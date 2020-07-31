@@ -20,7 +20,18 @@ class DataExample {
     }
 
     fun getUser(): UserProfile {
-        return myProfile
+        val profile = UserProfile(
+            myProfile.name,
+            myProfile.email,
+            myProfile.image,
+            myProfile.follower,
+            myProfile.following,
+            myProfile.introduce,
+            myProfile.age,
+            myProfile.sex,
+            myProfile.birthday
+        )
+        return profile
     }
 
     fun createRecordItem(): ArrayList<RecordItem> {

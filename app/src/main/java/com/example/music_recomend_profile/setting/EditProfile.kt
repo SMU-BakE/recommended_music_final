@@ -20,6 +20,8 @@ class EditProfile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_profile)
         updateView()
+
+        //캘린더 업데이트
         editProfileBirthInput.setOnClickListener {
             val newFragment = DateDialogFragment { year: Int, month: Int, day: Int ->
                 val birthday: TextView = findViewById(R.id.editProfileBirthInput)
@@ -34,6 +36,10 @@ class EditProfile : AppCompatActivity() {
         completeButton.setOnClickListener {
             setProfile()
         }
+
+        cancelButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun updateView() {
@@ -44,7 +50,9 @@ class EditProfile : AppCompatActivity() {
         editProfileEmailText.text = userProfile.email
 
         val birthdayInput: TextView = findViewById(R.id.editProfileBirthInput)
-        userProfile.birthday?.let { birthdayInput.text = TimeUtils().toDateString(userProfile.birthday!!) }
+        userProfile.birthday?.let {
+            birthdayInput.text = TimeUtils().toDateString(userProfile.birthday!!)
+        }
 
         val profileImage: ImageView = findViewById(R.id.editProfileImage)
         userProfile.image?.let {
