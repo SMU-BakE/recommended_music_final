@@ -2,18 +2,27 @@ package com.example.music_recomend_profile.database
 
 class UserProfile {
     var name: String? = null
-    var email:String? = null
+    var email: String? = null
     var image: Int? = 0
     var follower: Int? = null
     var following: Int? = null
     var introduce: String? = null
     var age: Int? = 0
     var sex: String? = null
+    var birthday: Long? = 0
 
 
     constructor(
-        name: String?, email:String?,image: Int?, follower: Int?, following: Int?, introduce: String?
-        , age: Int?, sex: String?
+        name: String?,
+        email: String?,
+        image: Int?,
+        follower: Int?,
+        following: Int?,
+        introduce: String?
+        ,
+        age: Int?,
+        sex: String?,
+        birthday: Long?
     ) {
         this.name = name
         this.email = email
@@ -23,5 +32,6 @@ class UserProfile {
         this.introduce = introduce
         this.age = age
         this.sex = sex
+        this.birthday = birthday
     }
 }

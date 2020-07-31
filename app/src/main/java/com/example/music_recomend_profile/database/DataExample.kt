@@ -5,18 +5,22 @@ import com.example.music_recomend_profile.R
 
 //임시 데이터 생성
 class DataExample {
-    fun createUser(): UserProfile {
-
-        val userProfile = UserProfile(
+    companion object {
+        var myProfile: UserProfile = UserProfile(
             "해써니사이드오브", "gildogi@naver.com",
             R.drawable.profile_haesun,
             243,
             150,
-            "배고파 치킨사줘", 24, "female"
+            "배고파 치킨사줘", 24, "female", 830919601000
         )
+    }
 
+    fun updateMyProfile(profile: UserProfile) {
+        myProfile = profile
+    }
 
-        return userProfile
+    fun getUser(): UserProfile {
+        return myProfile
     }
 
     fun createRecordItem(): ArrayList<RecordItem> {

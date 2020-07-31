@@ -16,7 +16,7 @@ class UserFeedActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_feed)
-        setUserData()
+
         setFrag(0)
 
 
@@ -32,6 +32,11 @@ class UserFeedActivity : AppCompatActivity() {
         }
     }
 
+     override fun onStart() {
+        super.onStart()
+         setUserData()
+    }
+
 
     private fun setFrag(FragNum: Int) {
         recordListFragment = RecordListFragment()
@@ -43,7 +48,7 @@ class UserFeedActivity : AppCompatActivity() {
 
     private fun setUserData() {
 
-        var userList : UserProfile = DataExample().createUser()
+        var userList : UserProfile = DataExample().getUser()
 
         profileName.text = userList.name
         followerNum.text = userList.follower.toString()
