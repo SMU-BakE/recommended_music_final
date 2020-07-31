@@ -21,7 +21,7 @@ class UserFeedActivity : AppCompatActivity() {
 
 
         backHomeButton.setOnClickListener{
-            //스튜디오 만드는 사람이 넣어주세요.
+            //home 으로 뒤로가기 만들어야함
             toast("뒤로가기 버튼")
         }
 

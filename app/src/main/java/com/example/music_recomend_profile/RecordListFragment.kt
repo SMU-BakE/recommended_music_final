@@ -42,10 +42,8 @@ class RecordListFragment : Fragment() {
     }
 
     private fun setRecordData(): ArrayList<RecordItem> {
-
+        //임시 데이터. DB 에서 불러와서 recordItem 에 넣어주세요.
         val recordItem : ArrayList<RecordItem> = DataExample().createRecordItem()
-
-        //임시 데이터. DB 에서 불러와서 넣어주세요.
         return recordItem
     }
 
