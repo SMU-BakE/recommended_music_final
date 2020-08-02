@@ -3,6 +3,10 @@ package com.example.music_recomend_profile.setting
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.ImageView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.example.music_recomend_profile.R
 import com.example.music_recomend_profile.TimeUtils
 import com.example.music_recomend_profile.database.DataExample
@@ -49,10 +53,14 @@ class AccountManagement : AppCompatActivity() {
         profileName.text = userProfile.name
         profileEmailText.text = userProfile.email
         profileSubtitle.text = userProfile.introduce
-        profileImage.setImageResource(userProfile.image!!)
-
         profileBirthday.text = TimeUtils().toDateString(userProfile.birthday!!)
         profileSex.text = userProfile.sex
+
+        if (userProfile.imageSrc != null) {
+            val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
+            Glide.with(this).load(userProfile.imageSrc).apply(requestOptions)
+                .into(findViewById<ImageView>(R.id.profileImage))   //이미지를 로딩하고 into()메서드로 imageView 에 표시
+        }
     }
 
 

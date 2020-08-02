@@ -8,10 +8,9 @@ class DataExample {
     companion object {
         var myProfile: UserProfile = UserProfile(
             "해써니사이드오브", "gildogi@naver.com",
-            R.drawable.profile_haesun,
-            999,
+            243,
             150,
-            "배고파 치킨사줘", 24, "female", 830919601000
+            "배고파 치킨사줘", 24, "female", 830919601000, null
         )
     }
 
@@ -23,13 +22,14 @@ class DataExample {
         val profile = UserProfile(
             myProfile.name,
             myProfile.email,
-            myProfile.image,
             myProfile.follower,
             myProfile.following,
             myProfile.introduce,
             myProfile.age,
             myProfile.sex,
-            myProfile.birthday
+            myProfile.birthday,
+            myProfile.imageSrc
+
         )
         return profile
     }
