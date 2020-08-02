@@ -55,15 +55,23 @@ class EditProfile : AppCompatActivity() {
             openGallery()
         }
 
-
+        editProfileSexInput.setOnClickListener {
+            val intent = Intent(this, GenderSelect::class.java).putExtra("sex", userProfile.sex)
+            startActivityForResult(intent, 1000)
+        }
     }
 
+
     private fun updateView() {
-
-
         editProfileNameInput.setText(userProfile.name)
         editProfileSubtitleInput.setText(userProfile.introduce)
         editProfileEmailText.text = userProfile.email
+        if (userProfile.sex != null && userProfile.sex!!.isNotEmpty()) {
+            editProfileSexInput.text = userProfile.sex
+        } else {
+            editProfileSexInput.text = "성별선택"
+        }
+
 
         val birthdayInput: TextView = findViewById(R.id.editProfileBirthInput)
         userProfile.birthday?.let {
@@ -75,19 +83,16 @@ class EditProfile : AppCompatActivity() {
             Glide.with(this).load(userProfile.imageSrc).apply(requestOptions)
                 .into(findViewById<ImageView>(R.id.editProfileImage))   //이미지를 로딩하고 into()메서드로 imageView 에 표시
         }
-
-
     }
 
     private fun setProfile() {
         userProfile.name = editProfileNameInput.text.toString()
         userProfile.introduce = editProfileSubtitleInput.text.toString()
-
+        userProfile.sex = editProfileSexInput.text.toString()
 
         DataExample().updateMyProfile(userProfile)
         toast("변경 완료")
         finish()
-
     }
 
 
@@ -102,6 +107,15 @@ class EditProfile : AppCompatActivity() {
     //사용자가 startActivityForResult 의 활동을 하고오면  onActivityResult 를 호출
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+//        selected sex
+        if (resultCode == 1001) {
+            val sex = data?.extras?.getString("sex")
+            if (!sex.isNullOrEmpty()) {
+                userProfile.sex = sex
+                updateView()
+            }
+        }
 
         if (resultCode == Activity.RESULT_OK) {
 

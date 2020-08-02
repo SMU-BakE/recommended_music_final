@@ -54,8 +54,11 @@ class AccountManagement : AppCompatActivity() {
         profileEmailText.text = userProfile.email
         profileSubtitle.text = userProfile.introduce
         profileBirthday.text = TimeUtils().toDateString(userProfile.birthday!!)
-        profileSex.text = userProfile.sex
-
+        if (userProfile.sex == "선택 안함") {
+            profileSex.text = "성별을 선택하세요."
+        }else {
+            profileSex.text = userProfile.sex
+        }
         if (userProfile.imageSrc != null) {
             val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
             Glide.with(this).load(userProfile.imageSrc).apply(requestOptions)

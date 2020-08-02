@@ -209,6 +209,15 @@
             app:layout_constraintStart_toEndOf="@+id/editProfileEmail"
             app:layout_constraintTop_toTopOf="@+id/editProfileEmail" />
 
+        <TextView
+            android:id="@+id/editProfileSexInput"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="여자"
+            app:layout_constraintBottom_toBottomOf="@+id/editProfileSex"
+            app:layout_constraintStart_toStartOf="@+id/editProfileBirthInput"
+            app:layout_constraintTop_toTopOf="@+id/editProfileSex" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
