@@ -1,7 +1,5 @@
 package com.example.music_recomend_profile.database
 
-import android.net.Uri
-
 data class UserProfile(
     var name: String? = null,
     var email: String? = null,
@@ -12,5 +10,4 @@ data class UserProfile(
     var sex: String? = null,
     var birthday: Long? = 0,
     var imageSrc : String? = null
-
 )

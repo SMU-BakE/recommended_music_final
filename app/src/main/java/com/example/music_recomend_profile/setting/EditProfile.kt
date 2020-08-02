@@ -109,7 +109,6 @@ class EditProfile : AppCompatActivity() {
                 //toast("open")
                 var currentImageUrl: Uri? = data?.data
                 userProfile.imageSrc = currentImageUrl.toString()
-                DataExample().updateMyProfile(userProfile)
                 //toast("Uri: ${currentImageUrl}")
                 try {
                     //toast(imageSrc.toString())
