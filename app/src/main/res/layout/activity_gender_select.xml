@@ -49,15 +49,15 @@
 
         </RadioGroup>
 
-        <TextView
+        <ImageView
             android:id="@+id/sexSelectTitle"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginTop="16dp"
-            android:text="성별"
             app:layout_constraintEnd_toStartOf="@+id/completeButton"
             app:layout_constraintStart_toEndOf="@+id/cancelButton"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/text_gender" />
 
         <View
             android:id="@+id/line"

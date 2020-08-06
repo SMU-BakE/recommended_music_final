@@ -26,10 +26,10 @@ class Adapter(var context: Context, var arrayList: ArrayList<RecordItem>) :
         val recordItem: RecordItem = arrayList[position]
 
         holder.dateTV.text = recordItem.date.toString()
-        holder.titleTV.text = recordItem.title
+        holder.titleTV.text = recordItem.emotion
 
         holder.titleTV.setOnClickListener {
-            Toast.makeText(context, recordItem.title, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, recordItem.emotion, Toast.LENGTH_LONG).show()
         }
 
     }
