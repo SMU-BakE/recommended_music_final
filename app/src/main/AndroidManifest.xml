@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".setting.GenderSelect"></activity>
+        <activity android:name=".friends.FindFriend"></activity>
+        <activity android:name=".friends.Following" />
+        <activity android:name=".friends.Follower" />
+        <activity android:name=".setting.GenderSelect" />
         <activity android:name=".setting.EditProfile" />
         <activity android:name=".setting.RequireUpdate" />
         <activity android:name=".setting.AccountManagement" />

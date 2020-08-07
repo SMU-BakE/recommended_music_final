@@ -9,6 +9,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.music_recomend_profile.database.DataExample
 import com.example.music_recomend_profile.database.UserProfile
+import com.example.music_recomend_profile.friends.Follower
+import com.example.music_recomend_profile.friends.Following
 import com.example.music_recomend_profile.setting.SettingListActivity
 import kotlinx.android.synthetic.main.activity_user_feed.*
 import org.jetbrains.anko.toast
@@ -35,6 +37,38 @@ class UserFeedActivity : AppCompatActivity() {
                 SettingListActivity::class.java
             )
             this.startActivity(intent)
+        }
+
+        profileFollower.setOnClickListener{
+            val intent = Intent(
+                this,
+                Follower::class.java
+            )
+            startActivity(intent)
+        }
+
+        followerNum.setOnClickListener{
+            val intent = Intent(
+                this,
+                Follower::class.java
+            )
+            startActivity(intent)
+        }
+
+        profileFollowing.setOnClickListener{
+            val intent = Intent(
+                this,
+                Following::class.java
+            )
+            startActivity(intent)
+        }
+
+        followingNum.setOnClickListener{
+            val intent = Intent(
+                this,
+                Following::class.java
+            )
+            startActivity(intent)
         }
     }
 

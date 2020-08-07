@@ -85,4 +85,21 @@ class DataExample {
         return recordItemList
 
     }
+
+    fun createFriends() : ArrayList<UserProfile>{
+        val userList: ArrayList<UserProfile> = ArrayList()
+
+        userList.add(
+            UserProfile("지니","astic@gmail.com",100,105,"요술램프 지니",21,"남성",0,null)
+        )
+
+        userList.add(
+            UserProfile("오구","ogu@gmail.com",999,50,"오리고기 먹지마",10,"null",0,null)
+        )
+
+        userList.add(
+            UserProfile("뚜지","duu@gmail.com",999,500,"두더지더지더지는땅을파지",7,"null",0,null)
+        )
+        return userList
+    }
 }
