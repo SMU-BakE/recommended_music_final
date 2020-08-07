@@ -70,6 +70,10 @@ class UserFeedActivity : AppCompatActivity() {
             )
             startActivity(intent)
         }
+
+        findFriends.setOnClickListener{
+            toast("아직 안만들었다.")
+        }
     }
 
     override fun onStart() {
