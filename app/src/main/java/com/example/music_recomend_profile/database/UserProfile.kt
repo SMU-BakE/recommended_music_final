@@ -9,5 +9,7 @@ data class UserProfile(
     var age: Int? = 0,
     var sex: String? = null,
     var birthday: Long? = 0,
+
+    //이미지 어떻게 받는지에따라 변수 변경해야함.
     var imageSrc: String? = null
 )

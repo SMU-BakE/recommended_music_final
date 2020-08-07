@@ -68,20 +68,17 @@ class GenderSelect : AppCompatActivity() {
                     if (checked) {
                         sex = "남성"
                         toast(sex.toString())
-                        // Pirates are the best
 
                     }
                 R.id.radio_female ->
                     if (checked) {
                         sex = "여성"
                         toast(sex.toString())
-                        // Ninjas rule
                     }
                 R.id.radio_etc ->
                     if (checked) {
                         sex = "선택 안함"
                         toast(sex.toString())
-                        // Ninjas rule
                     }
             }
         }

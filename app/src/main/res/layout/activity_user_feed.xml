@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UserFeedActivity">
@@ -70,12 +71,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/profileLine3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.05"
+            android:background="@drawable/divider"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileImage">
+
+        </View>
+
         <TextView
             android:id="@+id/profileName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="이해서니"
+            android:textColor="@color/black"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/profileImage"
@@ -86,18 +102,21 @@
             android:id="@+id/profileSubtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="해서니의 노래노래 감정기록장 뀨~"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+            app:layout_constraintTop_toBottomOf="@+id/profileLine3" />
 
         <TextView
             android:id="@+id/profileFollower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="팔로워"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/profileImage"
             app:layout_constraintStart_toStartOf="@+id/profileName"
             app:layout_constraintTop_toBottomOf="@+id/followerNum" />
 
@@ -107,16 +126,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:text="팔로잉"
-            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/profileImage"
             app:layout_constraintStart_toEndOf="@+id/profileFollower"
             app:layout_constraintTop_toBottomOf="@+id/followingNum" />
 
         <TextView
             android:id="@+id/followerNum"
             android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="0"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/profileFollower"
             app:layout_constraintEnd_toEndOf="@+id/profileFollower"
             app:layout_constraintStart_toStartOf="@+id/profileFollower"
             app:layout_constraintTop_toBottomOf="@+id/profileName" />
@@ -125,11 +150,15 @@
             android:id="@+id/followingNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="0"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/profileFollowing"
             app:layout_constraintEnd_toEndOf="@+id/profileFollowing"
-            app:layout_constraintHorizontal_bias="0.548"
             app:layout_constraintStart_toStartOf="@+id/profileFollowing"
-            app:layout_constraintTop_toTopOf="@+id/followerNum" />
+            app:layout_constraintTop_toBottomOf="@+id/profileName" />
 
         <Button
             android:id="@+id/findFriends"

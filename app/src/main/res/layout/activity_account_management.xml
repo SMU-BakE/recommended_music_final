@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     tools:context=".setting.AccountManagement">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,18 +37,28 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <View
+        android:id="@+id/line"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="16dp"
+        android:alpha="0.1"
+        android:background="@drawable/divider"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accountManagementTitle" />
+
     <ImageView
-        android:id="@+id/profileIcon"
+        android:id="@+id/accountManagementTitle"
         android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/text_setting"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backSettingButton"
-         />
+        app:layout_constraintTop_toTopOf="@+id/backSettingButton" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profileContainer"
@@ -58,11 +69,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileIcon">
-
-
-
-
+        app:layout_constraintTop_toBottomOf="@+id/line">
 
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -73,8 +80,20 @@
             app:civ_border_color="@color/colorAccent"
             app:civ_border_width="3dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-             />
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <View
+            android:id="@+id/line2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.1"
+            android:background="@drawable/divider"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
         <TextView
             android:id="@+id/profileName"
@@ -83,6 +102,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:text="Name"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toEndOf="@+id/profileImage"
             app:layout_constraintTop_toTopOf="@+id/profileImage" />
@@ -104,9 +124,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="소개"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileImage" />
+            app:layout_constraintTop_toBottomOf="@+id/line2" />
 
         <TextView
             android:id="@+id/profileSex"
@@ -114,6 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="성별"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileSubtitle" />
@@ -124,9 +146,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="생일"
+            android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileSex" />
+
+        <View
+            android:id="@+id/line3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:alpha="0.1"
+            android:background="@drawable/divider"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profileBirthday" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/editProfileButton"
@@ -154,6 +189,39 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/accountSecurityTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="계정 보안"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line3" />
+
+        <TextView
+            android:id="@+id/changePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="비밀번호 변경"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/accountSecurityTitle" />
+
+        <TextView
+            android:id="@+id/membershipWithdrawal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="회원 탈퇴"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/changePassword" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

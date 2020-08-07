@@ -14,6 +14,7 @@ import com.example.music_recomend_profile.database.UserProfile
 import kotlinx.android.synthetic.main.activity_account_management.*
 import kotlinx.android.synthetic.main.activity_account_management.profileImage
 import kotlinx.android.synthetic.main.activity_account_management.profileSubtitle
+import org.jetbrains.anko.toast
 
 
 class AccountManagement : AppCompatActivity() {
@@ -37,6 +38,16 @@ class AccountManagement : AppCompatActivity() {
             )
             this.startActivity(intent)
         }
+
+        changePassword.setOnClickListener {
+            //비밀번호 변경 기능 연결
+            toast("비밀번호 변경 기능")
+        }
+
+        membershipWithdrawal.setOnClickListener{
+            //회원 탈퇴 기능 연결
+            toast("회원탈퇴")
+        }
     }
 
     override fun onStart() {
@@ -59,7 +70,6 @@ class AccountManagement : AppCompatActivity() {
         } else {
             profileSex.text = userProfile.sex
         }
-
 
         if (userProfile.imageSrc != null) {
             val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)

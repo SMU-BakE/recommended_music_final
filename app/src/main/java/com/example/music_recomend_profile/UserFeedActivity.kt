@@ -23,7 +23,7 @@ class UserFeedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_feed)
 
-        setFrag(0)
+        setRecordList()
 
 
         backHomeButton.setOnClickListener {
@@ -39,7 +39,7 @@ class UserFeedActivity : AppCompatActivity() {
             this.startActivity(intent)
         }
 
-        profileFollower.setOnClickListener{
+        profileFollower.setOnClickListener {
             val intent = Intent(
                 this,
                 Follower::class.java
@@ -47,7 +47,7 @@ class UserFeedActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        followerNum.setOnClickListener{
+        followerNum.setOnClickListener {
             val intent = Intent(
                 this,
                 Follower::class.java
@@ -55,7 +55,7 @@ class UserFeedActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        profileFollowing.setOnClickListener{
+        profileFollowing.setOnClickListener {
             val intent = Intent(
                 this,
                 Following::class.java
@@ -63,7 +63,7 @@ class UserFeedActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        followingNum.setOnClickListener{
+        followingNum.setOnClickListener {
             val intent = Intent(
                 this,
                 Following::class.java
@@ -78,12 +78,10 @@ class UserFeedActivity : AppCompatActivity() {
     }
 
 
-    private fun setFrag(FragNum: Int) {
+    private fun setRecordList() {
         recordListFragment = RecordListFragment()
         val ft = supportFragmentManager.beginTransaction()
-        when (FragNum) {
-            0 -> ft.replace(R.id.recordFrame, RecordListFragment()).commit()
-        }
+        ft.replace(R.id.recordFrame, RecordListFragment()).commit()
     }
 
     private fun setUserData() {

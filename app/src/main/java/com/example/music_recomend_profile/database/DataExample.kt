@@ -11,7 +11,7 @@ class DataExample {
             "해써니사이드오브", "gildogi@naver.com",
             243,
             150,
-            "배고파 치킨사줘", 24, "여성", 830919601000, null
+            "배고파 치킨사줘\n#노래가좋아\n더이상 쓸말이 생각나지 않는다.", 24, "여성", 830919601000, null
         )
     }
 
@@ -82,6 +82,7 @@ class DataExample {
                 2007015
             )
         )
+
 
         return recordItemList
 

@@ -135,7 +135,7 @@ class EditProfile : AppCompatActivity() {
                     //toast(imageSrc.toString())
                     val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
                     Glide.with(this).load(userProfile.imageSrc).apply(requestOptions)
-                        .into(findViewById<ImageView>(R.id.editProfileImage))   //이미지를 로딩하고 into()메서드로 imageView 에 표시
+                        .into(findViewById<ImageView>(R.id.editProfileImage))
 
                 } catch (e: Exception) {
                     e.printStackTrace()
