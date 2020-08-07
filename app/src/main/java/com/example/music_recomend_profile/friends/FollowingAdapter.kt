@@ -27,12 +27,10 @@ class FollowingAdapter(
         val data = following[position]
 
         holder.itemView.followingName.text = data.name
-        holder.itemView.followingEmail.text=data.email
+        holder.itemView.followingEmail.text = data.email
 
         //이미지 데베에서 받아서 띄워주세요.
         //iconView.setImageResource()
-
-
 
 
     }

@@ -6,6 +6,7 @@ import com.example.music_recomend_profile.R
 //임시 데이터 생성
 class DataExample {
     companion object {
+        //생일(날짜) 는 타임스탬프 사용. 날짜 변환 함수는 TimeUtils 참고
         var myProfile: UserProfile = UserProfile(
             "해써니사이드오브", "gildogi@naver.com",
             243,

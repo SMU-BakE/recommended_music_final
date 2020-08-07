@@ -56,13 +56,15 @@ class AccountManagement : AppCompatActivity() {
         profileBirthday.text = TimeUtils().toDateString(userProfile.birthday!!)
         if (userProfile.sex == "선택 안함") {
             profileSex.text = "성별을 선택하세요."
-        }else {
+        } else {
             profileSex.text = userProfile.sex
         }
+
+
         if (userProfile.imageSrc != null) {
             val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
             Glide.with(this).load(userProfile.imageSrc).apply(requestOptions)
-                .into(findViewById<ImageView>(R.id.profileImage))   //이미지를 로딩하고 into()메서드로 imageView 에 표시
+                .into(findViewById<ImageView>(R.id.profileImage))
         }
     }
 

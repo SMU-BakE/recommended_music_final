@@ -33,13 +33,20 @@ class EditProfile : AppCompatActivity() {
 
         //캘린더 업데이트
         editProfileBirthInput.setOnClickListener {
-            val newFragment = DateDialogFragment { year: Int, month: Int, day: Int ->
-                val birthday: TextView = findViewById(R.id.editProfileBirthInput)
-                birthday.text = TimeUtils().dateToString(year, month, day)
-                val datetime = TimeUtils.DateTime(year, month, day, 0, 0)
+            val birthDayDateTime =
+                userProfile.birthday?.let { it1 -> TimeUtils().getDateTime(it1) }
+            val newFragment =
+                DateDialogFragment(
+                    birthDayDateTime?.year,
+                    birthDayDateTime?.month,
+                    birthDayDateTime?.dayOfMonth
+                ) { year: Int, month: Int, day: Int ->
+                    val birthday: TextView = findViewById(R.id.editProfileBirthInput)
+                    birthday.text = TimeUtils().dateToString(year, month, day)
+                    val datetime = TimeUtils.DateTime(year, month, day, 0, 0)
 
-                userProfile.birthday = TimeUtils().getTimestamp(datetime)
-            }
+                    userProfile.birthday = TimeUtils().getTimestamp(datetime)
+                }
             newFragment.show(supportFragmentManager, "datePicker")
         }
 

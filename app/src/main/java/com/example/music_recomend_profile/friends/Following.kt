@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_following.*
 import org.jetbrains.anko.toast
 
 
-class Following: AppCompatActivity() {
+class Following : AppCompatActivity() {
 
     private lateinit var listRV: RecyclerView
     private lateinit var searchView: SearchView
