@@ -16,6 +16,7 @@
         <activity android:name=".setting.EditProfile" />
         <activity android:name=".setting.RequireUpdate" />
         <activity android:name=".setting.AccountManagement" />
+        <activity android:name=".player.PlayerHome" />
         <activity android:name=".setting.SettingListAdapter" />
         <activity android:name=".setting.SettingListActivity" />
         <activity android:name=".UserFeedActivity">
