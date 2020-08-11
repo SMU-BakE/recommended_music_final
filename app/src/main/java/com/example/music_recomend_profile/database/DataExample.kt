@@ -88,19 +88,44 @@ class DataExample {
 
     }
 
-    fun createFriends() : ArrayList<UserProfile>{
+
+    //지금은 예시로 팔로우, 팔로잉, 친구찾기에 다 이 데이터 넣어둠. -> 바꿔야함
+    fun createFriends(): ArrayList<UserProfile> {
         val userList: ArrayList<UserProfile> = ArrayList()
 
         userList.add(
-            UserProfile("지니","astic@gmail.com",100,105,"요술램프 지니",21,"남성",0,null)
+            UserProfile("지니", "astic@gmail.com", 100, 105, "요술램프 지니", 21, "남성", 0, null)
         )
 
         userList.add(
-            UserProfile("오구","ogu@gmail.com",999,50,"오리고기 먹지마",10,"null",0,null)
+            UserProfile("오구", "ogu@gmail.com", 999, 50, "오리고기 먹지마", 10, "null", 0, null)
         )
 
         userList.add(
-            UserProfile("뚜지","duu@gmail.com",999,500,"두더지더지더지는땅을파지",7,"null",0,null)
+            UserProfile("뚜지", "duu@gmail.com", 999, 500, "두더지더지더지는땅을파지", 7, "null", 0, null)
+        )
+        userList.add(
+            UserProfile("세연세연세세", "se@gmail.com", 302, 105, "요술램프 지니", 21, "남성", 0, null)
+        )
+
+        userList.add(
+            UserProfile("은데데데데데데ㅔ데데데데이터베이스", "dedede@gmail.com", 63, 50, "오리고기 먹지마", 10, "null", 0, null)
+        )
+
+        userList.add(
+            UserProfile("성민", "smsm@gmail.com", 204, 500, "두더지더지더지는땅을파지", 7, "null", 0, null)
+        )
+
+        userList.add(
+            UserProfile("주원", "numberone@gmail.com", 999, 990, "두더지더지더지는땅을파지", 7, "null", 0, null)
+        )
+
+        userList.add(
+            UserProfile("Jinyjiny", "astic@gmail.com", 100, 105, "요술램프 지니", 21, "남성", 0, null)
+        )
+
+        userList.add(
+            UserProfile("tomandtoms", "tomtom@gmail.com", 999, 50, "오리고기 먹지마", 10, "null", 0, null)
         )
         return userList
     }

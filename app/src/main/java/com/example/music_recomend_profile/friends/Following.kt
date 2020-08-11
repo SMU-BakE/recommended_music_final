@@ -40,6 +40,7 @@ class Following : AppCompatActivity() {
             adapter = FollowingAdapter(
 
                 //예시 데이터. 바꿔주세요~
+                //여기서 필요한 데이터 : 내가 팔로잉 한 사람 데이터
                 following = DataExample().createFriends(),
                 context = this@Following
             )
@@ -69,7 +70,7 @@ class Following : AppCompatActivity() {
     }
 
 
-    //데이터베이스에서 나의 팔로워 검색하기 구현하고 listRV랑 연결해주세요오.
+    //데이터베이스에서 나의 팔로잉 검색하기 구현하고 listRV랑 연결해주세요오.
     private fun doSearch() {
 
     }

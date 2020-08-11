@@ -39,6 +39,7 @@ class Follower : AppCompatActivity() {
             adapter = FollowerAdapter(
 
                 //예시 데이터. 바꿔주세요~
+                //여기서 필요한 데이터 : 나를 팔로우 한 사람 데이터
                 follower = DataExample().createFriends(),
                 context = this@Follower
             )

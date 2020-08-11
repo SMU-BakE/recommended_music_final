@@ -9,6 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.example.music_recomend_profile.database.DataExample
 import com.example.music_recomend_profile.database.UserProfile
+import com.example.music_recomend_profile.friends.FindFriend
 import com.example.music_recomend_profile.friends.Follower
 import com.example.music_recomend_profile.friends.Following
 import com.example.music_recomend_profile.setting.SettingListActivity
@@ -71,8 +72,12 @@ class UserFeedActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        findFriends.setOnClickListener{
-            toast("아직 안만들었다.")
+        findFriends.setOnClickListener {
+            val intent = Intent(
+                this,
+                FindFriend::class.java
+            )
+            startActivity(intent)
         }
     }
 
@@ -99,7 +104,7 @@ class UserFeedActivity : AppCompatActivity() {
         if (userList.imageSrc != null) {
             val requestOptions = RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
             Glide.with(this).load(userList.imageSrc).apply(requestOptions)
-                .into(findViewById<ImageView>(R.id.profileImage))   //이미지를 로딩하고 into()메서드로 imageView 에 표시
+                .into(findViewById<ImageView>(R.id.profileImage))
         }
     }
 
