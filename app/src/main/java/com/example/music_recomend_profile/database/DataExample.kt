@@ -109,7 +109,17 @@ class DataExample {
         )
 
         userList.add(
-            UserProfile("은데데데데데데ㅔ데데데데이터베이스", "dedede@gmail.com", 63, 50, "오리고기 먹지마", 10, "null", 0, null)
+            UserProfile(
+                "은데데데데데데ㅔ데데데데이터베이스",
+                "dedede@gmail.com",
+                63,
+                50,
+                "오리고기 먹지마",
+                10,
+                "null",
+                0,
+                null
+            )
         )
 
         userList.add(
@@ -129,4 +139,15 @@ class DataExample {
         )
         return userList
     }
+
+
+    fun createSong(): ArrayList<Song> {
+        val songList: ArrayList<Song> = ArrayList()
+
+        songList.add(
+            Song("다시 여기 바닷가", "싹스리", "http://ddddd", true)
+        )
+        return songList
+    }
 }
+

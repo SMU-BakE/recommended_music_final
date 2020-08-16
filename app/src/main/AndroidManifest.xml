@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".friends.FindFriend"></activity>
+        <activity android:name=".player.ViewMorePopup"></activity>
+        <activity android:name=".friends.FindFriend" />
         <activity android:name=".friends.Following" />
         <activity android:name=".friends.Follower" />
         <activity android:name=".setting.GenderSelect" />

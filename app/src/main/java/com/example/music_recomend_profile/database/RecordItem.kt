@@ -11,5 +11,6 @@ data class RecordItem(
 data class Song(
     var songName: String? = null,
     var singer: String? = null,
-    var songLink: String? = null
+    var songLink: String? = null,
+    var favorite:Boolean = false
 )
