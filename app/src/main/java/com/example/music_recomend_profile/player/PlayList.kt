@@ -34,7 +34,7 @@ class PlayList : AppCompatActivity() {
                 it
             )
         }
-        
+
         listRV.apply {
             adapter = DataExample().createRecordItem()[position].songList?.let {
                 PlaylistAdapter(

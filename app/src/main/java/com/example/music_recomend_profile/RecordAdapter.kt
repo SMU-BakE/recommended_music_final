@@ -38,7 +38,7 @@ class Adapter(var context: Context, var recordItemList: ArrayList<RecordItem>) :
         holder.titleTV.text = recordItem.emotion
 
         holder.titleTV.setOnClickListener {
-            Toast.makeText(context, recordItem.emotion, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, recordItem.emotion, Toast.LENGTH_SHORT).show()
             val intent = Intent(
                 context,
                 PlayerHome::class.java

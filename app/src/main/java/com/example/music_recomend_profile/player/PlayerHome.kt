@@ -152,7 +152,7 @@ class PlayerHome : AppCompatActivity() {
         return timeLabel
     }
 
-    fun playButtonClick(v: View, context: Context) {
+    fun playButtonClick(v: View) {
 
         if (mediaPlayer.isPlaying) {
             // Stop
