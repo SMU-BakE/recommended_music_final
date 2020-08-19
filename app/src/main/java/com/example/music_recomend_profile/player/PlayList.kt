@@ -6,7 +6,9 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.music_recomend_profile.R
+import com.example.music_recomend_profile.TimeUtils
 import com.example.music_recomend_profile.database.DataExample
+import kotlinx.android.synthetic.main.activity_play_list.*
 import kotlin.properties.Delegates
 
 class PlayList : AppCompatActivity() {
@@ -24,9 +26,15 @@ class PlayList : AppCompatActivity() {
         listRV = findViewById(R.id.playlistRV)
 
         intent.extras?.getInt("position")?.let {
-                position  = it
+            position = it
         }
 
+        dateTextView.text = DataExample().createRecordItem()[position].date?.let {
+            TimeUtils().toDateString(
+                it
+            )
+        }
+        
         listRV.apply {
             adapter = DataExample().createRecordItem()[position].songList?.let {
                 PlaylistAdapter(
