@@ -30,8 +30,7 @@ class ViewMorePopup(context : Context) {
 
 
         updateView(songName,singer)
-        favoriteTemp = favorite
-        updateViewFavoriteButton(favoriteTemp)
+        updateViewFavoriteButton(favorite)
 
         musicVideoButton.setOnClickListener {
             Log.d("mv","music video")
@@ -46,7 +45,7 @@ class ViewMorePopup(context : Context) {
 
         favoriteButton.setOnClickListener {
             Log.d("favorite","favorite")
-            favoriteButtonClick(favoriteTemp)
+            favoriteButtonClick(favorite)
         }
 
         shareButton.setOnClickListener {

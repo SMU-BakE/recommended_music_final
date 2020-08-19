@@ -162,7 +162,7 @@ class DataExample {
         val songList: ArrayList<Song> = ArrayList()
 
         songList.add(
-            Song("출발", "김동률", "http://ddddd", true)
+            Song("출발", "김동률", "http://ddddd", false)
         )
 
         songList.add(

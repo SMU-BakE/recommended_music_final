@@ -1,6 +1,8 @@
 package com.example.music_recomend_profile.player
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
@@ -16,7 +18,7 @@ import com.example.music_recomend_profile.TimeUtils
 import com.example.music_recomend_profile.database.DataExample
 import com.example.music_recomend_profile.database.RecordItem
 import kotlinx.android.synthetic.main.activity_player_home.*
-
+import kotlin.properties.Delegates
 
 
 class PlayerHome : AppCompatActivity() {
@@ -25,9 +27,10 @@ class PlayerHome : AppCompatActivity() {
     private lateinit var recordImage: ImageView
     private lateinit var recordEmotion: TextView
     private var totalTime: Int = 0
+    private var position by Delegates.notNull<Int>()
 
-    //미래의 이해선 DataExample recordItem companion object 로 바꾸자
-    private var recordItem : RecordItem = DataExample().createRecordItem()[0]
+
+    private lateinit var recordItem: RecordItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +41,27 @@ class PlayerHome : AppCompatActivity() {
 
 
 
+        backButton.setOnClickListener {
+            onBackPressed()
+        }
+
+        queueMusicButton.setOnClickListener {
+            val intent = Intent(
+                this,
+                PlayList::class.java
+            ).putExtra("position",position)
+            startActivity(intent)
+        }
+
+
+
         moreViewButton.setOnClickListener {
             val dialog = ViewMorePopup(this)
             recordItem.songList?.get(0)?.songName?.let { it1 ->
                 recordItem.songList?.get(0)?.singer?.let { it2 ->
                     recordItem.songList?.get(0)?.favorite?.let { it3 ->
-                        dialog.start(this
+                        dialog.start(
+                            this
                             , it1
                             , it2
                             , it3
@@ -134,7 +152,7 @@ class PlayerHome : AppCompatActivity() {
         return timeLabel
     }
 
-    fun playButtonClick(v: View) {
+    fun playButtonClick(v: View, context: Context) {
 
         if (mediaPlayer.isPlaying) {
             // Stop
@@ -162,36 +180,18 @@ class PlayerHome : AppCompatActivity() {
         recordEmotion.clearAnimation()
     }
 
-    private fun getRecordIntent() {
 
-        intent.extras?.getString("emotion")?.let {
-            if (it.isNotEmpty()) {
-                recordItem.emotion = it
-            }
+    private fun getRecordIntent(){
+        intent.extras?.getInt("position")?.let {
+            position = it
         }
 
-        intent.extras?.getString("song")?.let {
-            if (it.isNotEmpty()) {
-                recordItem.songList?.get(0)?.songName = it
-            }
-        }
-
-        intent.extras?.getString("singer")?.let {
-            if (it.isNotEmpty()) {
-                recordItem.songList?.get(0)?.singer = it
-            }
-        }
-
-        intent.extras?.getLong("date")?.let {
-            recordItem.date = it
-        }
-
-        intent.extras?.getBoolean("favorite")?.let {
-            recordItem.songList?.get(0)?.favorite = it
-        }
+        //임시 데이터 생성
+        recordItem = DataExample().createRecordItem()[position]
     }
 
-    private fun updateView(){
+
+    private fun updateView() {
         dateTextView.text = recordItem.date?.let { TimeUtils().toDateString(it) }
         singerTextView.text = recordItem.songList?.get(0)?.singer
         songNameTextView.text = recordItem.songList?.get(0)?.songName

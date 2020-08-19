@@ -9,6 +9,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.music_recomend_profile.database.RecordItem
+import com.example.music_recomend_profile.player.PlayList
 import com.example.music_recomend_profile.player.PlayerHome
 
 class Adapter(var context: Context, var recordItemList: ArrayList<RecordItem>) :
@@ -41,14 +42,8 @@ class Adapter(var context: Context, var recordItemList: ArrayList<RecordItem>) :
             val intent = Intent(
                 context,
                 PlayerHome::class.java
-            ).putExtra("emotion",recordItem.emotion)
-                .putExtra("song", recordItem.songList?.get(0)?.songName)
-                .putExtra("singer",recordItem.songList?.get(0)?.singer)
-                .putExtra("date",recordItem.date!!)
-                .putExtra("favorite",recordItem.songList?.get(0)?.favorite)
-
+            ).putExtra("position",position)
             context.startActivity(intent)
-
 
         }
     }
