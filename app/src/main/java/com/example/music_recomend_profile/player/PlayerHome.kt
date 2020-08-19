@@ -1,42 +1,56 @@
 package com.example.music_recomend_profile.player
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.music_recomend_profile.R
+import com.example.music_recomend_profile.TimeUtils
+import com.example.music_recomend_profile.database.DataExample
+import com.example.music_recomend_profile.database.RecordItem
 import kotlinx.android.synthetic.main.activity_player_home.*
-import kotlinx.android.synthetic.main.view_more_popup.*
-import org.jetbrains.anko.appcompat.v7.buttonBarLayout
-import org.jetbrains.anko.toast
+
+
 
 class PlayerHome : AppCompatActivity() {
 
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var recordImage: ImageView
-    private lateinit var recordText: TextView
+    private lateinit var recordEmotion: TextView
     private var totalTime: Int = 0
+
+    //미래의 이해선 DataExample recordItem companion object 로 바꾸자
+    private var recordItem : RecordItem = DataExample().createRecordItem()[0]
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_home)
 
         recordImage = findViewById(R.id.playerImage)
-        recordText = findViewById(R.id.emotionTextView)
+        recordEmotion = findViewById(R.id.emotionTextView)
+
+
 
         moreViewButton.setOnClickListener {
             val dialog = ViewMorePopup(this)
-            dialog.start(this)
+            recordItem.songList?.get(0)?.songName?.let { it1 ->
+                recordItem.songList?.get(0)?.singer?.let { it2 ->
+                    recordItem.songList?.get(0)?.favorite?.let { it3 ->
+                        dialog.start(this
+                            , it1
+                            , it2
+                            , it3
+                        )
+                    }
+                }
+            }
         }
 
 
@@ -83,6 +97,13 @@ class PlayerHome : AppCompatActivity() {
             }
         }).start()
     }
+
+    override fun onStart() {
+        super.onStart()
+        getRecordIntent()
+        updateView()
+    }
+
 
     @SuppressLint("HandlerLeak")
     var handler = object : Handler() {
@@ -133,12 +154,48 @@ class PlayerHome : AppCompatActivity() {
         val rotateRecord = AnimationUtils.loadAnimation(this, R.anim.record_animation)
         recordImage.animation = rotateRecord
         val rotateText = AnimationUtils.loadAnimation(this, R.anim.record_animation)
-        recordText.animation = rotateText
+        recordEmotion.animation = rotateText
     }
 
     private fun stopRecordAnimation() {
         recordImage.clearAnimation()
-        recordText.clearAnimation()
+        recordEmotion.clearAnimation()
+    }
+
+    private fun getRecordIntent() {
+
+        intent.extras?.getString("emotion")?.let {
+            if (it.isNotEmpty()) {
+                recordItem.emotion = it
+            }
+        }
+
+        intent.extras?.getString("song")?.let {
+            if (it.isNotEmpty()) {
+                recordItem.songList?.get(0)?.songName = it
+            }
+        }
+
+        intent.extras?.getString("singer")?.let {
+            if (it.isNotEmpty()) {
+                recordItem.songList?.get(0)?.singer = it
+            }
+        }
+
+        intent.extras?.getLong("date")?.let {
+            recordItem.date = it
+        }
+
+        intent.extras?.getBoolean("favorite")?.let {
+            recordItem.songList?.get(0)?.favorite = it
+        }
+    }
+
+    private fun updateView(){
+        dateTextView.text = recordItem.date?.let { TimeUtils().toDateString(it) }
+        singerTextView.text = recordItem.songList?.get(0)?.singer
+        songNameTextView.text = recordItem.songList?.get(0)?.songName
+        emotionTextView.text = recordItem.emotion
     }
 
 

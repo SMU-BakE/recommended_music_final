@@ -34,7 +34,7 @@
         android:id="@+id/emotionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="설렘"
+        android:text="emotion"
         android:textAlignment="center"
         android:textColor="@color/colorPinkLight"
         android:textSize="24sp"

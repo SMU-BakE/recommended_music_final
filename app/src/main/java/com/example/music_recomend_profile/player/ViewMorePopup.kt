@@ -2,18 +2,15 @@ package com.example.music_recomend_profile.player
 
 import android.app.Dialog
 import android.content.Context
-import android.content.Intent
+import android.text.BoringLayout
 import android.util.Log
-import android.view.View
 import android.view.Window
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.music_recomend_profile.R
 import com.example.music_recomend_profile.database.DataExample
-import com.example.music_recomend_profile.database.Song
-import com.example.music_recomend_profile.setting.SettingListActivity
-import kotlinx.android.synthetic.main.activity_player_home.*
+import com.example.music_recomend_profile.database.RecordItem
+import kotlin.properties.Delegates
 
 
 class ViewMorePopup(context : Context) {
@@ -21,21 +18,20 @@ class ViewMorePopup(context : Context) {
     private lateinit var musicVideoButton : TextView
     private lateinit var favoriteButton : ImageView
     private lateinit var shareButton : ImageView
+    private lateinit var songTitleName : TextView
+    private lateinit var singerName : TextView
+    private var favoriteTemp by Delegates.notNull<Boolean>()
 
-    var song : ArrayList<Song> = DataExample().createSong()
 
-
-    fun start(context: Context) {
+    fun start(context: Context,songName:String,singer : String,favorite:Boolean) {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
         dialog.setContentView(R.layout.view_more_popup)
         dialog.setCancelable(true)    //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히게
 
 
-        musicVideoButton = dialog.findViewById(R.id.musicVideoButton)
-        favoriteButton = dialog.findViewById(R.id.favoriteButton)
-        shareButton = dialog.findViewById(R.id.shareButton)
-
-        updateViewFavoriteButton()
+        updateView(songName,singer)
+        favoriteTemp = favorite
+        updateViewFavoriteButton(favoriteTemp)
 
         musicVideoButton.setOnClickListener {
             Log.d("mv","music video")
@@ -50,7 +46,7 @@ class ViewMorePopup(context : Context) {
 
         favoriteButton.setOnClickListener {
             Log.d("favorite","favorite")
-            favoriteButtonClick()
+            favoriteButtonClick(favoriteTemp)
         }
 
         shareButton.setOnClickListener {
@@ -60,8 +56,19 @@ class ViewMorePopup(context : Context) {
         dialog.show()
     }
 
-    private fun updateViewFavoriteButton() {
-        if (song[0].favorite) {
+    private fun updateView(songName:String,singer : String){
+        musicVideoButton = dialog.findViewById(R.id.musicVideoButton)
+        favoriteButton = dialog.findViewById(R.id.favoriteButton)
+        shareButton = dialog.findViewById(R.id.shareButton)
+        songTitleName = dialog.findViewById(R.id.popupSongNameTextView)
+        singerName = dialog.findViewById(R.id.popupSingerTextView)
+
+        songTitleName.text = songName
+        singerName.text = singer
+    }
+
+    private fun updateViewFavoriteButton(favorite: Boolean) {
+        if (favorite) {
             favoriteButton.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
 
         } else {
@@ -69,16 +76,18 @@ class ViewMorePopup(context : Context) {
         }
     }
 
-    private fun favoriteButtonClick() {
-        if (song[0].favorite) {
-            song[0].favorite = false
+    private fun favoriteButtonClick(favoriteTemp: Boolean)  {
+        if (favoriteTemp) {
+            this.favoriteTemp = false
             favoriteButton.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
 
         } else {
-            song[0].favorite= true
+            this.favoriteTemp = true
             favoriteButton.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
         }
     }
+
+
 
 
 }
