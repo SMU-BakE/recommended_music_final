@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.music_recomend_profile.R
+import com.example.music_recomend_profile.RecordListFragment
 import com.example.music_recomend_profile.TimeUtils
 import com.example.music_recomend_profile.database.DataExample
 import com.example.music_recomend_profile.database.RecordItem
@@ -124,7 +125,11 @@ class PlayerHome : AppCompatActivity() {
                 this,
                 PlayList::class.java
             ).putExtra("position", position)
-            startActivity(intent)
+//            startActivity(intent)
+            //PlayList 프래그먼트로 바꿔서 아래처럼.
+            supportFragmentManager.beginTransaction()
+                .add(R.id.songListContainer, PlayList())
+                .commit()
         }
 
         moreViewButton.setOnClickListener {
