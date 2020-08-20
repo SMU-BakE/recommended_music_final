@@ -1,59 +1,131 @@
 package com.example.music_recomend_profile.player
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.media.MediaPlayer
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Button
 import android.widget.ImageView
-import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.music_recomend_profile.R
 import com.example.music_recomend_profile.TimeUtils
 import com.example.music_recomend_profile.database.DataExample
 import com.example.music_recomend_profile.database.RecordItem
+import com.example.music_recomend_profile.database.Song
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBar
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBarListener
 import kotlinx.android.synthetic.main.activity_player_home.*
+import org.jetbrains.anko.toast
 import kotlin.properties.Delegates
 
 
 class PlayerHome : AppCompatActivity() {
 
-    private lateinit var mediaPlayer: MediaPlayer
+
+    private var playingSong = false
+
+    // About view widget
     private lateinit var recordImage: ImageView
     private lateinit var recordEmotion: TextView
-    private var totalTime: Int = 0
+
     private var position by Delegates.notNull<Int>()
 
-
     private lateinit var recordItem: RecordItem
+
+    private var songIndex = 0
+    private lateinit var songCodeList: List<Song>
+
+    //    about SeekBar
+    private lateinit var playButton: Button
+    private lateinit var nextButton: ImageView
+
+    //    about youtube player
+    private lateinit var youtubePlayer: YouTubePlayer
+    private lateinit var youtubePlayerView: YouTubePlayerView
+    private lateinit var youtubePlayerSeekBar: YouTubePlayerSeekBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_home)
 
+        getRecordIntent()
+
+        if (DataExample().createRecordItem()[position].songList != null) {
+            songCodeList = DataExample().createRecordItem()[position].songList!!
+        } else {
+            toast("노래 목록을 불러올 수 없습니다.")
+            finish()
+        }
+
+        initPlayer()
+    }
+
+
+    private fun initPlayer() {
+        youtubePlayerView = findViewById(R.id.youtube_player_view)
+        youtubePlayerSeekBar = findViewById(R.id.youtube_player_seekbar)
+
+        youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onStateChange(
+                youTubePlayer: YouTubePlayer,
+                state: PlayerConstants.PlayerState
+            ) {
+                if (state == PlayerConstants.PlayerState.ENDED) {
+                    playNext()
+                }
+                super.onStateChange(youTubePlayer, state)
+            }
+
+            override fun onReady(player: YouTubePlayer) {
+                youtubePlayer = player
+
+                val currentVideoId = songCodeList?.get(songIndex)?.songLink
+
+                currentVideoId?.let { loadVideo(it) }
+
+                youtubePlayerSeekBar.youtubePlayerSeekBarListener =
+                    object : YouTubePlayerSeekBarListener {
+                        override fun seekTo(time: Float) {
+                            youtubePlayer.seekTo(time)
+                        }
+                    }
+
+                initView()
+            }
+        })
+    }
+
+    private fun loadVideo(videoId: String) {
+        youtubePlayer.loadVideo(videoId, 0f)
+        youtubePlayer.addListener(youtubePlayerSeekBar)
+        youtubePlayer.pause()
+    }
+
+
+    private fun initView() {
         recordImage = findViewById(R.id.playerImage)
         recordEmotion = findViewById(R.id.emotionTextView)
 
-
-
         backButton.setOnClickListener {
             onBackPressed()
+        }
+
+        nextButton = findViewById(R.id.nextSongButton)
+        nextButton.setOnClickListener {
+            playNext()
         }
 
         queueMusicButton.setOnClickListener {
             val intent = Intent(
                 this,
                 PlayList::class.java
-            ).putExtra("position",position)
+            ).putExtra("position", position)
             startActivity(intent)
         }
-
-
 
         moreViewButton.setOnClickListener {
             val dialog = ViewMorePopup(this)
@@ -71,102 +143,41 @@ class PlayerHome : AppCompatActivity() {
             }
         }
 
+        playButton = findViewById(R.id.playButton)
+        playButton.setOnClickListener {
+            playButtonClick()
+        }
+    }
 
+    fun playButtonClick() {
+        if (playingSong) {
+            // Stop
+            playButton.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24)
+            stopRecordAnimation()
+            stopVideo()
+        } else {
+            // Start
+            playButton.setBackgroundResource(R.drawable.ic_baseline_stop_24)
+            animateRecord()
+            startVideo()
+        }
+    }
 
+    private fun startVideo() {
+        youtubePlayer.play()
+        playingSong = true
+    }
 
-        mediaPlayer = MediaPlayer.create(this, R.raw.music)
-        mediaPlayer.isLooping = true
-        mediaPlayer.setVolume(0.5f, 0.5f)
-        totalTime = mediaPlayer.duration
-
-
-        // Position Bar
-        positionBar.max = totalTime
-        positionBar.setOnSeekBarChangeListener(
-            object : SeekBar.OnSeekBarChangeListener {
-                override fun onProgressChanged(
-                    seekBar: SeekBar?,
-                    progress: Int,
-                    fromUser: Boolean
-                ) {
-                    if (fromUser) {
-                        mediaPlayer.seekTo(progress)
-                    }
-                }
-
-                override fun onStartTrackingTouch(p0: SeekBar?) {
-                }
-
-                override fun onStopTrackingTouch(p0: SeekBar?) {
-                }
-            }
-        )
-
-        // Thread
-        Thread(Runnable {
-            while (mediaPlayer != null) {
-                try {
-                    var msg = Message()
-                    msg.what = mediaPlayer.currentPosition
-                    handler.sendMessage(msg)
-                    Thread.sleep(1000)
-                } catch (e: InterruptedException) {
-                }
-            }
-        }).start()
+    private fun stopVideo() {
+        youtubePlayer.pause()
+        playingSong = false
     }
 
     override fun onStart() {
         super.onStart()
-        getRecordIntent()
         updateView()
     }
 
-
-    @SuppressLint("HandlerLeak")
-    var handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            var currentPosition = msg.what
-
-            // Update positionBar
-            positionBar.progress = currentPosition
-
-            // Update Labels
-            var elapsedTime = createTimeLabel(currentPosition)
-            elapsedTimeLabel.text = elapsedTime
-
-            var remainingTime = createTimeLabel(totalTime)
-            remainingTimeLabel.text = "$remainingTime"
-        }
-    }
-
-    fun createTimeLabel(time: Int): String {
-        var timeLabel = ""
-        var min = time / 1000 / 60
-        var sec = time / 1000 % 60
-
-        timeLabel = "$min:"
-        if (sec < 10) timeLabel += "0"
-        timeLabel += sec
-
-        return timeLabel
-    }
-
-    fun playButtonClick(v: View) {
-
-        if (mediaPlayer.isPlaying) {
-            // Stop
-            mediaPlayer.pause()
-            playButton.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24)
-            stopRecordAnimation()
-
-        } else {
-            // Start
-            mediaPlayer.start()
-            playButton.setBackgroundResource(R.drawable.ic_baseline_stop_24)
-            animateRecord()
-        }
-    }
 
     private fun animateRecord() {
         val rotateRecord = AnimationUtils.loadAnimation(this, R.anim.record_animation)
@@ -181,7 +192,7 @@ class PlayerHome : AppCompatActivity() {
     }
 
 
-    private fun getRecordIntent(){
+    private fun getRecordIntent() {
         intent.extras?.getInt("position")?.let {
             position = it
         }
@@ -193,9 +204,21 @@ class PlayerHome : AppCompatActivity() {
 
     private fun updateView() {
         dateTextView.text = recordItem.date?.let { TimeUtils().toDateString(it) }
-        singerTextView.text = recordItem.songList?.get(0)?.singer
-        songNameTextView.text = recordItem.songList?.get(0)?.songName
+        singerTextView.text = recordItem.songList?.get(songIndex)?.singer
+        songNameTextView.text = recordItem.songList?.get(songIndex)?.songName
         emotionTextView.text = recordItem.emotion
+    }
+
+    private fun playNext() {
+        songIndex += 1
+        if (songIndex > songCodeList.size - 1) {
+            songIndex = 0
+        }
+
+        val videoId = songCodeList?.get(songIndex)?.songLink
+        videoId?.let { loadVideo(it) }
+        startVideo()
+        updateView()
     }
 
 

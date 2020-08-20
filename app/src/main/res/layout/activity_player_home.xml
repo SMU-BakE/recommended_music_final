@@ -44,34 +44,6 @@
         app:layout_constraintStart_toStartOf="@+id/playerImage"
         app:layout_constraintTop_toTopOf="@+id/playerImage" />
 
-    <SeekBar
-        android:id="@+id/positionBar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="52dp"
-        app:layout_constraintBottom_toTopOf="@+id/playerBox"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/elapsedTimeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="0:00"
-        app:layout_constraintStart_toStartOf="@+id/positionBar"
-        app:layout_constraintTop_toBottomOf="@+id/positionBar" />
-
-    <TextView
-        android:id="@+id/remainingTimeLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="1:00"
-        app:layout_constraintEnd_toEndOf="@+id/positionBar"
-        app:layout_constraintTop_toBottomOf="@+id/positionBar" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/playerBox"
@@ -113,7 +85,6 @@
             android:layout_marginEnd="16dp"
             android:background="@drawable/ic_baseline_play_arrow_24"
             android:backgroundTint="@color/colorPrimaryDark"
-            android:onClick="playButtonClick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/nextSongButton"
             app:layout_constraintStart_toEndOf="@+id/previousSongButton"
@@ -149,7 +120,7 @@
         android:layout_height="40dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/ic_baseline_queue_music_24"
-        app:layout_constraintBottom_toTopOf="@+id/positionBar"
+        app:layout_constraintBottom_toTopOf="@+id/youtube_player_seekbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/songNameTextView" />
 
@@ -175,7 +146,7 @@
         android:text="규현"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/positionBar"
+        app:layout_constraintBottom_toTopOf="@+id/youtube_player_seekbar"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -197,6 +168,32 @@
         android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backButton" />
+
+
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+        android:id="@+id/youtube_player_view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha="0"
+        app:autoPlay="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/moreViewButton"
+        app:useWebUi="true" />
+
+    <com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBar
+        android:id="@+id/youtube_player_seekbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="36dp"
+        app:color="@color/colorAccent"
+        app:fontSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/playerBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/moreViewButton"
