@@ -129,9 +129,9 @@ class PlayerHome : AppCompatActivity() {
 
         moreViewButton.setOnClickListener {
             val dialog = ViewMorePopup(this)
-            recordItem.songList?.get(0)?.songName?.let { it1 ->
-                recordItem.songList?.get(0)?.singer?.let { it2 ->
-                    recordItem.songList?.get(0)?.favorite?.let { it3 ->
+            recordItem.songList?.get(songIndex)?.songName?.let { it1 ->
+                recordItem.songList?.get(songIndex)?.singer?.let { it2 ->
+                    recordItem.songList?.get(songIndex)?.favorite?.let { it3 ->
                         dialog.start(
                             this
                             , it1
@@ -145,22 +145,24 @@ class PlayerHome : AppCompatActivity() {
 
         playButton = findViewById(R.id.playButton)
         playButton.setOnClickListener {
-            playButtonClick()
+            if (playingSong) {
+                stopSong()
+            } else {
+                startSong()
+            }
         }
     }
 
-    fun playButtonClick() {
-        if (playingSong) {
-            // Stop
-            playButton.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24)
-            stopRecordAnimation()
-            stopVideo()
-        } else {
-            // Start
-            playButton.setBackgroundResource(R.drawable.ic_baseline_stop_24)
-            animateRecord()
-            startVideo()
-        }
+    private fun stopSong() {
+        playButton.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24)
+        stopRecordAnimation()
+        stopVideo()
+    }
+
+    private fun startSong() {
+        playButton.setBackgroundResource(R.drawable.ic_baseline_stop_24)
+        animateRecord()
+        startVideo()
     }
 
     private fun startVideo() {
@@ -215,9 +217,9 @@ class PlayerHome : AppCompatActivity() {
             songIndex = 0
         }
 
-        val videoId = songCodeList?.get(songIndex)?.songLink
+        val videoId = songCodeList[songIndex].songLink
         videoId?.let { loadVideo(it) }
-        startVideo()
+        startSong()
         updateView()
     }
 
