@@ -1,12 +1,12 @@
 package com.example.music_recomend_profile.player
 
 import android.os.Bundle
+import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.music_recomend_profile.R
 import com.example.music_recomend_profile.TimeUtils
 import com.example.music_recomend_profile.database.DataExample
@@ -20,6 +20,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlay
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBarListener
 import kotlinx.android.synthetic.main.activity_player_home.*
 import org.jetbrains.anko.toast
+import java.util.*
 import kotlin.properties.Delegates
 
 
@@ -38,12 +39,13 @@ class PlayerHome : AppCompatActivity() {
     private lateinit var recordItem: RecordItem
 
     private var songIndex = 0
-    private lateinit var songCodeList: List<Song>
+    private lateinit var songList: List<Song>
 
     //    about SeekBar
     private lateinit var playButton: Button
     private lateinit var nextButton: ImageView
     private lateinit var previousButton: ImageView
+    private lateinit var shuffleButton: ImageView
 
     //    about youtube player
     private lateinit var youtubePlayer: YouTubePlayer
@@ -51,16 +53,21 @@ class PlayerHome : AppCompatActivity() {
     private lateinit var youtubePlayerSeekBar: YouTubePlayerSeekBar
 
     //    about playlist
-    private lateinit var playListFragement: PlayList
+    private lateinit var playListFragment: PlayList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player_home)
 
-        getRecordIntent()
+        intent.extras?.getInt("position")?.let {
+            position = it
+        }
+
+        //TODO(임시 데이터 생성, 변경필요)
+        recordItem = DataExample().createRecordItem()[position]
 
         if (DataExample().createRecordItem()[position].songList != null) {
-            songCodeList = DataExample().createRecordItem()[position].songList!!
+            songList = DataExample().createRecordItem()[position].songList!!
         } else {
             toast("노래 목록을 불러올 수 없습니다.")
             finish()
@@ -88,7 +95,7 @@ class PlayerHome : AppCompatActivity() {
             override fun onReady(player: YouTubePlayer) {
                 youtubePlayer = player
 
-                val currentVideoId = songCodeList?.get(songIndex)?.songLink
+                val currentVideoId = songList?.get(songIndex)?.songLink
 
                 currentVideoId?.let { loadVideo(it) }
 
@@ -112,7 +119,6 @@ class PlayerHome : AppCompatActivity() {
         youtubePlayer.pause()
     }
 
-
     private fun initView() {
         recordImage = findViewById(R.id.playerImage)
         recordEmotion = findViewById(R.id.emotionTextView)
@@ -131,22 +137,27 @@ class PlayerHome : AppCompatActivity() {
             playPrevious()
         }
 
-        playListFragement = PlayList()
+        shuffleButton = findViewById(R.id.shuffleButton)
+        shuffleButton.setOnClickListener {
+            playShuffle()
+        }
+
+        playListFragment = PlayList()
         supportFragmentManager.beginTransaction()
-            .add(R.id.songListContainer, playListFragement)
-            .hide(playListFragement)
+            .add(R.id.songListContainer, playListFragment)
+            .hide(playListFragment)
             .commit()
         queueMusicButton.setOnClickListener {
             if (!queue) {
                 supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.dropdown, R.anim.dropdown)
-                    .show(playListFragement)
+                    .show(playListFragment)
                     .commit()
                 queue = true
             } else {
                 supportFragmentManager.beginTransaction()
                     .setCustomAnimations(R.anim.riseup, R.anim.riseup)
-                    .hide(playListFragement).commit()
+                    .hide(playListFragment).commit()
                 queue = false
             }
         }
@@ -217,17 +228,6 @@ class PlayerHome : AppCompatActivity() {
         recordEmotion.clearAnimation()
     }
 
-
-    private fun getRecordIntent() {
-        intent.extras?.getInt("position")?.let {
-            position = it
-        }
-
-        //임시 데이터 생성
-        recordItem = DataExample().createRecordItem()[position]
-    }
-
-
     private fun updateView() {
         dateTextView.text = recordItem.date?.let { TimeUtils().toDateString(it) }
         singerTextView.text = recordItem.songList?.get(songIndex)?.singer
@@ -237,11 +237,11 @@ class PlayerHome : AppCompatActivity() {
 
     private fun playNext() {
         songIndex += 1
-        if (songIndex > songCodeList.size - 1) {
+        if (songIndex > songList.size - 1) {
             songIndex = 0
         }
 
-        val videoId = songCodeList[songIndex].songLink
+        val videoId = songList[songIndex].songLink
         videoId?.let { loadVideo(it) }
         startSong()
         updateView()
@@ -250,13 +250,17 @@ class PlayerHome : AppCompatActivity() {
     private fun playPrevious() {
         songIndex -= 1
         if (songIndex < 0) {
-            songIndex = songCodeList.size - 1
+            songIndex = songList.size - 1
         }
 
-        val videoId = songCodeList[songIndex].songLink
+        val videoId = songList[songIndex].songLink
         videoId?.let { loadVideo(it) }
         startSong()
         updateView()
+    }
+
+    private fun playShuffle() {
+        
     }
 
     override fun onDestroy() {
