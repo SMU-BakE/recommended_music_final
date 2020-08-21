@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -14,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.music_recomend_profile.R
 import com.example.music_recomend_profile.TimeUtils
 import com.example.music_recomend_profile.database.DataExample
+import kotlinx.android.synthetic.main.activity_play_list.*
+import kotlinx.android.synthetic.main.activity_player_home.*
 import kotlin.properties.Delegates
 
 class PlayList : Fragment() {

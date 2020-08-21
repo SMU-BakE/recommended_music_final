@@ -27,7 +27,7 @@ class TimeUtils {
     }
 
     fun dateToString(year: Int, month: Int, dayOfMonth: Int): String {
-        return "${year}/${month + 1}/${dayOfMonth}"
+        return "${year}년 ${month + 1}월 ${dayOfMonth}일"
     }
 
     fun getTimestamp(dateTime: DateTime): Long {

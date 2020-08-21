@@ -155,6 +155,17 @@ class DataExample {
         songList.add(
             Song("벚꽃엔딩", "버스커버스커", "tXV7dfvSefo", true)
         )
+        songList.add(
+            Song("그대와 나 설레임", "어쿠스틱콜라보", "2MvjjJXSX-g", true)
+        )
+
+        songList.add(
+            Song("나만 봄", "볼빨간 사춘기", "AsXxuIdpkWM", true)
+        )
+
+        songList.add(
+            Song("벚꽃엔딩", "버스커버스커", "tXV7dfvSefo", true)
+        )
         return songList
     }
 

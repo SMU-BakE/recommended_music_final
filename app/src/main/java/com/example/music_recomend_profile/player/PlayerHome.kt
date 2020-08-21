@@ -1,14 +1,13 @@
 package com.example.music_recomend_profile.player
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.music_recomend_profile.R
-import com.example.music_recomend_profile.RecordListFragment
 import com.example.music_recomend_profile.TimeUtils
 import com.example.music_recomend_profile.database.DataExample
 import com.example.music_recomend_profile.database.RecordItem
@@ -28,6 +27,7 @@ class PlayerHome : AppCompatActivity() {
 
 
     private var playingSong = false
+    private var queue = false
 
     // About view widget
     private lateinit var recordImage: ImageView
@@ -48,6 +48,9 @@ class PlayerHome : AppCompatActivity() {
     private lateinit var youtubePlayer: YouTubePlayer
     private lateinit var youtubePlayerView: YouTubePlayerView
     private lateinit var youtubePlayerSeekBar: YouTubePlayerSeekBar
+
+    //    about playlist
+    private lateinit var playListFragement: PlayList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,6 +100,8 @@ class PlayerHome : AppCompatActivity() {
 
                 initView()
             }
+
+
         })
     }
 
@@ -120,16 +125,25 @@ class PlayerHome : AppCompatActivity() {
             playNext()
         }
 
+
+        playListFragement = PlayList()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.songListContainer, playListFragement)
+            .hide(playListFragement)
+            .commit()
         queueMusicButton.setOnClickListener {
-            val intent = Intent(
-                this,
-                PlayList::class.java
-            ).putExtra("position", position)
-//            startActivity(intent)
-            //PlayList 프래그먼트로 바꿔서 아래처럼.
-            supportFragmentManager.beginTransaction()
-                .add(R.id.songListContainer, PlayList())
-                .commit()
+            if (!queue) {
+                supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.dropdown, R.anim.dropdown)
+                    .show(playListFragement)
+                    .commit()
+                queue = true
+            } else {
+                supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.riseup, R.anim.riseup)
+                    .hide(playListFragement).commit()
+                queue = false
+            }
         }
 
         moreViewButton.setOnClickListener {
@@ -228,5 +242,8 @@ class PlayerHome : AppCompatActivity() {
         updateView()
     }
 
-
+    override fun onDestroy() {
+        super.onDestroy()
+        youtubePlayerView.release()
+    }
 }
