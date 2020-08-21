@@ -43,6 +43,7 @@ class PlayerHome : AppCompatActivity() {
     //    about SeekBar
     private lateinit var playButton: Button
     private lateinit var nextButton: ImageView
+    private lateinit var previousButton: ImageView
 
     //    about youtube player
     private lateinit var youtubePlayer: YouTubePlayer
@@ -125,6 +126,10 @@ class PlayerHome : AppCompatActivity() {
             playNext()
         }
 
+        previousButton = findViewById(R.id.previousSongButton)
+        previousButton.setOnClickListener {
+            playPrevious()
+        }
 
         playListFragement = PlayList()
         supportFragmentManager.beginTransaction()
@@ -234,6 +239,18 @@ class PlayerHome : AppCompatActivity() {
         songIndex += 1
         if (songIndex > songCodeList.size - 1) {
             songIndex = 0
+        }
+
+        val videoId = songCodeList[songIndex].songLink
+        videoId?.let { loadVideo(it) }
+        startSong()
+        updateView()
+    }
+
+    private fun playPrevious() {
+        songIndex -= 1
+        if (songIndex < 0) {
+            songIndex = songCodeList.size - 1
         }
 
         val videoId = songCodeList[songIndex].songLink
