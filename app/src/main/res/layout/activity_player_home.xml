@@ -71,11 +71,11 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="16dp"
-            android:background="@drawable/ic_baseline_shuffle_24"
-            android:backgroundTint="@color/colorPrimaryDark"
+            android:tint="@color/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_shuffle_24" />
 
         <Button
             android:id="@+id/playButton"

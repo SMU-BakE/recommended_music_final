@@ -46,6 +46,7 @@ class ViewMorePopup(context : Context) {
         favoriteButton.setOnClickListener {
             Log.d("favorite","favorite")
             favoriteButtonClick(favorite)
+            //favorite db에 업데이트
         }
 
         shareButton.setOnClickListener {

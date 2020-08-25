@@ -23,7 +23,7 @@ class PlayList : Fragment() {
 
     private lateinit var callback: OnBackPressedCallback
     private lateinit var listRV: RecyclerView
-    private lateinit var dateTV : TextView
+    private lateinit var dateTV: TextView
     private var position by Delegates.notNull<Int>()
 
 
@@ -48,7 +48,7 @@ class PlayList : Fragment() {
 
         listRV.apply {
             adapter = DataExample().createRecordItem()[position].songList?.let {
-                PlaylistAdapter(it,context)
+                PlaylistAdapter(it, context)
             }
             layoutManager = LinearLayoutManager(context)
         }
@@ -56,13 +56,16 @@ class PlayList : Fragment() {
         return view
     }
 
-    //fragment 생명주기 이용하여 backPressed 구현
+    /*//fragment 생명주기 이용하여 backPressed 구현
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 val fragmentManager: FragmentManager = activity!!.supportFragmentManager
-                fragmentManager.beginTransaction().remove(this@PlayList).commit()
+                fragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.dropdown, R.anim.dropdown)
+                    .hide(this@PlayList).commit()
+                //queue 변수
                 fragmentManager.popBackStack()
 
             }
@@ -73,7 +76,5 @@ class PlayList : Fragment() {
     override fun onDetach() {
         super.onDetach()
         callback.remove()
-    }
-
-
+    }*/
 }

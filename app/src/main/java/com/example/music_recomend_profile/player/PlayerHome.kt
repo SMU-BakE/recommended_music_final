@@ -1,5 +1,6 @@
 package com.example.music_recomend_profile.player
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.util.Log
 import android.view.animation.AnimationUtils
@@ -7,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.music_recomend_profile.R
 import com.example.music_recomend_profile.TimeUtils
 import com.example.music_recomend_profile.database.DataExample
@@ -21,6 +23,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlay
 import kotlinx.android.synthetic.main.activity_player_home.*
 import org.jetbrains.anko.toast
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 
 
@@ -29,6 +32,7 @@ class PlayerHome : AppCompatActivity() {
 
     private var playingSong = false
     private var queue = false
+    private var shuffleToggle = false
 
     // About view widget
     private lateinit var recordImage: ImageView
@@ -54,6 +58,11 @@ class PlayerHome : AppCompatActivity() {
 
     //    about playlist
     private lateinit var playListFragment: PlayList
+
+    //about shuffle
+    private var randomIndexList: ArrayList<Int>? = null
+
+    private var shufflePosition = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,10 +101,10 @@ class PlayerHome : AppCompatActivity() {
                 super.onStateChange(youTubePlayer, state)
             }
 
-            override fun onReady(player: YouTubePlayer) {
-                youtubePlayer = player
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                youtubePlayer = youTubePlayer
 
-                val currentVideoId = songList?.get(songIndex)?.songLink
+                val currentVideoId = songList[songIndex].songLink
 
                 currentVideoId?.let { loadVideo(it) }
 
@@ -105,7 +114,6 @@ class PlayerHome : AppCompatActivity() {
                             youtubePlayer.seekTo(time)
                         }
                     }
-
                 initView()
             }
 
@@ -137,9 +145,11 @@ class PlayerHome : AppCompatActivity() {
             playPrevious()
         }
 
+
+
         shuffleButton = findViewById(R.id.shuffleButton)
         shuffleButton.setOnClickListener {
-            playShuffle()
+            setShuffle()
         }
 
         playListFragment = PlayList()
@@ -147,6 +157,7 @@ class PlayerHome : AppCompatActivity() {
             .add(R.id.songListContainer, playListFragment)
             .hide(playListFragment)
             .commit()
+
         queueMusicButton.setOnClickListener {
             if (!queue) {
                 supportFragmentManager.beginTransaction()
@@ -186,35 +197,35 @@ class PlayerHome : AppCompatActivity() {
                 startSong()
             }
         }
+
+        setShuffle()
+
     }
 
     private fun stopSong() {
         playButton.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24)
         stopRecordAnimation()
-        stopVideo()
+        youtubePlayer.pause()
+        playingSong = false
     }
 
     private fun startSong() {
         playButton.setBackgroundResource(R.drawable.ic_baseline_stop_24)
         animateRecord()
-        startVideo()
-    }
-
-    private fun startVideo() {
         youtubePlayer.play()
         playingSong = true
     }
 
-    private fun stopVideo() {
-        youtubePlayer.pause()
-        playingSong = false
-    }
 
     override fun onStart() {
         super.onStart()
         updateView()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        stopSong()
+    }
 
     private fun animateRecord() {
         val rotateRecord = AnimationUtils.loadAnimation(this, R.anim.record_animation)
@@ -241,7 +252,22 @@ class PlayerHome : AppCompatActivity() {
             songIndex = 0
         }
 
+        if (shuffleToggle) {
+            if (randomIndexList == null) {
+                toast("랜덤 재생 목록을 불러올 수 없습니다.")
+                finish()
+            }
+
+            shufflePosition += 1
+            if (shufflePosition > randomIndexList!!.size - 1) {
+                shufflePosition = 0
+            }
+
+            songIndex = randomIndexList!![shufflePosition]
+        }
+
         val videoId = songList[songIndex].songLink
+
         videoId?.let { loadVideo(it) }
         startSong()
         updateView()
@@ -259,8 +285,63 @@ class PlayerHome : AppCompatActivity() {
         updateView()
     }
 
-    private fun playShuffle() {
-        
+
+    private fun createRandomIndexList() {
+        val listLength = songList.size - 1
+
+        val indexList = arrayListOf<Int>()
+        songList.mapIndexed { i, value ->
+            indexList.add(i)
+        }
+
+        val random = Random()
+
+        indexList.mapIndexed { index, song ->
+            if (listLength == index) {
+                return@mapIndexed
+            }
+//            create Random position
+            val randomNum = random.nextInt(listLength - index)
+//            will exchange random position n last position - index
+            val currentPosition = indexList[randomNum]
+
+            indexList[randomNum] = indexList[listLength - index]
+            indexList[listLength - index] = currentPosition
+        }
+
+//        set first value to current song
+        val currentPlayIndex = indexList.indexOf(songIndex)
+        val willChange = indexList[0]
+        indexList[0] = indexList[currentPlayIndex]
+        indexList[currentPlayIndex] = willChange
+
+        randomIndexList = indexList
+        shufflePosition = 0
+    }
+
+    private fun setShuffle() {
+        if (shuffleToggle) {
+//            unset shuffle
+            shuffleButton.setColorFilter(
+                ContextCompat.getColor(this, R.color.black),
+                PorterDuff.Mode.SRC_IN
+            )
+            shuffleToggle = false
+        } else {
+//            set shuffle
+            shuffleButton.setColorFilter(
+                ContextCompat.getColor(this, R.color.colorPrimaryDark),
+                PorterDuff.Mode.SRC_IN
+            )
+            shuffleToggle = true
+            createRandomIndexList()
+            Log.d("randomize", randomIndexList.toString())
+        }
+
+    }
+
+    private fun playRepeat() {
+
     }
 
     override fun onDestroy() {
