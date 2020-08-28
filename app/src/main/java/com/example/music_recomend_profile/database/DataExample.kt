@@ -156,16 +156,18 @@ class DataExample {
             Song("벚꽃엔딩", "버스커버스커", "tXV7dfvSefo", true)
         )
         songList.add(
-            Song("그대와 나 설레임", "어쿠스틱콜라보", "2MvjjJXSX-g", true)
+            Song("흔들리는 꽃들속에서 네 샴푸향이 느껴진거야", "장범준", "689GoEBjMhY", true)
+        )
+        songList.add(
+            Song("봄이 좋냐", "10cm", "cIGgSI1uhKI", false)
+        )
+        songList.add(
+            Song("오래된 노래", "스탠딩 에그", "bW3XExLBf7A", false)
+        )
+        songList.add(
+            Song("내 마음이 움찔했던 순간", "규현", "vIPug7A8Fds", false)
         )
 
-        songList.add(
-            Song("나만 봄", "볼빨간 사춘기", "AsXxuIdpkWM", true)
-        )
-
-        songList.add(
-            Song("벚꽃엔딩", "버스커버스커", "tXV7dfvSefo", true)
-        )
         return songList
     }
 
@@ -190,21 +192,15 @@ class DataExample {
         val songList: ArrayList<Song> = ArrayList()
 
         songList.add(
-            Song("헤어지던 밤", "어쿠르브", "http://ddddd", true)
+            Song("헤어지던 밤", "어쿠르브", "lYAn8xu5x4E", true)
         )
 
         songList.add(
-            Song("고백", "정준일", "http://ddddd", true)
+            Song("고백", "정준일", "H6t8r2wdS5U", true)
         )
 
         songList.add(
-            Song("헤어져줘서 고마워", "벤", "http://ddddd", true)
-        )
-        songList.add(
-            Song("444", "벤", "http://ddddd", true)
-        )
-        songList.add(
-            Song("55", "벤", "http://ddddd", true)
+            Song("헤어져줘서 고마워", "벤", "7tO_eJek6D8", true)
         )
         return songList
     }

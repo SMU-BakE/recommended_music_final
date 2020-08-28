@@ -2,7 +2,6 @@ package com.example.music_recomend_profile.player
 
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.ImageView
@@ -28,28 +27,23 @@ import kotlin.properties.Delegates
 
 
 class PlayerHome : AppCompatActivity() {
-
-
-    private var playingSong = false
-    private var queue = false
-    private var shuffleToggle = false
-
-    // About view widget
+    //      About view widget
     private lateinit var recordImage: ImageView
     private lateinit var recordEmotion: TextView
 
-    private var position by Delegates.notNull<Int>()
-
+    //      about playing music
+    private var position by Delegates.notNull<Int>()    //해당 날짜의 음악 id
     private lateinit var recordItem: RecordItem
-
-    private var songIndex = 0
+    private var songPosition = 0
     private lateinit var songList: List<Song>
+    private var playingSongToggle = false
 
-    //    about SeekBar
+    //      about SeekBar
     private lateinit var playButton: Button
     private lateinit var nextButton: ImageView
     private lateinit var previousButton: ImageView
     private lateinit var shuffleButton: ImageView
+    private lateinit var repeatButton: ImageView
 
     //    about youtube player
     private lateinit var youtubePlayer: YouTubePlayer
@@ -58,11 +52,15 @@ class PlayerHome : AppCompatActivity() {
 
     //    about playlist
     private lateinit var playListFragment: PlayList
+    private var queue = false
 
-    //about shuffle
-    private var randomIndexList: ArrayList<Int>? = null
-
+    //     about shuffle
+    private var shuffleToggle = false
+    private var shuffledList: ArrayList<Int>? = null
     private var shufflePosition = 0
+
+    //      about repeat
+    private var repeatToggle: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +94,17 @@ class PlayerHome : AppCompatActivity() {
                 state: PlayerConstants.PlayerState
             ) {
                 if (state == PlayerConstants.PlayerState.ENDED) {
-                    playNext()
+                    when (repeatToggle) {
+                        0 -> {
+                            startSong()
+                        }
+                        1 -> {
+                            playNext()
+                        }
+                        2 -> {
+                            playNext()
+                        }
+                    }
                 }
                 super.onStateChange(youTubePlayer, state)
             }
@@ -104,7 +112,7 @@ class PlayerHome : AppCompatActivity() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 youtubePlayer = youTubePlayer
 
-                val currentVideoId = songList[songIndex].songLink
+                val currentVideoId = songList[songPosition].songLink
 
                 currentVideoId?.let { loadVideo(it) }
 
@@ -145,11 +153,14 @@ class PlayerHome : AppCompatActivity() {
             playPrevious()
         }
 
-
-
         shuffleButton = findViewById(R.id.shuffleButton)
         shuffleButton.setOnClickListener {
             setShuffle()
+        }
+
+        repeatButton = findViewById(R.id.repaeatButton)
+        repaeatButton.setOnClickListener {
+            playRepeat()
         }
 
         playListFragment = PlayList()
@@ -175,9 +186,9 @@ class PlayerHome : AppCompatActivity() {
 
         moreViewButton.setOnClickListener {
             val dialog = ViewMorePopup(this)
-            recordItem.songList?.get(songIndex)?.songName?.let { it1 ->
-                recordItem.songList?.get(songIndex)?.singer?.let { it2 ->
-                    recordItem.songList?.get(songIndex)?.favorite?.let { it3 ->
+            recordItem.songList?.get(songPosition)?.songName?.let { it1 ->
+                recordItem.songList?.get(songPosition)?.singer?.let { it2 ->
+                    recordItem.songList?.get(songPosition)?.favorite?.let { it3 ->
                         dialog.start(
                             this
                             , it1
@@ -191,29 +202,28 @@ class PlayerHome : AppCompatActivity() {
 
         playButton = findViewById(R.id.playButton)
         playButton.setOnClickListener {
-            if (playingSong) {
+            if (playingSongToggle) {
                 stopSong()
             } else {
                 startSong()
             }
         }
-
         setShuffle()
-
+        playRepeat()
     }
 
     private fun stopSong() {
         playButton.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24)
         stopRecordAnimation()
         youtubePlayer.pause()
-        playingSong = false
+        playingSongToggle = false
     }
 
     private fun startSong() {
         playButton.setBackgroundResource(R.drawable.ic_baseline_stop_24)
         animateRecord()
         youtubePlayer.play()
-        playingSong = true
+        playingSongToggle = true
     }
 
 
@@ -241,45 +251,92 @@ class PlayerHome : AppCompatActivity() {
 
     private fun updateView() {
         dateTextView.text = recordItem.date?.let { TimeUtils().toDateString(it) }
-        singerTextView.text = recordItem.songList?.get(songIndex)?.singer
-        songNameTextView.text = recordItem.songList?.get(songIndex)?.songName
+        singerTextView.text = recordItem.songList?.get(songPosition)?.singer
+        songNameTextView.text = recordItem.songList?.get(songPosition)?.songName
         emotionTextView.text = recordItem.emotion
     }
 
     private fun playNext() {
-        songIndex += 1
-        if (songIndex > songList.size - 1) {
-            songIndex = 0
+        var ended = false
+        if (!shuffleToggle) {
+//            normal play mode
+            songPosition += 1
+            if (songPosition > songList.size - 1) {
+                songPosition = 0
+                ended = true
+            }
+        } else {
+//            shuffle play mode
+            if (shuffledList == null) {
+                toast("랜덤 재생 목록을 불러올 수 없습니다.")
+                finish()
+            }
+            shufflePosition += 1
+            if (shufflePosition > shuffledList!!.size - 1) {
+                shufflePosition = 0
+                ended = true
+            }
+            songPosition = shuffledList!![shufflePosition]
+        }
+
+        val videoId = songList[songPosition].songLink
+        videoId?.let { loadVideo(it) }
+        if (ended) {
+            if (repeatToggle == 2) {
+                startSong()
+            }else{
+                stopSong()
+            }
+        } else {
+            startSong()
+        }
+        updateView()
+
+        /*songPosition += 1
+        if (songPosition > songList.size - 1) {
+            when (repeatToggle) {
+                1 -> {
+                    stopSong()
+                }
+                2 -> songPosition = 0
+            }
         }
 
         if (shuffleToggle) {
-            if (randomIndexList == null) {
+            if (shuffledList == null) {
                 toast("랜덤 재생 목록을 불러올 수 없습니다.")
                 finish()
             }
 
             shufflePosition += 1
-            if (shufflePosition > randomIndexList!!.size - 1) {
-                shufflePosition = 0
+            if (shufflePosition > shuffledList!!.size - 1) {
+                when (repeatToggle) {
+                    1 -> {
+                        stopSong()
+                    }
+                    2 -> shufflePosition = 0
+                }
             }
-
-            songIndex = randomIndexList!![shufflePosition]
+            songPosition = shuffledList!![shufflePosition]
         }
 
-        val videoId = songList[songIndex].songLink
-
-        videoId?.let { loadVideo(it) }
-        startSong()
-        updateView()
+        if (songPosition != songList.size || repeatToggle == 2) {
+            val videoId = songList[songPosition].songLink
+            videoId?.let { loadVideo(it) }
+            startSong()
+            updateView()
+        } else {
+            songPosition = -1
+        }*/
     }
 
     private fun playPrevious() {
-        songIndex -= 1
-        if (songIndex < 0) {
-            songIndex = songList.size - 1
+        songPosition -= 1
+        if (songPosition < 0) {
+            songPosition = songList.size - 1
         }
 
-        val videoId = songList[songIndex].songLink
+        val videoId = songList[songPosition].songLink
         videoId?.let { loadVideo(it) }
         startSong()
         updateView()
@@ -310,12 +367,12 @@ class PlayerHome : AppCompatActivity() {
         }
 
 //        set first value to current song
-        val currentPlayIndex = indexList.indexOf(songIndex)
+        val currentPlayIndex = indexList.indexOf(songPosition)
         val willChange = indexList[0]
         indexList[0] = indexList[currentPlayIndex]
         indexList[currentPlayIndex] = willChange
 
-        randomIndexList = indexList
+        shuffledList = indexList
         shufflePosition = 0
     }
 
@@ -335,13 +392,36 @@ class PlayerHome : AppCompatActivity() {
             )
             shuffleToggle = true
             createRandomIndexList()
-            Log.d("randomize", randomIndexList.toString())
+            //Log.d("randomize", randomIndexList.toString())
         }
-
     }
 
     private fun playRepeat() {
-
+        if (repeatToggle == 0) {
+            //play one song
+            repeatButton.setBackgroundResource(R.drawable.ic_baseline_repeat_24)
+            repaeatButton.setColorFilter(
+                ContextCompat.getColor(this, R.color.black),
+                PorterDuff.Mode.SRC_IN
+            )
+            repeatToggle = 1
+        } else if (repeatToggle == 1) {
+            //repeatedly play all song
+            repeatButton.setBackgroundResource(R.drawable.ic_baseline_repeat_24)
+            repaeatButton.setColorFilter(
+                ContextCompat.getColor(this, R.color.colorPrimaryDark),
+                PorterDuff.Mode.SRC_IN
+            )
+            repeatToggle = 2
+        } else {
+            //repeatedly play only one song
+            repeatButton.setBackgroundResource(R.drawable.ic_baseline_repeat_one_24)
+            repaeatButton.setColorFilter(
+                ContextCompat.getColor(this, R.color.colorPrimaryDark),
+                PorterDuff.Mode.SRC_IN
+            )
+            repeatToggle = 0
+        }
     }
 
     override fun onDestroy() {
