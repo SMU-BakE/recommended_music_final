@@ -224,6 +224,7 @@ class PlayerHome : AppCompatActivity() {
         animateRecord()
         youtubePlayer.play()
         playingSongToggle = true
+        playListFragment.setHighlight(songPosition)
     }
 
 
@@ -284,7 +285,7 @@ class PlayerHome : AppCompatActivity() {
         if (ended) {
             if (repeatToggle == 2) {
                 startSong()
-            }else{
+            } else {
                 stopSong()
             }
         } else {

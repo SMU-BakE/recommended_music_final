@@ -7,6 +7,7 @@
     <color name="white">#ffffff</color>
     <color name="grey">#CCCCCC</color>
 
+    <color name="selectedSong">#cc2566</color>
     <color name="colorPink">#FF9A8F</color>
     <color name="colorPinkDark">#FF6166</color>
     <color name="colorPinkLight">#ffc0ba</color>

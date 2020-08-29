@@ -2,11 +2,14 @@ package com.example.music_recomend_profile
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.music_recomend_profile.database.RecordItem
 import com.example.music_recomend_profile.player.PlayList
@@ -36,7 +39,6 @@ class Adapter(var context: Context, var recordItemList: ArrayList<RecordItem>) :
         val recordItem: RecordItem = recordItemList[position]
         holder.dateTV.text = recordItem.date?.let { TimeUtils().toDateString(it) }
         holder.titleTV.text = recordItem.emotion
-
         holder.titleTV.setOnClickListener {
             //Toast.makeText(context, recordItem.emotion, Toast.LENGTH_SHORT).show()
             val intent = Intent(

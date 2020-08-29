@@ -1,6 +1,7 @@
 package com.example.music_recomend_profile.player
 
 import android.content.Context
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,7 @@ import com.example.music_recomend_profile.TimeUtils
 import com.example.music_recomend_profile.database.DataExample
 import kotlinx.android.synthetic.main.activity_play_list.*
 import kotlinx.android.synthetic.main.activity_player_home.*
+import kotlinx.android.synthetic.main.unit_playlist.*
 import kotlin.properties.Delegates
 
 class PlayList : Fragment() {
@@ -48,12 +51,23 @@ class PlayList : Fragment() {
 
         listRV.apply {
             adapter = DataExample().createRecordItem()[position].songList?.let {
-                PlaylistAdapter(it, context)
+                PlaylistAdapter(it, context, null)
             }
             layoutManager = LinearLayoutManager(context)
         }
 
+
         return view
+    }
+
+    fun setHighlight(songPosition: Int) {
+//        updateView
+        listRV.apply {
+            adapter = DataExample().createRecordItem()[position].songList?.let {
+                PlaylistAdapter(it, context, songPosition)
+            }
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 
     /*//fragment 생명주기 이용하여 backPressed 구현
