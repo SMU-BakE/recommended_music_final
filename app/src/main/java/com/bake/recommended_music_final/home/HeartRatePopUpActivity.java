@@ -58,16 +58,6 @@ public class HeartRatePopUpActivity extends AppCompatActivity {
         Animation anim2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fork2_animation);
         rotateFork2.startAnimation(anim2);
 
-        //지우기!! 임시테스트코드: 유튜브 비디오 화면 작동 확인
-        ImageView imageView_fork = findViewById(R.id.imageView_fork);
-        imageView_fork.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*Intent intent = new Intent(getApplicationContext(), PlayMusicVideoActivity.class);
-                startActivityForResult(intent,0);
-                finish();*/
-            }
-        });
     }
 
     //바깥화면 클릭 시 닫히지 않게

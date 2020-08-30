@@ -1,6 +1,5 @@
-package com.bake.recommended_music_final.home;
+package com.bake.recommended_music_final.player;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,8 +7,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.bake.recommended_music_final.R;
-import com.bake.recommended_music_final.player.PlayerHome;
-import com.bake.recommended_music_final.player.ViewMorePopup;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -28,6 +25,7 @@ public class PlayMusicVideoActivity extends YouTubeBaseActivity {
         setContentView(R.layout.activity_play_music_video);
         videoId = this.getIntent().getStringExtra("videoId");
         initPlayer();
+
         Button button_play = findViewById(R.id.button_play);
         button_play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +33,7 @@ public class PlayMusicVideoActivity extends YouTubeBaseActivity {
                 playVideo();
             }
         });
+
         //누르면 ViewMorePopup 연결시키기
         ImageView button_back = findViewById(R.id.imageView_back);
         button_back.setOnClickListener(new View.OnClickListener() {
