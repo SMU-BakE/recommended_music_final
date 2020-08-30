@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.music_recomend_profile">
+    package="com.bake.recommended_music_final">
 
+    <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -13,26 +14,41 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".player.PlayList"></activity>
-        <activity android:name=".player.ViewMorePopup" />
-        <activity android:name=".friends.FindFriend" />
-        <activity android:name=".friends.Following" />
-        <activity android:name=".friends.Follower" />
-        <activity android:name=".setting.GenderSelect" />
-        <activity android:name=".setting.EditProfile" />
-        <activity android:name=".setting.RequireUpdate" />
-        <activity android:name=".setting.AccountManagement" />
-        <activity android:name=".player.PlayerHome" />
-        <activity android:name=".setting.SettingListAdapter" />
-        <activity android:name=".setting.SettingListActivity" />
-        <activity android:name=".UserFeedActivity">
+        <activity android:name="com.bake.recommended_music_final.InitialActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.bake.recommended_music_final.friends.FindFriend" />
+        <activity android:name="com.bake.recommended_music_final.friends.Following" />
+        <activity android:name="com.bake.recommended_music_final.friends.Follower" />
+        <activity android:name="com.bake.recommended_music_final.setting.GenderSelect" />
+        <activity android:name="com.bake.recommended_music_final.setting.EditProfile" />
+        <activity android:name="com.bake.recommended_music_final.setting.RequireUpdate" />
+        <activity android:name="com.bake.recommended_music_final.setting.AccountManagement" />
+        <activity android:name="com.bake.recommended_music_final.player.PlayerHome" />
+        <activity android:name="com.bake.recommended_music_final.setting.SettingListActivity" />
+        <activity android:name="com.bake.recommended_music_final.userfeed.UserFeedActivity" />
 
+        <activity
+            android:name="com.bake.recommended_music_final.home.GoodOrBadPopupActivity"
+            android:theme="@style/AppTheme.Dialog" />
+        <activity
+            android:name="com.bake.recommended_music_final.home.EmotionPopUpActivity"
+            android:theme="@style/AppTheme.Dialog" />
+        <activity
+            android:name="com.bake.recommended_music_final.home.CameraActivity"
+            android:hardwareAccelerated="true" />
+        <activity
+            android:name="com.bake.recommended_music_final.home.HeartRatePopUpActivity"
+            android:hardwareAccelerated="true"
+            android:theme="@style/AppTheme.Dialog" />
+        <activity
+            android:name="com.bake.recommended_music_final.home.HomeActivity"
+            android:theme="@style/AppTheme.home">
+        </activity>
+        <activity android:name=".home.PlayMusicVideoActivity" />
     </application>
 
 </manifest>

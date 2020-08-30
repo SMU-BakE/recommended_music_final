@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.example.music_recomend_profile"
+        applicationId "com.bake.recommended_music_final"
         minSdkVersion 28
         targetSdkVersion 30
         versionCode 1
@@ -33,6 +33,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation files('libs\\YouTubeAndroidPlayerApi.jar')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -49,4 +50,7 @@ dependencies {
 
     //for youtubePlayer
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
+
+    //for location
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
 }

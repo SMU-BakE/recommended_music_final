@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "music-recomend-profile"
+rootProject.name = "recommended_music_final"
