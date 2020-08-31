@@ -62,7 +62,11 @@ class PlayerHome : AppCompatActivity() {
     private var shufflePosition = 0
 
     //      about repeat
-    private var repeatToggle: Int = 1
+    private var repeatToggle = RepeatState.REPEAT
+
+    enum class RepeatState{
+        REPEAT,NO_REPEAT,ONE_SONG_REPEAT
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,13 +100,13 @@ class PlayerHome : AppCompatActivity() {
             ) {
                 if (state == PlayerConstants.PlayerState.ENDED) {
                     when (repeatToggle) {
-                        0 -> {
+                        RepeatState.ONE_SONG_REPEAT -> {
                             startSong()
                         }
-                        1 -> {
+                        RepeatState.REPEAT -> {
                             playNext()
                         }
-                        2 -> {
+                        RepeatState.NO_REPEAT -> {
                             playNext()
                         }
                     }
@@ -123,7 +127,6 @@ class PlayerHome : AppCompatActivity() {
                             youtubePlayer.seekTo(time)
                         }
                     }
-
                 youtubePlayerLoading = false
             }
         })
@@ -197,7 +200,6 @@ class PlayerHome : AppCompatActivity() {
         playButton = findViewById(R.id.playButton)
         playButton.setOnClickListener {
             if (playingSongToggle) {
-
                 stopSong()
             } else {
                 startSong()
@@ -288,7 +290,7 @@ class PlayerHome : AppCompatActivity() {
         val videoId = songList[songPosition].songLink
         videoId?.let { loadVideo(it) }
         if (ended) {
-            if (repeatToggle == 2) {
+            if (repeatToggle == RepeatState.NO_REPEAT) {
                 startSong()
             } else {
                 stopSong()
@@ -297,43 +299,6 @@ class PlayerHome : AppCompatActivity() {
             startSong()
         }
         updateView()
-
-        /*songPosition += 1
-        if (songPosition > songList.size - 1) {
-            when (repeatToggle) {
-                1 -> {
-                    stopSong()
-                }
-                2 -> songPosition = 0
-            }
-        }
-
-        if (shuffleToggle) {
-            if (shuffledList == null) {
-                toast("랜덤 재생 목록을 불러올 수 없습니다.")
-                finish()
-            }
-
-            shufflePosition += 1
-            if (shufflePosition > shuffledList!!.size - 1) {
-                when (repeatToggle) {
-                    1 -> {
-                        stopSong()
-                    }
-                    2 -> shufflePosition = 0
-                }
-            }
-            songPosition = shuffledList!![shufflePosition]
-        }
-
-        if (songPosition != songList.size || repeatToggle == 2) {
-            val videoId = songList[songPosition].songLink
-            videoId?.let { loadVideo(it) }
-            startSong()
-            updateView()
-        } else {
-            songPosition = -1
-        }*/
     }
 
     private fun playPrevious() {
@@ -406,22 +371,22 @@ class PlayerHome : AppCompatActivity() {
     }
 
     private fun playRepeat() {
-        if (repeatToggle == 0) {
+        if (repeatToggle == RepeatState.ONE_SONG_REPEAT) {
             //play one song
             repeatButton.setBackgroundResource(R.drawable.ic_baseline_repeat_24)
             repaeatButton.setColorFilter(
                 ContextCompat.getColor(this, R.color.black),
                 PorterDuff.Mode.SRC_IN
             )
-            repeatToggle = 1
-        } else if (repeatToggle == 1) {
+            repeatToggle = RepeatState.REPEAT
+        } else if (repeatToggle == RepeatState.REPEAT) {
             //repeatedly play all song
             repeatButton.setBackgroundResource(R.drawable.ic_baseline_repeat_24)
             repaeatButton.setColorFilter(
                 ContextCompat.getColor(this, R.color.colorPrimaryDark),
                 PorterDuff.Mode.SRC_IN
             )
-            repeatToggle = 2
+            repeatToggle = RepeatState.NO_REPEAT
         } else {
             //repeatedly play only one song
             repeatButton.setBackgroundResource(R.drawable.ic_baseline_repeat_one_24)
@@ -429,7 +394,7 @@ class PlayerHome : AppCompatActivity() {
                 ContextCompat.getColor(this, R.color.colorPrimaryDark),
                 PorterDuff.Mode.SRC_IN
             )
-            repeatToggle = 0
+            repeatToggle = RepeatState.ONE_SONG_REPEAT
         }
     }
 

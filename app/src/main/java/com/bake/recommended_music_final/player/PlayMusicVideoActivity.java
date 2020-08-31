@@ -17,7 +17,7 @@ public class PlayMusicVideoActivity extends YouTubeBaseActivity {
     YouTubePlayer player;
 
     private static String API_KEY = "AIzaSyCnJH9Elr_UWHRSCnUvIHbT7OOzM7Ew4k0";
-    private static String videoId = "f2Pee5hnO-E";
+    private static String videoId = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

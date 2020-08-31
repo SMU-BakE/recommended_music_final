@@ -35,6 +35,8 @@ class InitialActivity : AppCompatActivity() {
             HomeActivity::class.java
         )
         startActivity(intent)
+
+        //로그인 되어있지 않으면 로그인창으로
     }
 
 }
