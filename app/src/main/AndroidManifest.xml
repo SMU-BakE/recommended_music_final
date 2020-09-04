@@ -33,7 +33,9 @@
         <activity android:name="com.bake.recommended_music_final.setting.AccountManagement" />
         <activity android:name="com.bake.recommended_music_final.player.PlayerHome" />
         <activity android:name="com.bake.recommended_music_final.setting.SettingListActivity" />
-        <activity android:name="com.bake.recommended_music_final.userfeed.UserFeedActivity" />
+        <activity
+            android:name="com.bake.recommended_music_final.userfeed.UserFeedActivity"
+            />
 
         <activity
             android:name="com.bake.recommended_music_final.home.GoodOrBadPopupActivity"

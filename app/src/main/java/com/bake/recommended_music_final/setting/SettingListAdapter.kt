@@ -40,7 +40,8 @@ class SettingListAdapter(
 
                     //d아아ㅣㅢㅏㅓ아ㅣㅓ가어왜안되는데에ㅔㅔㅓ에ㅓㅔ
                     Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
-                    Navigator(context).goLoginPage()
+                    //Navigator(context).goLoginPage()
+                    Navigator(context).executeSignOut()
                 }
             }
         }
