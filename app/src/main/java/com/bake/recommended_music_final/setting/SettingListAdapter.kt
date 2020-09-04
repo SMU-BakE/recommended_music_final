@@ -1,5 +1,6 @@
 package com.bake.recommended_music_final.setting
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -7,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.bake.recommended_music_final.Navigator
 import com.bake.recommended_music_final.R
 import com.bake.recommended_music_final.database.SettingMenu
+import com.bake.recommended_music_final.user.SignInActivity
 import kotlinx.android.synthetic.main.unit_setting.view.*
 
 
@@ -30,13 +33,14 @@ class SettingListAdapter(
 
         holder.itemView.settingMenu.setOnClickListener {
             when (position) {
-                0 -> context.startActivity(Intent(context, AccountManagement::class.java))
-                1 -> context.startActivity(Intent(context,RequireUpdate::class.java))
-
-
+//                0 -> context.startActivity(Intent(context, AccountManagement::class.java))
+//                1 -> context.startActivity(Intent(context, RequireUpdate::class.java))
                 //로그아웃 기능 연결해주세요
                 2 -> {
+
+                    //d아아ㅣㅢㅏㅓ아ㅣㅓ가어왜안되는데에ㅔㅔㅓ에ㅓㅔ
                     Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+                    Navigator(context).goLoginPage()
                 }
             }
         }

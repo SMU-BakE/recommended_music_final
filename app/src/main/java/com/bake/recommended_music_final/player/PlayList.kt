@@ -16,8 +16,6 @@ import kotlin.properties.Delegates
 
 class PlayList : Fragment() {
 
-
-    private lateinit var callback: OnBackPressedCallback
     private lateinit var listRV: RecyclerView
     private lateinit var dateTV: TextView
     private var position by Delegates.notNull<Int>()
@@ -62,26 +60,4 @@ class PlayList : Fragment() {
         }
     }
 
-
-    /*//fragment 생명주기 이용하여 backPressed 구현
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                val fragmentManager: FragmentManager = activity!!.supportFragmentManager
-                fragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.dropdown, R.anim.dropdown)
-                    .hide(this@PlayList).commit()
-                //queue 변수
-                fragmentManager.popBackStack()
-
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        callback.remove()
-    }*/
 }

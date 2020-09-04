@@ -13,7 +13,6 @@
         android:layout_margin="8dp"
         android:layout_weight="1"
         android:gravity="center"
-
         android:scaleType="fitXY"
         android:src="@drawable/icon_record"
         app:layout_constraintEnd_toEndOf="parent"

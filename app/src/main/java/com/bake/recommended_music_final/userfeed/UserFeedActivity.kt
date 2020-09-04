@@ -36,7 +36,7 @@ class UserFeedActivity : AppCompatActivity() {
                 this,
                 SettingListActivity::class.java
             )
-            this.startActivity(intent)
+            startActivity(intent)
         }
 
         profileFollower.setOnClickListener {

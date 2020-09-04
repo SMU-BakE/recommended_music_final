@@ -57,9 +57,9 @@ class GenderSelect : AppCompatActivity() {
 
     fun onRadioButtonClicked(view: View) {
         if (view is RadioButton) {
-            // Is the button now checked?
+            // Is the button_login now checked?
             val checked = view.isChecked
-            // Check which radio button was clicked
+            // Check which radio button_login was clicked
             when (view.getId()) {
                 R.id.radio_male ->
                     if (checked) {

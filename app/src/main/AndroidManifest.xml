@@ -22,9 +22,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name="com.bake.recommended_music_final.friends.FindFriend" />
         <activity android:name="com.bake.recommended_music_final.friends.Following" />
         <activity android:name="com.bake.recommended_music_final.friends.Follower" />
+
         <activity android:name="com.bake.recommended_music_final.setting.GenderSelect" />
         <activity android:name="com.bake.recommended_music_final.setting.EditProfile" />
         <activity android:name="com.bake.recommended_music_final.setting.RequireUpdate" />
@@ -48,9 +50,14 @@
             android:theme="@style/AppTheme.Dialog" />
         <activity
             android:name="com.bake.recommended_music_final.home.HomeActivity"
-            android:theme="@style/AppTheme.home">
-        </activity>
+            android:theme="@style/AppTheme.home"></activity>
         <activity android:name=".player.PlayMusicVideoActivity" />
+        <activity android:name=".user.EmailAuth" />
+        <activity android:name=".user.LoginLoading" />
+        <activity android:name=".user.FindPassword" />
+        <activity android:name=".user.SignInActivity" />
+        <activity android:name=".user.SignUpActivity" />
+
     </application>
 
 </manifest>

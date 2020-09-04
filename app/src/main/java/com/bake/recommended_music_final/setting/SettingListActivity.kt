@@ -16,7 +16,7 @@ class SettingListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting_list)
 
-        backStudioButton.setOnClickListener{
+        backStudioButton.setOnClickListener {
             onBackPressed()
         }
 
