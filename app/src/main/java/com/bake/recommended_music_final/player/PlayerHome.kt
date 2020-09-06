@@ -64,8 +64,8 @@ class PlayerHome : AppCompatActivity() {
     //      about repeat
     private var repeatToggle = RepeatState.REPEAT
 
-    enum class RepeatState{
-        REPEAT,NO_REPEAT,ONE_SONG_REPEAT
+    enum class RepeatState {
+        REPEAT, NO_REPEAT, ONE_SONG_REPEAT
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -187,8 +187,8 @@ class PlayerHome : AppCompatActivity() {
             }
         }
 
+        val currentSong = recordItem.songList?.get(songPosition)
         moreViewButton.setOnClickListener {
-            val currentSong = recordItem.songList?.get(songPosition)
             if (currentSong == null) {
                 toast("곡 정보를 불러올 수 없습니다.")
             } else {
@@ -205,8 +205,10 @@ class PlayerHome : AppCompatActivity() {
                 startSong()
             }
         }
-        setShuffle()
-        playRepeat()
+        if (currentSong != null) {
+            setShuffle()
+            playRepeat()
+        }
         initPlayer()
     }
 
