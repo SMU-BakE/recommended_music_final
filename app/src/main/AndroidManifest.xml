@@ -57,7 +57,8 @@
         <activity android:name=".user.EmailAuth" />
         <activity android:name=".user.LoginLoading" />
         <activity android:name=".user.FindPassword" />
-        <activity android:name=".user.SignInActivity" />
+        <activity android:name=".user.SignInActivity"
+            android:theme="@style/AppTheme.home"/>
         <activity android:name=".user.SignUpActivity" />
 
     </application>
