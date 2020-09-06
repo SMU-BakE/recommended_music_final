@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.bake.recommended_music_final.home.HomeActivity
 import com.bake.recommended_music_final.user.SignInActivity
 
 //예시. 임시 변수
@@ -34,17 +33,11 @@ class InitialActivity : AppCompatActivity() {
 
     private fun checkLogin() {
         //로그인 되어있으면 홈으로
-
         if (signIn) {
-            var intent = Intent(
-                this,
-                HomeActivity::class.java
-            )
-            startActivity(intent)
+            Navigator(this).startHomeActivity()
         } else {
             //로그인 되어있지 않으면 로그인창으로
-            intent = Intent(this, SignInActivity::class.java)
-            startActivity(intent)
+            Navigator(this).startLoginActivity()
         }
     }
 

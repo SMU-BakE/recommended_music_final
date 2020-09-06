@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
+import com.bake.recommended_music_final.Navigator
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -26,57 +27,32 @@ class UserFeedActivity : AppCompatActivity() {
 
         setRecordList()
 
-
         backHomeButton.setOnClickListener {
             onBackPressed()
         }
 
         profileSettingButton.setOnClickListener {
-            val intent = Intent(
-                this,
-                SettingListActivity::class.java
-            )
-            startActivity(intent)
+            Navigator(this).startSettingListActivity()
         }
 
         profileFollower.setOnClickListener {
-            val intent = Intent(
-                this,
-                Follower::class.java
-            )
-            startActivity(intent)
+            Navigator(this).startFollowerActivity()
         }
 
         followerNum.setOnClickListener {
-            val intent = Intent(
-                this,
-                Follower::class.java
-            )
-            startActivity(intent)
+            Navigator(this).startFollowerActivity()
         }
 
         profileFollowing.setOnClickListener {
-            val intent = Intent(
-                this,
-                Following::class.java
-            )
-            startActivity(intent)
+            Navigator(this).startFollowingActivity()
         }
 
         followingNum.setOnClickListener {
-            val intent = Intent(
-                this,
-                Following::class.java
-            )
-            startActivity(intent)
+            Navigator(this).startFollowingActivity()
         }
 
         findFriends.setOnClickListener {
-            val intent = Intent(
-                this,
-                FindFriend::class.java
-            )
-            startActivity(intent)
+            Navigator(this).startFindFriendActivity()
         }
     }
 
@@ -84,7 +60,6 @@ class UserFeedActivity : AppCompatActivity() {
         super.onStart()
         setUserData()
     }
-
 
     private fun setRecordList() {
         recordListFragment =
@@ -97,7 +72,6 @@ class UserFeedActivity : AppCompatActivity() {
     }
 
     private fun setUserData() {
-
         var userList: UserProfile = DataExample().getUser()
 
         profileName.text = userList.name
@@ -110,7 +84,5 @@ class UserFeedActivity : AppCompatActivity() {
                 .into(findViewById<ImageView>(R.id.profileImage))
         }
     }
-
-
 }
 

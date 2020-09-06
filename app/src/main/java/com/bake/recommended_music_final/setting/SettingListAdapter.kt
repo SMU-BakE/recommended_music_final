@@ -34,11 +34,11 @@ class SettingListAdapter(
             when (position) {
                 0 -> context.startActivity(Intent(context, AccountManagement::class.java))
                 1 -> context.startActivity(Intent(context, RequireUpdate::class.java))
-                //로그아웃 기능 연결해주세요
                 2 -> {
                     Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
                     Navigator(context).executeSignOut()
                 }
+
             }
         }
 
