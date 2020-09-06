@@ -12,7 +12,6 @@ class EmotionPopUpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choice_emotion_popup)
-        this.setFinishOnTouchOutside(false) //팝업 바깥 화면 클릭 시 팝업 닫히지 않게
         animateFork1() //fork 시계반대방향 회전 애니메이션
         animateFork2() //fork2 시계방향 회전 애니메이션
 
