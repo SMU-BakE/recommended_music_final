@@ -7,7 +7,7 @@
     tools:context=".user.SignInActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageView_bake"
         android:layout_width="0dp"
         android:layout_height="98dp"
         android:layout_marginStart="64dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView10"
+        android:id="@+id/icon_email"
         android:layout_width="40dp"
         android:layout_height="30dp"
         android:layout_marginStart="64dp"
@@ -29,11 +29,11 @@
         app:srcCompat="@drawable/email_icon" />
 
     <ImageView
-        android:id="@+id/imageView12"
+        android:id="@+id/icon_key"
         android:layout_width="40dp"
         android:layout_height="30dp"
         app:layout_constraintBottom_toBottomOf="@+id/main_pw"
-        app:layout_constraintStart_toStartOf="@+id/imageView10"
+        app:layout_constraintStart_toStartOf="@+id/icon_email"
         app:layout_constraintTop_toTopOf="@+id/main_pw"
         app:srcCompat="@drawable/password_icon" />
 
@@ -48,8 +48,8 @@
         android:hint="E-MAIL"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView10"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintStart_toEndOf="@+id/icon_email"
+        app:layout_constraintTop_toBottomOf="@+id/imageView_bake" />
 
     <EditText
         android:id="@+id/main_pw"
@@ -61,7 +61,7 @@
         android:hint="PASSWORD"
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="@+id/main_id"
-        app:layout_constraintStart_toEndOf="@+id/imageView12"
+        app:layout_constraintStart_toEndOf="@+id/icon_key"
         app:layout_constraintTop_toBottomOf="@+id/main_id" />
 
     <Button
@@ -74,7 +74,7 @@
         android:text="SIGN UP"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/btn_login"
-        app:layout_constraintStart_toStartOf="@+id/imageView12"
+        app:layout_constraintStart_toStartOf="@+id/icon_key"
         app:layout_constraintTop_toBottomOf="@+id/main_pw" />
 
     <Button
@@ -101,7 +101,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/imageView_pan"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
