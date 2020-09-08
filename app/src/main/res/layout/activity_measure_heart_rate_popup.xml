@@ -5,13 +5,13 @@
     android:id="@+id/heartRatePopup"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".HeartRatePopUpActivity">
+    tools:context=".home.HeartRatePopUpActivity">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/button_measure_heart_rate"
         android:layout_width="150dp"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="66dp"
         android:layout_marginEnd="16dp"
@@ -28,7 +28,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/icon_heart" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imageButton_measure"
             android:layout_width="150dp"
             android:layout_height="50dp"
