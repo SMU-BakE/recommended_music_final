@@ -47,14 +47,14 @@ class HomeActivity : AppCompatActivity() {
         //NOW 이미지뷰 투명도 애니메이션
         animateNOW()
 
-        imageButton_home.setOnClickListener{
+        button_home.setOnClickListener{
             startActivity<HomeActivity>()
             finish()
         }
-        imageButton_popup.setOnClickListener {
+        button_popup.setOnClickListener {
             startActivity<EmotionPopUpActivity>()
         }
-        imageButton_mystudio.setOnClickListener {
+        button_mystudio.setOnClickListener {
             startActivity<UserFeedActivity>()
         }
     }

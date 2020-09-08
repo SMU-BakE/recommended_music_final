@@ -156,7 +156,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imageButton_popup"
             android:layout_width="70dp"
             android:layout_height="25dp"
@@ -191,7 +191,7 @@
         app:layout_constraintEnd_toStartOf="@+id/button_mystudio"
         app:layout_constraintStart_toEndOf="@+id/button_popup">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imageButton_home"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -225,7 +225,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/imageButton_mystudio"
             android:layout_width="70dp"
             android:layout_height="25dp"
