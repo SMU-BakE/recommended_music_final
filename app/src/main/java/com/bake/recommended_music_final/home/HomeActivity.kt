@@ -30,10 +30,10 @@ import com.bake.recommended_music_final.userfeed.UserFeedActivity
 class HomeActivity : AppCompatActivity() {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val PERMISSION_ID = 1000
-    private lateinit var LAT: String
-    private lateinit var LON: String
-    private val CITY: String = "segok-dong,kr"
+    private var LAT: Double = 37.4643
+    private var LON: Double = 127.106
     private val API: String = "cf47ea0b59553630ae022abdf6c77247" //OpenWeatherMap 날씨 API
+//    private val CITY: String = "segok-dong,kr"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,14 +47,14 @@ class HomeActivity : AppCompatActivity() {
         //NOW 이미지뷰 투명도 애니메이션
         animateNOW()
 
-        imageButton_home.setOnClickListener{
+        button_home.setOnClickListener{
             startActivity<HomeActivity>()
             finish()
         }
-        imageButton_popup.setOnClickListener {
+        button_popup.setOnClickListener {
             startActivity<EmotionPopUpActivity>()
         }
-        imageButton_mystudio.setOnClickListener {
+        button_mystudio.setOnClickListener {
             startActivity<UserFeedActivity>()
         }
     }
@@ -73,8 +73,8 @@ class HomeActivity : AppCompatActivity() {
                     } else { //모든 권한이 승인됐을 때, 출력 코드
 //                        findViewById<TextView>(R.id.latTextView).text = location.latitude.toString()
 //                        findViewById<TextView>(R.id.lonTextView).text = location.longitude.toString()
-                        LAT = location.latitude.toString()
-                        LON = location.longitude.toString()
+                        LAT = location.latitude
+                        LON = location.longitude
                     }
                 }
             } else {
@@ -140,8 +140,8 @@ class HomeActivity : AppCompatActivity() {
             var lastLocation: Location = locationResult.lastLocation
 //            findViewById<TextView>(R.id.latTextView).text = lastLocation.latitude.toString()
 //            findViewById<TextView>(R.id.lonTextView).text = lastLocation.longitude.toString()
-//            LAT = lastLocation.latitude.toString()
-//            LON = lastLocation.longitude.toString()
+            LAT = lastLocation.latitude
+            LON = lastLocation.longitude
         }
     }
 
@@ -163,7 +163,7 @@ class HomeActivity : AppCompatActivity() {
         override fun doInBackground(vararg params: String?): String? {
             var response:String?
             try{ // lat=$LAT&lon=$LON | q=$CITY
-                response = URL("https://api.openweathermap.org/data/2.5/weather?q=$CITY&units=metric&appid=$API").readText(Charsets.UTF_8)
+                response = URL("https://api.openweathermap.org/data/2.5/weather?lat=$LAT&lon=$LON&units=metric&appid=$API&lang=kr").readText(Charsets.UTF_8)
             }
             catch (e: Exception){
                 response = null
