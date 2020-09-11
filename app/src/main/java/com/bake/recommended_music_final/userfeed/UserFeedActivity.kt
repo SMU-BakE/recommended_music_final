@@ -72,7 +72,7 @@ class UserFeedActivity : AppCompatActivity() {
     }
 
     private fun setUserData() {
-        var userList: UserProfile = DataExample().getUser()
+        val userList: UserProfile = DataExample().getUser()
 
         profileName.text = userList.name
         followerNum.text = userList.follower.toString()

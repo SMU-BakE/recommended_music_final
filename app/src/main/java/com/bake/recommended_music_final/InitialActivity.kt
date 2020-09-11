@@ -1,10 +1,10 @@
 package com.bake.recommended_music_final
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import com.bake.recommended_music_final.user.SignInActivity
+import android.view.animation.AnimationUtils
+import kotlinx.android.synthetic.main.activity_initial.*
 
 //예시. 임시 변수
 private var signIn: Boolean = false
@@ -18,12 +18,13 @@ class InitialActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-       startLoading()
+        startLoading()
     }
 
     private fun startLoading() {
         val handler = Handler()
-        handler.postDelayed({ initialApp() }, 1000)
+        handler.postDelayed({ initialApp() }, 3000)
+        animatePan()
     }
 
     private fun initialApp() {
@@ -39,6 +40,27 @@ class InitialActivity : AppCompatActivity() {
             //로그인 되어있지 않으면 로그인창으로
             Navigator(this).startLoginActivity()
         }
+    }
+
+    private fun animatePan() {
+        val translatePan = AnimationUtils.loadAnimation(this, R.anim.pan_transtate)
+        iv_pan.animation = translatePan
+
+        val translateSalt = AnimationUtils.loadAnimation(this, R.anim.salt_transtate)
+        iv_salt.animation = translateSalt
+
+        val translateEmotion2 = AnimationUtils.loadAnimation(this, R.anim.emotion_transtate_2)
+        iv_note1.animation = translateEmotion2
+        iv_note2.animation = translateEmotion2
+        iv_note3.animation = translateEmotion2
+
+        val translateEmotion1 = AnimationUtils.loadAnimation(this, R.anim.emotion_transtate_1)
+        iv_emotion.animation = translateEmotion1
+
+
+
+
+
     }
 
 }

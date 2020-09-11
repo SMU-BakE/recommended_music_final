@@ -4,7 +4,68 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_loading"
     tools:context=".InitialActivity">
+
+    <ImageView
+        android:id="@+id/iv_pan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/icon_pan" />
+
+    <ImageView
+        android:id="@+id/iv_salt"
+        android:layout_width="200dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_salt" />
+
+    <ImageView
+        android:id="@+id/iv_note1"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toStartOf="@+id/iv_salt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon_note" />
+
+    <ImageView
+        android:id="@+id/iv_note2"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_note1"
+        app:layout_constraintTop_toBottomOf="@+id/iv_salt"
+        app:srcCompat="@drawable/icon_note" />
+
+    <ImageView
+        android:id="@+id/iv_note3"
+        android:layout_width="80dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintEnd_toStartOf="@+id/iv_note2"
+        app:layout_constraintTop_toBottomOf="@+id/iv_note2"
+        app:srcCompat="@drawable/icon_note" />
+
+    <ImageView
+        android:id="@+id/iv_emotion"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/iv_pan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_note3"
+        app:srcCompat="@drawable/emotion_loading" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

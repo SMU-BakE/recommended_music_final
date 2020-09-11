@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -17,10 +18,9 @@ import android.widget.Toast;
 import com.bake.recommended_music_final.R;
 
 public class EmailAuth extends AppCompatActivity implements View.OnClickListener, Dialog.OnCancelListener {
-
     final int randomNum = 106245; // 테스트할 6자리 인증번호
 
-    EditText authEmail;
+    TextView authEmail;
     Button authBtn;
 
     /*Dialog에 관련된 필드*/
@@ -31,22 +31,27 @@ public class EmailAuth extends AppCompatActivity implements View.OnClickListener
 
     /*카운트 다운 타이머에 관련된 필드*/
 
-    TextView time_counter; //시간을 보여주는 TextView
-    EditText emailAuth_number; //인증 번호를 입력 하는 칸
+    TextView time_counter; // 시간을 보여주는 TextView
+    EditText emailAuth_number; // 인증 번호를 입력 하는 칸
     Button emailAuth_btn; // 인증버튼
     CountDownTimer countDownTimer;
-    final int MILLISINFUTURE = 300 * 1000; //총 시간 (300초 = 5분)
-    final int COUNT_DOWN_INTERVAL = 1000; //onTick 메소드를 호출할 간격 (1초)
+    final int MILLISINFUTURE = 300 * 1000; // 총 시간 (300초 = 5분)
+    final int COUNT_DOWN_INTERVAL = 1000; // onTick 메소드를 호출할 간격 (1초)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        authEmail=(EditText)findViewById(R.id.authEmail);
+        authEmail=(TextView)findViewById(R.id.authEmail);
         authBtn=(Button)findViewById(R.id.authBtn);
         authBtn.setOnClickListener(this);
 
+        //입력한 이메일 값을 자동으로 넣어두기
+        Intent secondIntent = getIntent();
+        String intent = secondIntent.getStringExtra("이메일 값");
+
+        authEmail.setText(intent);
 
     }
 
@@ -112,18 +117,20 @@ public class EmailAuth extends AppCompatActivity implements View.OnClickListener
                 int user_answer = Integer.parseInt(emailAuth_number.getText().toString());
                 if(user_answer==randomNum){
                     Toast.makeText(this, "이메일 인증 성공", Toast.LENGTH_SHORT).show();
+                    finish();
                 }else{
 
-                    Toast.makeText(this, "이메일 인증 실패", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "이메일 인증 실패, 다시 입력 해 주세요.", Toast.LENGTH_SHORT).show();
                 }
                 break;
 
         }
 
-   }
+    }
 
     @Override
     public void onCancel(DialogInterface dialog) {
         countDownTimer.cancel();
     } //다이얼로그 닫을 때 카운트 다운 타이머의 cancel()메소드 호출
+
 }
