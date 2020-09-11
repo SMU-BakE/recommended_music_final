@@ -24,6 +24,7 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.*
 import com.bake.recommended_music_final.R
+import com.bake.recommended_music_final.TimeUtils
 import com.bake.recommended_music_final.userfeed.UserFeedActivity
 
 
@@ -46,6 +47,9 @@ class HomeActivity : AppCompatActivity() {
         weatherTask().execute()
         //NOW 이미지뷰 투명도 애니메이션
         animateNOW()
+
+        //date
+        tv_date.text=TimeUtils().getWeather()
 
         button_home.setOnClickListener{
             startActivity<HomeActivity>()
@@ -202,6 +206,8 @@ class HomeActivity : AppCompatActivity() {
             }
         }
     }
+
+
 
 
     //NOW 이미지뷰 투명도 애니메이션

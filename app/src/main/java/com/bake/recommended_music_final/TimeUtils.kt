@@ -1,9 +1,13 @@
 package com.bake.recommended_music_final
 
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_home.*
 import java.sql.Timestamp
 import java.time.Instant
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 class TimeUtils {
     class DateTime(
@@ -87,4 +91,23 @@ class TimeUtils {
         val dateTime = getDateTime(timestamp)
         return dateToString(dateTime.year, dateTime.month, dateTime.dayOfMonth)
     }
+
+
+    fun getWeather() : String{
+        var weather ="spring"
+        val dateAndTime: LocalDateTime = LocalDateTime.now()    //time 필요할때 사용
+        val nowDate: LocalDate = LocalDate.now()
+        var nowMonth = nowDate.format(DateTimeFormatter.ofPattern("MM"))
+        if(nowMonth=="01"||nowMonth=="02"||nowMonth=="12"){
+            weather = "winter"
+        }else if(nowMonth=="03"||nowMonth=="04"||nowMonth=="05"){
+            weather = "spring"
+        }else if(nowMonth=="06"||nowMonth=="07"||nowMonth=="08"){
+            weather = "summer"
+        }else if(nowMonth=="09"||nowMonth=="10"||nowMonth=="11"){
+            weather = "fall"
+        }
+    return weather
+    }
+
 }
