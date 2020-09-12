@@ -48,8 +48,8 @@ class HomeActivity : AppCompatActivity() {
         //NOW 이미지뷰 투명도 애니메이션
         animateNOW()
 
-        //date
-        tv_date.text=TimeUtils().getWeather()
+//        //date BE 에서 처리
+//        tv_date.text=TimeUtils().getWeather()
 
         button_home.setOnClickListener{
             startActivity<HomeActivity>()

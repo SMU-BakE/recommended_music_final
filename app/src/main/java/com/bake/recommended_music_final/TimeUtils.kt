@@ -1,7 +1,5 @@
 package com.bake.recommended_music_final
 
-import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_home.*
 import java.sql.Timestamp
 import java.time.Instant
 import java.time.LocalDate
