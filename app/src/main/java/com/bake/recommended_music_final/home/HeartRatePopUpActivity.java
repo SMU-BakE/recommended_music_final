@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -30,13 +31,13 @@ public class HeartRatePopUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_measure_heart_rate_popup);
 
         //측정하기 버튼 클릭
-        ConstraintLayout button_measure_heart_rate =  findViewById(R.id.button_measure_heart_rate);
+        ConstraintLayout button_measure_heart_rate = findViewById(R.id.button_measure_heart_rate);
         button_measure_heart_rate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-                startActivityForResult(intent,0);
-                finish();
+                startActivityForResult(intent, 0);
+//                finish();
             }
         });
 
@@ -45,7 +46,7 @@ public class HeartRatePopUpActivity extends AppCompatActivity {
         button_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+//                finish();
             }
         });
 
@@ -61,23 +62,22 @@ public class HeartRatePopUpActivity extends AppCompatActivity {
     }
 
     //바깥화면 클릭 시 닫히지 않게
-    public boolean onTouchEvent(MotionEvent event){
-        if(event.getAction() == MotionEvent.ACTION_OUTSIDE){
-            return false;
-        }
-        return true;
+    public boolean onTouchEvent(MotionEvent event) {
+        return event.getAction() != MotionEvent.ACTION_OUTSIDE;
     }
 
     //안드로이드 백버튼 막기
-    public void onBackPressed(){
+    public void onBackPressed() {
         return;
     }
+
 
     //심장박동 측정결과 토스트
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Toast.makeText(getApplicationContext(), "Result : " + resultCode, Toast.LENGTH_SHORT).show();
+        finish();
         //여기 활용
     }
 

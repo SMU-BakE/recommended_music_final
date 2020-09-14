@@ -2,6 +2,7 @@ package com.bake.recommended_music_final.home;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
@@ -22,6 +23,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -45,7 +47,7 @@ public class CameraActivity extends AppCompatActivity {
     private int mCurrentRollingAverage;
     private int mLastRollingAverage;
     private int mLastLastRollingAverage;
-    private long [] mTimeArray;
+    private long[] mTimeArray;
     private int numCaptures = 0;
     private int mNumBeats = 0;
     TextView tv;
@@ -57,11 +59,11 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera_heart_rate);
-        textureView =  findViewById(R.id.texture);
+        textureView = findViewById(R.id.texture);
         assert textureView != null;
 
-        mTimeArray = new long [15];
-        tv = (TextView)findViewById(R.id.neechewalatext);
+        mTimeArray = new long[15];
+        tv = (TextView) findViewById(R.id.neechewalatext);
 
         textureView.setSurfaceTextureListener(textureListener);
     }
@@ -103,16 +105,17 @@ public class CameraActivity extends AppCompatActivity {
             // Next 18 averages needs to incorporate the sum with the correct N multiplier
             // in rolling average.   //2 , 5
             else if (numCaptures > 2 && numCaptures < 5) {
-                mCurrentRollingAverage = (mCurrentRollingAverage*(numCaptures-2) + sum)/(numCaptures-1);
+                mCurrentRollingAverage = (mCurrentRollingAverage * (numCaptures - 2) + sum) / (numCaptures - 1);
             }
             // From 49 on, the rolling average incorporates the last 30 rolling averages.
             else if (numCaptures >= 5) {   //49 //5
-                mCurrentRollingAverage = (mCurrentRollingAverage*29 + sum)/30;
+                mCurrentRollingAverage = (mCurrentRollingAverage * 29 + sum) / 30;
                 if (mLastRollingAverage > mCurrentRollingAverage && mLastRollingAverage > mLastLastRollingAverage && mNumBeats < 5) {
                     mTimeArray[mNumBeats] = System.currentTimeMillis();
 //                    tv.setText("beats="+mNumBeats+"\ntime="+mTimeArray[mNumBeats]);
                     mNumBeats++;
                     if (mNumBeats == 5) {//
+                        Log.d("beattt", "hello");
                         calcBPM();
                     }
                 }
@@ -152,6 +155,7 @@ public class CameraActivity extends AppCompatActivity {
         mBackgroundThread.start();
         mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
     }
+
     // onPause
     protected void stopBackgroundThread() {
         mBackgroundThread.quitSafely();
@@ -166,15 +170,18 @@ public class CameraActivity extends AppCompatActivity {
 
     private void calcBPM() {
         int med;
-        long [] timedist = new long [4];
+        long[] timedist = new long[4];
         for (int i = 0; i < 4; i++) {   //14//비트-1
-            timedist[i] = mTimeArray[i+1] - mTimeArray[i];
+            timedist[i] = mTimeArray[i + 1] - mTimeArray[i];
         }
         Arrays.sort(timedist);
-        med = (int) timedist[timedist.length/2];
+        med = (int) timedist[timedist.length / 2];
         //med = (int)timedist[0];
-        hrtratebpm= (int)(60000/med);
+        hrtratebpm = (int) (60000 / med);
 
+        Log.d("hrtratebpm", String.valueOf(hrtratebpm));
+
+//        setResult(1, new Intent().putExtra("hello", 1313));
         setResult(hrtratebpm);
         finish();
 
@@ -211,6 +218,7 @@ public class CameraActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     // Opening the rear-facing camera for use
     private void openCamera() {
         CameraManager manager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
@@ -231,6 +239,7 @@ public class CameraActivity extends AppCompatActivity {
         }
         Log.e(TAG, "openCamera X");
     }
+
     protected void updatePreview() {
         if (null == cameraDevice) {
             Log.e(TAG, "updatePreview error, return");
@@ -243,6 +252,7 @@ public class CameraActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private void closeCamera() {
         if (null != cameraDevice) {
             cameraDevice.close();
@@ -260,6 +270,7 @@ public class CameraActivity extends AppCompatActivity {
             }
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -271,6 +282,7 @@ public class CameraActivity extends AppCompatActivity {
             textureView.setSurfaceTextureListener(textureListener);
         }
     }
+
     @Override
     protected void onPause() {
         Log.e(TAG, "onPause");
