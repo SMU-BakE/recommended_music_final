@@ -37,7 +37,6 @@ public class HeartRatePopUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
                 startActivityForResult(intent, 0);
-//                finish();
             }
         });
 
@@ -46,7 +45,7 @@ public class HeartRatePopUpActivity extends AppCompatActivity {
         button_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                finish();
+                finish();
             }
         });
 
