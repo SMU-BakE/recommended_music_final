@@ -187,13 +187,14 @@ class PlayerHome : AppCompatActivity() {
             }
         }
 
-        val currentSong = recordItem.songList?.get(songPosition)
+        var currentSong: Song? = recordItem.songList?.get(songPosition)
         moreViewButton.setOnClickListener {
             if (currentSong == null) {
                 toast("곡 정보를 불러올 수 없습니다.")
             } else {
-                val dialog = ViewMorePopup(this, currentSong)
-                dialog.show()
+                currentSong = recordItem.songList?.get(songPosition)
+                val dialog = currentSong?.let { it1 -> ViewMorePopup(this, it1) }
+                dialog?.show()
             }
         }
 
@@ -296,6 +297,7 @@ class PlayerHome : AppCompatActivity() {
                 startSong()
             } else {
                 stopSong()
+                playListFragment.setHighlight(songPosition)
             }
         } else {
             startSong()
