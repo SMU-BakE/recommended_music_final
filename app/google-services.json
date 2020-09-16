@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "312988178575",
+    "firebase_url": "https://recommended-music.firebaseio.com",
+    "project_id": "recommended-music",
+    "storage_bucket": "recommended-music.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:312988178575:android:c7f44fcddf478426e0b8fa",
+        "android_client_info": {
+          "package_name": "com.bake.recommended_music_final"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "312988178575-vn3a8p8qhj0jiakmqd03lu9k887sgu2l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bake.recommended_music_final",
+            "certificate_hash": "ce50b6970e50c923da12b4412ffffe744f06ed8a"
+          }
+        },
+        {
+          "client_id": "312988178575-4a9b2vk0k4b5gbh4f91j8354vgpoludc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfwXuU6-g4JoF9i5RR4Nu79CKIn32Ylac"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "312988178575-4a9b2vk0k4b5gbh4f91j8354vgpoludc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

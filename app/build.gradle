@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+//for firebase
+apply plugin: 'com.google.gms.google-services'
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.0"
@@ -53,4 +56,7 @@ dependencies {
 
     //for location
     implementation 'com.google.android.gms:play-services-location:17.0.0'
+
+    //for firebase
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
 }

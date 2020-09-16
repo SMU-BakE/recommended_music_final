@@ -7,7 +7,7 @@ import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.activity_initial.*
 
 //예시. 임시 변수
-private var signIn: Boolean = true
+private var signIn: Boolean = false
 
 class InitialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
