@@ -52,14 +52,16 @@
             android:theme="@style/AppTheme.Dialog" />
         <activity
             android:name="com.bake.recommended_music_final.home.HomeActivity"
-            android:theme="@style/AppTheme.home"></activity>
+            android:theme="@style/AppTheme.home" />
         <activity android:name=".player.PlayMusicVideoActivity" />
         <activity android:name=".user.EmailAuth" />
         <activity android:name=".user.LoginLoading" />
-        <activity android:name=".user.FindPassword" />
+        <activity android:name=".user.FindPassword"
+            android:theme="@style/AppTheme.home" />
         <activity android:name=".user.SignInActivity"
-            android:theme="@style/AppTheme.home"/>
-        <activity android:name=".user.SignUpActivity" />
+            android:theme="@style/AppTheme.home" />
+        <activity android:name=".user.SignUpActivity"
+            android:theme="@style/AppTheme.home" />
 
     </application>
 
