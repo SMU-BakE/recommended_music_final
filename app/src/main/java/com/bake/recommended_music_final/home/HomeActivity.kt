@@ -166,8 +166,8 @@ class HomeActivity : AppCompatActivity() {
         //스레드가 수행할 작업(생성된 스레드)
         override fun doInBackground(vararg params: String?): String? {
             var response:String?
-            try{ // lat=$LAT&lon=$LON | q=$CITY
-                response = URL("https://api.openweathermap.org/data/2.5/weather?lat=$LAT&lon=$LON&units=metric&appid=$API&lang=kr").readText(Charsets.UTF_8)
+            try{ // lat=$LAT&lon=$LON | q=$CITY | &lang=kr
+                response = URL("https://api.openweathermap.org/data/2.5/weather?lat=$LAT&lon=$LON&units=metric&appid=$API").readText(Charsets.UTF_8)
             }
             catch (e: Exception){
                 response = null
@@ -187,19 +187,16 @@ class HomeActivity : AppCompatActivity() {
 
                 val updatedAt:Long = jsonObj.getLong("dt")
                 val updatedAtText = "Updated at: "+ SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.KOREA).format(Date(updatedAt*1000))//.format(Date(updatedAt*1000))
+                val weatherMainDescription = weather.getString("main")
                 val weatherDescription = weather.getString("description")
                 val temp = main.getString("temp")+"°C"
                 val address = jsonObj.getString("name")+", "+sys.getString("country")
 
+                classifyWeather(temp, weatherMainDescription)
 
                 /* Populating extracted data into our views */
                 findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
                 findViewById<TextView>(R.id.temp).text = temp
-//                findViewById<TextView>(R.id.updated_at).text =  updatedAtText
-//                findViewById<TextView>(R.id.address).text = address
-
-                /* Views populated, Hiding the loader, Showing the main design */
-//                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
 
             } catch (e: Exception) {
 //                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
@@ -207,8 +204,29 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-
-
+    //날씨 6가지 기준에 따라 분류
+    private fun classifyWeather(temp: String, main: String): String{
+        if(main == "Clear" && temp.toDouble() > 5 && temp.toDouble() < 24){
+            return "sunshine"
+        }
+        else if(main == "Clear" && temp.toDouble() >= 24){
+            return "hot"
+        }
+        else if(main == "Clear" && temp.toDouble() <= 5){
+            return "cold"
+        }
+        else if(main == "Clouds" || main == "Mist" || main == "Smoke" || main == "Haze" || main == "Dust"
+            || main == "Fog" || main == "Sand" || main == "Dust" || main == "Ash" || main == "Squall" || main == "Tornado"){
+            return "cloudy"
+        }
+        else if(main == "Rain" || main == "Thunderstorm" || main == "Drizzle"){
+            return "rainy"
+        }
+        else if(main == "Snow"){
+            return "snowy"
+        }
+        return "sunshine"
+    }
 
     //NOW 이미지뷰 투명도 애니메이션
     private fun animateNOW(){
