@@ -192,11 +192,12 @@ class HomeActivity : AppCompatActivity() {
                 val temp = main.getString("temp")+"°C"
                 val address = jsonObj.getString("name")+", "+sys.getString("country")
 
-                classifyWeather(temp, weatherMainDescription)
 
                 /* Populating extracted data into our views */
                 findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
                 findViewById<TextView>(R.id.temp).text = temp
+
+                classifyWeather(temp, weatherMainDescription)
 
             } catch (e: Exception) {
 //                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
