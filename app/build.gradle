@@ -57,6 +57,14 @@ dependencies {
     //for location
     implementation 'com.google.android.gms:play-services-location:17.0.0'
 
+    //    for firebase sdk
+    implementation 'com.google.firebase:firebase-analytics:17.4.4'
+    implementation 'com.google.firebase:firebase-auth-ktx:19.3.2'
+
     //for firebase
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
+
+//    for firebase functions
+    implementation "com.google.firebase:firebase-functions-ktx:19.1.0"
+
 }

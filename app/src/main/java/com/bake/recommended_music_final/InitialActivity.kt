@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.animation.AnimationUtils
+import com.bake.recommended_music_final.firebase.Initialize
+import com.google.firebase.FirebaseApp
 import kotlinx.android.synthetic.main.activity_initial.*
 
 //예시. 임시 변수
@@ -13,6 +15,11 @@ class InitialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial)
+
+
+        Initialize().callIncreaseCount("썸탈거야","flutter","good")
+        Initialize().callDecreaseCount("한숨","funny","bad")
+        Initialize().callRecommendMusic("flutter","cloudy",70)
     }
 
     override fun onStart() {
@@ -56,11 +63,6 @@ class InitialActivity : AppCompatActivity() {
 
         val translateEmotion1 = AnimationUtils.loadAnimation(this, R.anim.emotion_transtate_1)
         iv_emotion.animation = translateEmotion1
-
-
-
-
-
     }
 
 }

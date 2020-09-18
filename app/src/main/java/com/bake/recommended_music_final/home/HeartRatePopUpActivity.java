@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bake.recommended_music_final.R;
+import com.bake.recommended_music_final.firebase.Initialize;
 
 public class HeartRatePopUpActivity extends AppCompatActivity {
 
