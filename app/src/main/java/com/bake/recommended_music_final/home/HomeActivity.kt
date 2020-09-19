@@ -16,6 +16,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_home.*
 import org.jetbrains.anko.startActivity
@@ -25,16 +27,31 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.bake.recommended_music_final.R
 import com.bake.recommended_music_final.TimeUtils
+import com.bake.recommended_music_final.database.DataExample
+import com.bake.recommended_music_final.database.RecordItem
+import com.bake.recommended_music_final.database.Song
+import com.bake.recommended_music_final.player.PlaylistAdapter
 import com.bake.recommended_music_final.userfeed.UserFeedActivity
+import org.jetbrains.anko.toast
+import kotlin.properties.Delegates
 
 
 class HomeActivity : AppCompatActivity() {
+
+    //위치, 날씨
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val PERMISSION_ID = 1000
+//    private val CITY: String = "segok-dong,kr"
     private var LAT: Double = 37.4643
     private var LON: Double = 127.106
     private val API: String = "cf47ea0b59553630ae022abdf6c77247" //OpenWeatherMap 날씨 API
-//    private val CITY: String = "segok-dong,kr"
+
+    //RecentSongList
+    private lateinit var listRV: RecyclerView
+    private var position by Delegates.notNull<Int>()    //해당 날짜의 음악 id
+    private var songPosition = 0
+    private lateinit var songList: List<Song>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,13 +60,25 @@ class HomeActivity : AppCompatActivity() {
         //위치
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
-        //날씨, 시간
+        //날씨
         weatherTask().execute()
         //NOW 이미지뷰 투명도 애니메이션
         animateNOW()
-
         //date BE 에서 처리
         tv_date.text=TimeUtils().getWeather()
+
+        //최근 추천 음악 리스트
+//        listRV = findViewById(R.id.recentSong)
+//        intent.extras?.getInt("position")?.let {
+//            position = it
+//        }
+//        listRV.apply {
+//            adapter = DataExample().createRecordItem()[position].songList?.let {
+//                RecentSongListAdapter(it, context, null)
+//            }
+//            layoutManager = LinearLayoutManager(context)
+//        }
+
 
         button_home.setOnClickListener{
             startActivity<HomeActivity>()
@@ -228,6 +257,7 @@ class HomeActivity : AppCompatActivity() {
         }
         return "sunshine"
     }
+
 
     //NOW 이미지뷰 투명도 애니메이션
     private fun animateNOW(){
