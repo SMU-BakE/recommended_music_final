@@ -1,5 +1,6 @@
 package com.bake.recommended_music_final
 
+import org.json.JSONObject
 import java.sql.Timestamp
 import java.time.Instant
 import java.time.LocalDate
@@ -91,7 +92,7 @@ class TimeUtils {
     }
 
 
-    fun getWeather() : String{
+    fun getSeoson() : String{
         var weather ="spring"
         val dateAndTime: LocalDateTime = LocalDateTime.now()    //time 필요할때 사용
         val nowDate: LocalDate = LocalDate.now()
@@ -107,5 +108,26 @@ class TimeUtils {
         }
     return weather
     }
+
+
+    fun getTime() : String{
+        var time = "morning"
+        val localTime = LocalDateTime.now()
+        val timeFormatter = DateTimeFormatter.ofPattern("HH")
+        val nowTime = localTime.format(timeFormatter)
+
+        if(time=="05"||time=="06"||time=="07"||time=="08"||time=="09"||time=="10"||time=="11"){
+            time = "morning"
+        }else if(time=="12"||time=="13"||time=="14"||time=="15"||time=="16"||time=="17"){
+            time = "lunch"
+        }else if(time=="18"||time=="19"||time=="20"||time=="21"||time=="22"||time=="23"){
+            time = "evening"
+        }else{
+            time = "dawn"
+        }
+    return time
+    }
+
+
 
 }

@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bake.recommended_music_final.R;
+import com.bake.recommended_music_final.TimeUtils;
 import com.bake.recommended_music_final.firebase.Initialize;
 
 public class HeartRatePopUpActivity extends AppCompatActivity {
@@ -46,6 +47,12 @@ public class HeartRatePopUpActivity extends AppCompatActivity {
         button_pass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = getIntent();
+                String emotion = intent.getStringExtra("emotion");
+                    Toast.makeText(getApplicationContext(), emotion, Toast.LENGTH_SHORT).show();
+
+                //서버에 노래추천 요청
+                new Initialize().callRecommendMusic(emotion,"cloudy",new TimeUtils().getSeoson(),new TimeUtils().getTime());
                 finish();
             }
         });

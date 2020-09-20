@@ -5,6 +5,7 @@ import android.content.Intent
 import com.bake.recommended_music_final.friends.FindFriend
 import com.bake.recommended_music_final.friends.Follower
 import com.bake.recommended_music_final.friends.Following
+import com.bake.recommended_music_final.home.HeartRatePopUpActivity
 import com.bake.recommended_music_final.home.HomeActivity
 import com.bake.recommended_music_final.player.PlayerHome
 import com.bake.recommended_music_final.setting.SettingListActivity
@@ -50,6 +51,11 @@ class Navigator(val context: Context) {
 
     fun startFindFriendActivity() {
         val intent = Intent(context, FindFriend::class.java)
+        context.startActivity(intent)
+    }
+
+    fun startHeartRatePopUpActivity(emotion : String){
+        val intent = Intent(context, HeartRatePopUpActivity::class.java).putExtra("emotion",emotion)
         context.startActivity(intent)
     }
 
