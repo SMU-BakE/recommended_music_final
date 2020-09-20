@@ -27,6 +27,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.bake.recommended_music_final.R
 import com.bake.recommended_music_final.TimeUtils
+import com.bake.recommended_music_final.firebase.Initialize
 import com.bake.recommended_music_final.database.DataExample
 import com.bake.recommended_music_final.database.Song
 import com.bake.recommended_music_final.userfeed.UserFeedActivity
@@ -58,7 +59,7 @@ class HomeActivity : AppCompatActivity() {
 
         //잠시 테스트
         imageView_BAKE.setOnClickListener {
-
+            //Initialize().sampleLike("01oOhsYxuRrhQuBCDtDc", "flutter", "cloudy", "fall", "morning")
         }
 
         button_home.setOnClickListener {
@@ -67,9 +68,7 @@ class HomeActivity : AppCompatActivity() {
         }
 
         button_popup.setOnClickListener {
-//            val weather = classifyWeather(temp, weatherMainDescription)
-            val intent = Intent(this, EmotionPopUpActivity::class.java)
-            this.startActivity(intent)
+            startActivity<EmotionPopUpActivity>()
         }
 
         button_mystudio.setOnClickListener {
@@ -273,7 +272,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     //날씨 6가지 기준에 따라 분류
-    fun classifyWeather(temp: String, main: String): String {
+    private fun classifyWeather(temp: String, main: String): String {
         if (main == "Clear" && temp.toDouble() > 5 && temp.toDouble() < 24) {
             return "sunshine"
         } else if (main == "Clear" && temp.toDouble() >= 24) {
