@@ -20,7 +20,7 @@
             android:id="@+id/backStudioText"
             android:layout_width="wrap_content"
             android:layout_height="24dp"
-            android:text="STUDIO"
+            android:text="MY STUDIO"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/backStudioImage"

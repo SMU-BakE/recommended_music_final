@@ -33,6 +33,7 @@ import com.bake.recommended_music_final.database.RecordItem
 import com.bake.recommended_music_final.database.Song
 import com.bake.recommended_music_final.player.PlaylistAdapter
 import com.bake.recommended_music_final.userfeed.UserFeedActivity
+import kotlinx.android.synthetic.main.activity_initial.*
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.toast
 import kotlin.properties.Delegates
@@ -49,8 +50,9 @@ class HomeActivity : AppCompatActivity() {
     private var LON: Double = 127.106
     private val API: String = "cf47ea0b59553630ae022abdf6c77247" //OpenWeatherMap 날씨 API
 
-    //RecentSongList
-    private lateinit var listRV: RecyclerView
+    //SongList
+    private lateinit var listRV_recent: RecyclerView
+    private lateinit var listRV_favorite: RecyclerView
     private var position by Delegates.notNull<Int>()    //해당 날짜의 음악 id
     private var songPosition = 0
     private lateinit var songList: List<Song>
@@ -59,7 +61,6 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-
 
         //잠시 테스트
         imageView_BAKE.setOnClickListener {
@@ -85,16 +86,16 @@ class HomeActivity : AppCompatActivity() {
         getLastLocation()
         //날씨
         weatherTask().execute()
-        //NOW 이미지뷰 투명도 애니메이션
-        animateNOW()
+        //이미지뷰 애니메이션
+        animateNOWnSWM()
 
         //date BE 에서 처리
-        tv_date.text = TimeUtils().getWeather()
+        tv_date.text = TimeUtils().getWeather().capitalize()
 
         //최근 추천 음악 리스트
-        listRV = findViewById(R.id.recentSong)
+        listRV_recent = findViewById(R.id.recentSong)
 
-        listRV.apply {
+        listRV_recent.apply {
             if (DataExample().createRecordItem()[0].songList == null) {
                 return
             }
@@ -105,6 +106,19 @@ class HomeActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@HomeActivity)
         }
 
+        //좋아한 음악 리스트
+        listRV_favorite = findViewById(R.id.favoriteSong)
+
+        listRV_favorite.apply {
+            if (DataExample().createRecordItem()[0].songList == null) {
+                return
+            }
+            adapter = FavoriteSongListAdapter(
+                songList = DataExample().createRecordItem()[0].songList!!,
+                context = this@HomeActivity
+            )
+            layoutManager = LinearLayoutManager(this@HomeActivity)
+        }
 
     }
 
@@ -295,10 +309,15 @@ class HomeActivity : AppCompatActivity() {
         return "sunshine"
     }
 
-    //NOW 이미지뷰 투명도 애니메이션
-    private fun animateNOW() {
+
+    private fun animateNOWnSWM() {
         val alphaNOW = AnimationUtils.loadAnimation(this, R.anim.now_animation)
         imageView_NOW.animation = alphaNOW
+
+        val translateEmotion2 = AnimationUtils.loadAnimation(this, R.anim.emotion_transtate_2)
+        imageView_pan.animation = translateEmotion2
+        imageView3.animation = translateEmotion2
+        imageView4.animation = translateEmotion2
     }
 
 }
