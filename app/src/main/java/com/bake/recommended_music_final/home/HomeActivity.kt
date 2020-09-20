@@ -11,6 +11,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Looper
 import android.provider.Settings
+import android.util.Log
 import android.view.animation.AnimationUtils
 import android.widget.TextView
 import android.widget.Toast
@@ -31,6 +32,7 @@ import com.bake.recommended_music_final.firebase.Initialize
 import com.bake.recommended_music_final.database.DataExample
 import com.bake.recommended_music_final.database.Song
 import com.bake.recommended_music_final.userfeed.UserFeedActivity
+import org.jetbrains.anko.toast
 import kotlin.properties.Delegates
 
 
@@ -60,6 +62,7 @@ class HomeActivity : AppCompatActivity() {
         //잠시 테스트
         imageView_BAKE.setOnClickListener {
             //Initialize().sampleLike("01oOhsYxuRrhQuBCDtDc", "flutter", "cloudy", "fall", "morning")
+            Log.d("songlist", DataExample.myCondtion.toString())
         }
 
         button_home.setOnClickListener {
@@ -68,7 +71,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         button_popup.setOnClickListener {
-            startActivity<EmotionPopUpActivity>()
+            val intent = Intent(this, EmotionPopUpActivity::class.java)
+            startActivityForResult(intent, 1000)
         }
 
         button_mystudio.setOnClickListener {
@@ -90,18 +94,31 @@ class HomeActivity : AppCompatActivity() {
         //최근 추천 음악 리스트
         listRV = findViewById(R.id.recentSong)
 
-        listRV.apply {
-            if (DataExample().createRecordItem()[0].songList == null) {
-                return
+        updateSongsList()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == 1001) {
+            val result = data?.extras?.get("result")
+            if (result == true) {
+                updateSongsList()
             }
-            adapter = RecentSongListAdapter(
-                songList = DataExample().createRecordItem()[0].songList!!,
+        }
+    }
+
+    private fun updateSongsList() {
+        listRV.apply {
+            var songList = DataExample.songs
+            if (songList == null) {
+                songList = listOf()
+            }
+            adapter = HomeListAdapter(
+                songList,
                 context = this@HomeActivity
             )
             layoutManager = LinearLayoutManager(this@HomeActivity)
         }
-
-
     }
 
 
@@ -236,6 +253,7 @@ class HomeActivity : AppCompatActivity() {
                 response = null
             }
             return response
+
         }
 
         //스레드 작업이 모두 끝난 후에 수행할 작업(메인 스레드)
@@ -264,7 +282,6 @@ class HomeActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.temp).text = temp
 
                 classifyWeather(temp, weatherMainDescription)
-
             } catch (e: Exception) {
 //                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
             }
@@ -273,22 +290,28 @@ class HomeActivity : AppCompatActivity() {
 
     //날씨 6가지 기준에 따라 분류
     private fun classifyWeather(temp: String, main: String): String {
+        var result = ""
         if (main == "Clear" && temp.toDouble() > 5 && temp.toDouble() < 24) {
-            return "sunshine"
+            result = "sunshine"
         } else if (main == "Clear" && temp.toDouble() >= 24) {
-            return "hot"
+            result = "hot"
         } else if (main == "Clear" && temp.toDouble() <= 5) {
-            return "cold"
+            result = "cold"
         } else if (main == "Clouds" || main == "Mist" || main == "Smoke" || main == "Haze" || main == "Dust"
             || main == "Fog" || main == "Sand" || main == "Dust" || main == "Ash" || main == "Squall" || main == "Tornado"
         ) {
-            return "cloudy"
+            result = "cloudy"
         } else if (main == "Rain" || main == "Thunderstorm" || main == "Drizzle") {
-            return "rainy"
+            result = "rainy"
         } else if (main == "Snow") {
-            return "snowy"
+            result = "snowy"
+        } else {
+            result = "sunshine"
         }
-        return "sunshine"
+        Log.d("weather changed", result)
+        DataExample.myCondtion.weather = result
+        toast(result)
+        return result
     }
 
     //NOW 이미지뷰 투명도 애니메이션

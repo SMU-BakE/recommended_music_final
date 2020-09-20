@@ -33,7 +33,7 @@ class ViewMorePopup(val context: Context, song: Song) {
     } else {
         ""
     }
-    private val favorite = song.favorite
+//    private val favorite = song.favorite
     private val songLink = if (song.songLink != null) {
         song.songLink!!
     } else {
@@ -59,7 +59,7 @@ class ViewMorePopup(val context: Context, song: Song) {
 
         favoriteButton.setOnClickListener {
             Log.d("favorite", "favorite")
-            favoriteButtonClick(favorite)
+//            favoriteButtonClick(favorite)
             //favorite db에 업데이트
         }
 
@@ -80,12 +80,12 @@ class ViewMorePopup(val context: Context, song: Song) {
         songTitleName.text = songName
         singerName.text = singer
 
-        if (favorite) {
-            favoriteButton.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
-
-        } else {
-            favoriteButton.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
-        }
+//        if (favorite) {
+//            favoriteButton.setBackgroundResource(R.drawable.ic_baseline_favorite_24)
+//
+//        } else {
+//            favoriteButton.setBackgroundResource(R.drawable.ic_baseline_favorite_border_24)
+//        }
     }
 
     private fun favoriteButtonClick(favoriteTemp: Boolean) {

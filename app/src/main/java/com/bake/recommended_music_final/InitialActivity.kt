@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.animation.AnimationUtils
+import com.bake.recommended_music_final.database.DataExample
 import com.bake.recommended_music_final.firebase.Initialize
 
 import kotlinx.android.synthetic.main.activity_initial.*
@@ -36,6 +37,9 @@ class InitialActivity : AppCompatActivity() {
 
     private fun initialApp() {
         checkLogin()
+        DataExample.myCondtion.season = TimeUtils().getSeoson()
+        DataExample.myCondtion.time = TimeUtils().getTime()
+//        DataExample.myCondtion.weather = TimeUtils().get
         finish()
     }
 

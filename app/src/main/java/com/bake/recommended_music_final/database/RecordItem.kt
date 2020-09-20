@@ -1,5 +1,7 @@
 package com.bake.recommended_music_final.database
 
+import android.util.Log
+
 data class RecordItem(
     var emotion: String? = null,
     var date: Long? = null,
@@ -7,11 +9,33 @@ data class RecordItem(
 )
 
 data class Song(
-    var songName: String? = null,
-    var singer: String? = null,
-    var songLink: String? = null,
-    var favorite: Boolean = false,
+    var songName: String = "",
+    var singer: String = "",
+    var songLink: String = "",
+    var docId: String = ""
+) {
+    fun from(map: HashMap<String, *>): Song? {
+        val songName = map["songName"]
+        val singer = map["singer"]
+        val songLink = map["songLink"]
+        val docId = map["docId"]
+        return if (songName is String && singer is String && songLink is String && docId is String) {
+            Song(songName, singer, songLink, docId)
+        } else {
+            Log.e("db error", "cannot parse Song object")
+            null
+        }
+    }
+}
 
+data class Condition(
+    var emotion: String = "flutter",
+    var weather: String = "cloudy",
+    var season: String = "fall",
+    var time: String = "morning"
+)
+
+data class ConditionNotUsed(
     var angry: Int = 0,
     var flutter: Int = 0,
     var funny: Int = 0,
@@ -35,6 +59,7 @@ data class Song(
     var lunch: Int = 0,
     var evening: Int = 0,
     var dawn: Int = 0
+
 )
 
 

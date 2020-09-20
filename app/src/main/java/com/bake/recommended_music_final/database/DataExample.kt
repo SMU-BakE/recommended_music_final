@@ -11,6 +11,10 @@ class DataExample {
             150,
             "배고파 치킨사줘\n#노래가좋아\n더이상 쓸말이 생각나지 않는다.", 24, "여성", 830919601000, null
         )
+
+        var songs: List<Song>? = null
+
+        var myCondtion: Condition = Condition()
     }
 
     fun updateMyProfile(profile: UserProfile) {
@@ -41,19 +45,19 @@ class DataExample {
         recordItemList.add(
             RecordItem(
                 "설레",
-                1588331341000,createSong1()
+                1588331341000
             )
         )
         recordItemList.add(
             RecordItem(
                 "즐거워",
-                1587380941000,createSong2()
+                1587380941000
             )
         )
         recordItemList.add(
             RecordItem(
                 "슬퍼",
-                1586084941000,createSong3()
+                1586084941000
             )
         )
         recordItemList.add(
@@ -139,68 +143,5 @@ class DataExample {
     }
 
 
-    private fun createSong1(): ArrayList<Song> {
-        val songList: ArrayList<Song> = ArrayList()
-
-        songList.add(
-            Song("그대와 나 설레임", "어쿠스틱콜라보", "2MvjjJXSX-g", true)
-        )
-
-        songList.add(
-            Song("나만 봄", "볼빨간 사춘기", "AsXxuIdpkWM", true)
-        )
-
-        songList.add(
-            Song("벚꽃엔딩", "버스커버스커", "tXV7dfvSefo", true)
-        )
-        songList.add(
-            Song("흔들리는 꽃들속에서 네 샴푸향이 느껴진거야", "장범준", "689GoEBjMhY", true)
-        )
-        songList.add(
-            Song("봄이 좋냐", "10cm", "cIGgSI1uhKI", false)
-        )
-        songList.add(
-            Song("오래된 노래", "스탠딩 에그", "bW3XExLBf7A", false)
-        )
-        songList.add(
-            Song("내 마음이 움찔했던 순간", "규현", "vIPug7A8Fds", false)
-        )
-
-        return songList
-    }
-
-    private fun createSong2(): ArrayList<Song> {
-        val songList: ArrayList<Song> = ArrayList()
-
-        songList.add(
-            Song("출발", "김동률", "xgvckGs6xhU", false)
-        )
-
-        songList.add(
-            Song("해변의 여인", "쿨", "M2RSYAGdybA", true)
-        )
-
-        songList.add(
-            Song("여행을 떠나요", "이승기", "xjjHdLFsUtk", true)
-        )
-        return songList
-    }
-
-    private fun createSong3(): ArrayList<Song> {
-        val songList: ArrayList<Song> = ArrayList()
-
-        songList.add(
-            Song("헤어지던 밤", "어쿠르브", "lYAn8xu5x4E", true)
-        )
-
-        songList.add(
-            Song("고백", "정준일", "H6t8r2wdS5U", true)
-        )
-
-        songList.add(
-            Song("헤어져줘서 고마워", "벤", "7tO_eJek6D8", true)
-        )
-        return songList
-    }
 }
 

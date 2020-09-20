@@ -1,12 +1,20 @@
 package com.bake.recommended_music_final.home
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import com.bake.recommended_music_final.Navigator
 import com.bake.recommended_music_final.R
+import com.bake.recommended_music_final.TimeUtils
+import com.bake.recommended_music_final.database.Condition
+import com.bake.recommended_music_final.database.DataExample
+import com.bake.recommended_music_final.database.DataExample.Companion.songs
+import com.bake.recommended_music_final.database.Song
+import com.bake.recommended_music_final.firebase.Initialize
+import com.google.android.gms.tasks.OnCompleteListener
 import kotlinx.android.synthetic.main.activity_choice_emotion_popup.*
-import org.jetbrains.anko.startActivity
 
 class EmotionPopUpActivity : AppCompatActivity() {
 
@@ -19,35 +27,43 @@ class EmotionPopUpActivity : AppCompatActivity() {
         var emotion: String = "happy"
         //감정선택결과 DB로 연결시키기
         imageButton_happy.setOnClickListener {
-            Navigator(this).startHeartRatePopUpActivity("happy")
-            finish()
+            submitEmotion("happy")
         }
         imageButton_flutter.setOnClickListener {
-            Navigator(this).startHeartRatePopUpActivity("flutter")
-            finish()
+            submitEmotion("flutter")
         }
         imageButton_soso.setOnClickListener {
-            Navigator(this).startHeartRatePopUpActivity("soso")
-            finish()
+            submitEmotion("soso")
         }
         imageButton_sad.setOnClickListener {
-            Navigator(this).startHeartRatePopUpActivity("sad")
-            finish()
+            submitEmotion("sad")
         }
         imageButton_fun.setOnClickListener {
-            Navigator(this).startHeartRatePopUpActivity("fun")
-            finish()
+            submitEmotion("funny")
         }
         imageButton_angry.setOnClickListener {
-            Navigator(this).startHeartRatePopUpActivity("angry")
-            finish()
+            submitEmotion("angry")
         }
 
         //닫기 버튼 클릭
         button_close.setOnClickListener {
             finish()
         }
+    }
 
+    private fun submitEmotion(emotion: String) {
+        DataExample.myCondtion.emotion = emotion
+        Initialize().callRecommendMusic(
+            DataExample.myCondtion
+        ).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val songList = task.result
+                songs = songList
+                Log.d("songs updated", songs.toString())
+                setResult(1001, Intent().putExtra("result", true))
+                finish()
+            }
+        }
     }
 
     //fork 시계반대방향 회전 애니메이션

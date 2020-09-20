@@ -5,8 +5,10 @@
 
 package com.bake.recommended_music_final.home;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -16,13 +18,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.bake.recommended_music_final.R;
 import com.bake.recommended_music_final.TimeUtils;
+import com.bake.recommended_music_final.database.Condition;
+import com.bake.recommended_music_final.database.DataExample;
+import com.bake.recommended_music_final.database.Song;
 import com.bake.recommended_music_final.firebase.Initialize;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+import java.util.List;
 
 public class HeartRatePopUpActivity extends AppCompatActivity {
 
@@ -49,11 +59,22 @@ public class HeartRatePopUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = getIntent();
                 String emotion = intent.getStringExtra("emotion");
-                    Toast.makeText(getApplicationContext(), emotion, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), emotion, Toast.LENGTH_SHORT).show();
 
                 //서버에 노래추천 요청
-                new Initialize().callRecommendMusic(emotion,"cloudy",new TimeUtils().getSeoson(),new TimeUtils().getTime());
-                finish();
+                assert emotion != null;
+                new Initialize().callRecommendMusic(DataExample.Companion.getMyCondtion()).addOnCompleteListener(new OnCompleteListener<List<Song>>() {
+                    @Override
+                    public void onComplete(@NonNull Task<List<Song>> task) {
+                        if (task.isSuccessful()) {
+                            List<Song> songList = task.getResult();
+                            DataExample.Companion.setSongs(songList);
+                            Log.d("songs updated", DataExample.Companion.getSongs().toString());
+                            setResult(1001, new Intent().putExtra("result", true));
+                            finish();
+                        }
+                    }
+                });
             }
         });
 

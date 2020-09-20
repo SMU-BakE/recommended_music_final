@@ -13,6 +13,7 @@ import com.bake.recommended_music_final.TimeUtils
 import com.bake.recommended_music_final.database.DataExample
 import com.bake.recommended_music_final.database.RecordItem
 import com.bake.recommended_music_final.database.Song
+import com.bake.recommended_music_final.firebase.Initialize
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -27,15 +28,14 @@ import kotlin.properties.Delegates
 
 
 class PlayerHome : AppCompatActivity() {
-
     //      About view widget
     private lateinit var recordImage: ImageView
     private lateinit var recordEmotion: TextView
 
     //      about playing music
-    private var position by Delegates.notNull<Int>()    //해당 날짜의 음악 id
-    private lateinit var recordItem: RecordItem
-    private var songPosition = 0
+    private var position = 0  //해당 날짜의 음악 id
+
+    //    private lateinit var recordItem: RecordItem
     private lateinit var songList: List<Song>
     private var playingSongToggle = false
 
@@ -76,15 +76,23 @@ class PlayerHome : AppCompatActivity() {
             position = it
         }
 
-        //TODO(임시 데이터 생성, 변경필요)
-        recordItem = DataExample().createRecordItem()[position]
-
-        if (DataExample().createRecordItem()[position].songList != null) {
-            songList = DataExample().createRecordItem()[position].songList!!
-        } else {
-            toast("노래 목록을 불러올 수 없습니다.")
+        if (DataExample.songs == null) {
+            toast("song list is empty")
             finish()
+        } else {
+            songList = DataExample.songs!!
         }
+
+
+//        //TODO(임시 데이터 생성, 변경필요)
+//        recordItem = DataExample().createRecordItem()[position]
+//
+//        if (DataExample().createRecordItem()[position].songList != null) {
+//            songList = DataExample().createRecordItem()[position].songList!!
+//        } else {
+//            toast("노래 목록을 불러올 수 없습니다.")
+//            finish()
+//        }
 
         initView()
     }
@@ -117,9 +125,7 @@ class PlayerHome : AppCompatActivity() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 youtubePlayer = youTubePlayer
 
-                val currentVideoId = songList[songPosition].songLink
-
-                currentVideoId?.let { loadVideo(it) }
+                loadVideo(songList[position].songLink)
 
                 youtubePlayerSeekBar.youtubePlayerSeekBarListener =
                     object : YouTubePlayerSeekBarListener {
@@ -166,6 +172,17 @@ class PlayerHome : AppCompatActivity() {
             playRepeat()
         }
 
+        val goodButton = findViewById<ImageView>(R.id.iv_good)
+        goodButton.setOnClickListener {
+            Initialize().increaseCondition(songList[position].docId)
+        }
+
+
+        val badButton = findViewById<ImageView>(R.id.iv_bad)
+        badButton.setOnClickListener {
+            Initialize().decreaseCondition(songList[position].docId)
+        }
+
         playListFragment = PlayList()
         supportFragmentManager.beginTransaction()
             .add(R.id.songListContainer, playListFragment)
@@ -187,16 +204,15 @@ class PlayerHome : AppCompatActivity() {
             }
         }
 
-        var currentSong: Song? = recordItem.songList?.get(songPosition)
-        moreViewButton.setOnClickListener {
-            if (currentSong == null) {
-                toast("곡 정보를 불러올 수 없습니다.")
-            } else {
-                currentSong = recordItem.songList?.get(songPosition)
-                val dialog = currentSong?.let { it1 -> ViewMorePopup(this, it1) }
-                dialog?.show()
-            }
-        }
+//        moreViewButton.setOnClickListener {
+//            if (currentSong == null) {
+//                toast("곡 정보를 불러올 수 없습니다.")
+//            } else {
+//                currentSong = recordItem.songList?.get(songPosition)
+//                val dialog = currentSong?.let { it1 -> ViewMorePopup(this, it1) }
+//                dialog?.show()
+//            }
+//        }
 
         playButton = findViewById(R.id.playButton)
         playButton.setOnClickListener {
@@ -206,10 +222,10 @@ class PlayerHome : AppCompatActivity() {
                 startSong()
             }
         }
-        if (currentSong != null) {
-            setShuffle()
-            playRepeat()
-        }
+
+        setShuffle()
+        playRepeat()
+
         initPlayer()
     }
 
@@ -231,7 +247,7 @@ class PlayerHome : AppCompatActivity() {
         animateRecord()
         youtubePlayer.play()
         playingSongToggle = true
-        playListFragment.setHighlight(songPosition)
+        playListFragment.setHighlight(position)
     }
 
 
@@ -258,10 +274,10 @@ class PlayerHome : AppCompatActivity() {
     }
 
     private fun updateView() {
-        dateTextView.text = recordItem.date?.let { TimeUtils().toDateString(it) }
-        singerTextView.text = recordItem.songList?.get(songPosition)?.singer
-        songNameTextView.text = recordItem.songList?.get(songPosition)?.songName
-        emotionTextView.text = recordItem.emotion
+//        dateTextView.text = recordItem.date?.let { TimeUtils().toDateString(it) }
+        songNameTextView.text = songList[position].songName
+        singerTextView.text = songList[position].singer
+        emotionTextView.text = DataExample.myCondtion.emotion
     }
 
     private fun playNext() {
@@ -271,9 +287,9 @@ class PlayerHome : AppCompatActivity() {
         var ended = false
         if (!shuffleToggle) {
 //            normal play mode
-            songPosition += 1
-            if (songPosition > songList.size - 1) {
-                songPosition = 0
+            position += 1
+            if (position > songList.size - 1) {
+                position = 0
                 ended = true
             }
         } else {
@@ -287,17 +303,16 @@ class PlayerHome : AppCompatActivity() {
                 shufflePosition = 0
                 ended = true
             }
-            songPosition = shuffledList!![shufflePosition]
+            position = shuffledList!![shufflePosition]
         }
 
-        val videoId = songList[songPosition].songLink
-        videoId?.let { loadVideo(it) }
+        loadVideo(songList[position].songLink)
         if (ended) {
             if (repeatToggle == RepeatState.NO_REPEAT) {
                 startSong()
             } else {
                 stopSong()
-                playListFragment.setHighlight(songPosition)
+                playListFragment.setHighlight(position)
             }
         } else {
             startSong()
@@ -309,13 +324,12 @@ class PlayerHome : AppCompatActivity() {
         if (youtubePlayerLoading) {
             return
         }
-        songPosition -= 1
-        if (songPosition < 0) {
-            songPosition = songList.size - 1
+        position -= 1
+        if (position < 0) {
+            position = songList.size - 1
         }
 
-        val videoId = songList[songPosition].songLink
-        videoId?.let { loadVideo(it) }
+        loadVideo(songList[position].songLink)
         startSong()
         updateView()
     }
@@ -345,7 +359,7 @@ class PlayerHome : AppCompatActivity() {
         }
 
 //        set first value to current song
-        val currentPlayIndex = indexList.indexOf(songPosition)
+        val currentPlayIndex = indexList.indexOf(position)
         val willChange = indexList[0]
         indexList[0] = indexList[currentPlayIndex]
         indexList[currentPlayIndex] = willChange

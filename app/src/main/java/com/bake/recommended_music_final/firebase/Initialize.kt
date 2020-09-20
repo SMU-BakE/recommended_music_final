@@ -1,32 +1,47 @@
 package com.bake.recommended_music_final.firebase
 
 import android.util.Log
-import android.widget.Toast
-import com.google.firebase.FirebaseApp
+import com.bake.recommended_music_final.database.Condition
+import com.bake.recommended_music_final.database.DataExample
+import com.bake.recommended_music_final.database.Song
+import com.google.android.gms.tasks.Task
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.ktx.functions
 import com.google.firebase.ktx.Firebase
+import kotlin.random.Random
 
 class Initialize {
     private var functions: FirebaseFunctions = Firebase.functions("asia-northeast3")
 
     init {
-        functions.useEmulator("10.0.2.2", 5001)
+ //       functions.useEmulator("10.0.2.2", 5001)
+    }
+
+
+    //초반에 데이터 모으기 위해 랜덤지정
+    fun randomWeather(): String {
+        val random = Random
+        val num = random.nextInt(14)
+
+        val conditionList = listOf<String>(
+            "cloudy", "sunshine", "rainy", "snowy", "hot", "cold",
+            "fall", "spring", "winter", "summer",
+            "morning", "lunch", "evening", "dawn"
+        )
+
+        return conditionList[num]
     }
 
     fun increaseCondition(
-        songDocId: String,
-        emotion: String,
-        weather: String,
-        season: String,
-        time: String
+        songDocId: String
     ) {
+        val condition = DataExample.myCondtion
         Log.d("start fx", "increase")
         val conditionRequest = hashMapOf<String, String>(
-            "emotion" to emotion,
-            "weather" to weather,
-            "season" to season,
-            "time" to time
+            "emotion" to condition.emotion,
+            "weather" to condition.weather,
+            "season" to condition.season,
+            "time" to condition.time
         )
         val request = hashMapOf<String, Any>(
             "songDocId" to songDocId, "condition" to conditionRequest
@@ -43,18 +58,16 @@ class Initialize {
     }
 
     fun decreaseCondition(
-        songDocId: String,
-        emotion: String,
-        weather: String,
-        season: String,
-        time: String
+        songDocId: String
     ) {
         Log.d("start fx", "decrease")
+        val condition = DataExample.myCondtion
+
         val conditionRequest = hashMapOf<String, String>(
-            "emotion" to emotion,
-            "weather" to weather,
-            "season" to season,
-            "time" to time
+            "emotion" to condition.emotion,
+            "weather" to condition.weather,
+            "season" to condition.season,
+            "time" to condition.time
         )
         val request = hashMapOf<String, Any>(
             "songDocId" to songDocId, "condition" to conditionRequest
@@ -71,17 +84,40 @@ class Initialize {
     }
 
 
-    fun callRecommendMusic(emotion: String, weather: String, season: String, time: String) {
+    fun callRecommendMusic(
+        condition: Condition
+    ): Task<List<Song>> {
+        val emotion = condition.emotion
+        val weather = condition.weather
+        val season = condition.season
+        val time = condition.time
+
+        Log.d("recommend music fx is requested", "request")
         val request = hashMapOf<String, String>(
             "emotion" to emotion,
-            "weather" to weather,
-            "season" to season,
-            "time" to time
+            "weather" to randomWeather(),
+            "season" to randomWeather(),
+            "time" to randomWeather()
         )
-        functions.getHttpsCallable("requestSongListWithCondition").call(request)
-            .addOnCompleteListener {
-                val result = it.result?.data.toString()
-                Log.d("result", result)
+
+        return functions.getHttpsCallable("requestSongListWithCondition").call(request)
+            .continueWith {
+                if (!it.isSuccessful) {
+                    throw Error("hello?")
+                }
+
+                val songs = it.result?.data as List<*>
+
+                val songList: ArrayList<Song> = arrayListOf()
+
+                songs.map { song ->
+                    val songData = Song().from(song as HashMap<String, *>)
+                    if (songData != null) {
+                        songList.add(songData)
+                    }
+                }
+//                Log.d("result", songs.toString())
+                return@continueWith songList
             }
     }
 

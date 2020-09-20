@@ -15,11 +15,15 @@ import com.bake.recommended_music_final.database.DataExample
 import kotlin.properties.Delegates
 
 class PlayList : Fragment() {
-
     private lateinit var listRV: RecyclerView
     private lateinit var dateTV: TextView
-    private var position by Delegates.notNull<Int>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (DataExample.songs == null) {
+            activity!!.onBackPressed()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,23 +33,16 @@ class PlayList : Fragment() {
         listRV = view.findViewById(R.id.playlistRV)
         dateTV = view.findViewById(R.id.dateTextView)
 
-        activity!!.intent.extras?.getInt("position")?.let {
-            position = it
-        }
-
-        dateTV.text = DataExample().createRecordItem()[position].date?.let {
-            TimeUtils().toDateString(
-                it
-            )
-        }
+//        dateTV.text = DataExample().createRecordItem()[position].date?.let {
+//            TimeUtils().toDateString(
+//                it
+//            )
+//        }
 
         listRV.apply {
-            adapter = DataExample().createRecordItem()[position].songList?.let {
-                PlaylistAdapter(it, context, null)
-            }
+            adapter = PlaylistAdapter(DataExample.songs!!, context, null)
             layoutManager = LinearLayoutManager(context)
         }
-
 
         return view
     }
@@ -53,9 +50,7 @@ class PlayList : Fragment() {
     fun setHighlight(songPosition: Int) {
 //        updateView
         listRV.apply {
-            adapter = DataExample().createRecordItem()[position].songList?.let {
-                PlaylistAdapter(it, context, songPosition)
-            }
+            adapter = PlaylistAdapter(DataExample.songs!!, context, songPosition)
             layoutManager = LinearLayoutManager(context)
         }
     }
