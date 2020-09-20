@@ -10,7 +10,7 @@ import com.bake.recommended_music_final.R
 import com.bake.recommended_music_final.database.Song
 import kotlinx.android.synthetic.main.unit_song.view.*
 
-class FavoriteSongListAdapter(
+class HomeListAdapter(
     private val songList: List<Song>, private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
