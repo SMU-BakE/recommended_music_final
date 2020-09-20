@@ -45,6 +45,7 @@ class HomeActivity : AppCompatActivity() {
 
     //SongList
     private lateinit var listRV: RecyclerView
+    private var recordNum: Int = 0
 
     
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,7 +91,8 @@ class HomeActivity : AppCompatActivity() {
             }
             adapter = HomeListAdapter(
                 songList = DataExample().createRecordItem()[0].songList!!,
-                context = this@HomeActivity
+                context = this@HomeActivity,
+                recordNum = recordNum
             )
             layoutManager = LinearLayoutManager(this@HomeActivity)
         }
@@ -104,7 +106,8 @@ class HomeActivity : AppCompatActivity() {
             }
             adapter = HomeListAdapter(
                 songList = DataExample().createRecordItem()[2].songList!!,
-                context = this@HomeActivity
+                context = this@HomeActivity,
+                recordNum = 2
             )
             layoutManager = LinearLayoutManager(this@HomeActivity)
         }
