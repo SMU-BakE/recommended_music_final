@@ -16,6 +16,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.*
 import kotlinx.android.synthetic.main.activity_home.*
 import org.jetbrains.anko.startActivity
@@ -26,17 +28,32 @@ import java.util.*
 import com.bake.recommended_music_final.R
 import com.bake.recommended_music_final.TimeUtils
 import com.bake.recommended_music_final.firebase.Initialize
+import com.bake.recommended_music_final.database.DataExample
+import com.bake.recommended_music_final.database.RecordItem
+import com.bake.recommended_music_final.database.Song
+import com.bake.recommended_music_final.player.PlaylistAdapter
 import com.bake.recommended_music_final.userfeed.UserFeedActivity
 import org.jetbrains.anko.toast
+import org.jetbrains.anko.toast
+import kotlin.properties.Delegates
 
 
 class HomeActivity : AppCompatActivity() {
+
+    //위치, 날씨
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private val PERMISSION_ID = 1000
+//    private val CITY: String = "segok-dong,kr"
     private var LAT: Double = 37.4643
     private var LON: Double = 127.106
     private val API: String = "cf47ea0b59553630ae022abdf6c77247" //OpenWeatherMap 날씨 API
-//    private val CITY: String = "segok-dong,kr"
+
+    //RecentSongList
+    private lateinit var listRV: RecyclerView
+    private var position by Delegates.notNull<Int>()    //해당 날짜의 음악 id
+    private var songPosition = 0
+    private lateinit var songList: List<Song>
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +68,7 @@ class HomeActivity : AppCompatActivity() {
         //위치
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
-        //날씨, 시간
+        //날씨
         weatherTask().execute()
         //NOW 이미지뷰 투명도 애니메이션
         animateNOW()
@@ -59,7 +76,20 @@ class HomeActivity : AppCompatActivity() {
         //date BE 에서 처리
         tv_date.text = TimeUtils().getWeather()
 
-        button_home.setOnClickListener {
+        //최근 추천 음악 리스트
+//        listRV = findViewById(R.id.recentSong)
+//        intent.extras?.getInt("position")?.let {
+//            position = it
+//        }
+//        listRV.apply {
+//            adapter = DataExample().createRecordItem()[position].songList?.let {
+//                RecentSongListAdapter(it, context, null)
+//            }
+//            layoutManager = LinearLayoutManager(context)
+//        }
+
+
+        button_home.setOnClickListener{
             startActivity<HomeActivity>()
             finish()
         }
@@ -100,59 +130,40 @@ class HomeActivity : AppCompatActivity() {
     }
 
     //위치 권한이 있는지 검사
-    private fun checkPermissions(): Boolean {
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
+    private fun checkPermissions(): Boolean{
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             return true
         }
         return false
     }
-
     //이전에 권한을 거부한 적이 있는 경우 권한 요청
-    private fun requestPermissions() {
+    private fun requestPermissions(){
         ActivityCompat.requestPermissions(
             this,
-            arrayOf(
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ),
+            arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
             PERMISSION_ID
         )
     }
-
     //사용자가 권한을 수락 또는 거부했을 때: 수락 시 다음 단계로 이동
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_ID) {
-            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+        if(requestCode == PERMISSION_ID){
+            if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)){
                 //Granted. Start getting the location information
             }
         }
     }
-
     //사용자가 '설정'에서 위치 권한을 수락할 경우
     private fun isLocationEnabled(): Boolean {
-        var locationManager: LocationManager =
-            getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        var locationManager: LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
     }
-
     //실행 중 권한 요청 코드 적용
     @SuppressLint("MissingPermission")
-    private fun requestNewLocationData() {
+    private fun requestNewLocationData(){
         var locationRequest = LocationRequest() //위치 요청 객체
         locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY //GPS 우선
         locationRequest.interval = 10000 //위치 정보 업데이트 시간 간격
@@ -165,9 +176,8 @@ class HomeActivity : AppCompatActivity() {
             Looper.myLooper()
         )
     }
-
     //최근 현재 위치에 대한 Location 객체(위도,경도 정보)를 얻음:
-    private val locationCallback = object : LocationCallback() {
+    private val locationCallback = object : LocationCallback(){
         override fun onLocationResult(locationResult: LocationResult) {
             var lastLocation: Location = locationResult.lastLocation
 //            findViewById<TextView>(R.id.latTextView).text = lastLocation.latitude.toString()
@@ -193,13 +203,11 @@ class HomeActivity : AppCompatActivity() {
 
         //스레드가 수행할 작업(생성된 스레드)
         override fun doInBackground(vararg params: String?): String? {
-            var response: String?
-            try { // lat=$LAT&lon=$LON | q=$CITY | &lang=kr
-                response =
-                    URL("https://api.openweathermap.org/data/2.5/weather?lat=$LAT&lon=$LON&units=metric&appid=$API").readText(
-                        Charsets.UTF_8
-                    )
-            } catch (e: Exception) {
+            var response:String?
+            try{ // lat=$LAT&lon=$LON | q=$CITY | &lang=kr
+                response = URL("https://api.openweathermap.org/data/2.5/weather?lat=$LAT&lon=$LON&units=metric&appid=$API").readText(Charsets.UTF_8)
+            }
+            catch (e: Exception){
                 response = null
             }
             return response
@@ -215,23 +223,19 @@ class HomeActivity : AppCompatActivity() {
                 val weather = jsonObj.getJSONArray("weather").getJSONObject(0)
                 val sys = jsonObj.getJSONObject("sys")
 
-                val updatedAt: Long = jsonObj.getLong("dt")
-                val updatedAtText =
-                    "Updated at: " + SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.KOREA).format(
-                        Date(updatedAt * 1000)
-                    )//.format(Date(updatedAt*1000))
+                val updatedAt:Long = jsonObj.getLong("dt")
+                val updatedAtText = "Updated at: "+ SimpleDateFormat("yyyy-MM-dd hh:mm a", Locale.KOREA).format(Date(updatedAt*1000))//.format(Date(updatedAt*1000))
                 val weatherMainDescription = weather.getString("main")
                 val weatherDescription = weather.getString("description")
-                val temp = main.getString("temp") + "°C"
-                val address = jsonObj.getString("name") + ", " + sys.getString("country")
+                val temp = main.getString("temp")+"°C"
+                val address = jsonObj.getString("name")+", "+sys.getString("country")
 
 
                 /* Populating extracted data into our views */
                 findViewById<TextView>(R.id.status).text = weatherDescription.capitalize()
                 findViewById<TextView>(R.id.temp).text = temp
 
-                val tempt = classifyWeather(temp, weatherMainDescription)
-                toast(tempt)
+                classifyWeather(temp, weatherMainDescription)
 
             } catch (e: Exception) {
 //                findViewById<ProgressBar>(R.id.loader).visibility = View.GONE
@@ -240,28 +244,31 @@ class HomeActivity : AppCompatActivity() {
     }
 
     //날씨 6가지 기준에 따라 분류
-    private fun classifyWeather(temp: String, main: String): String {
-        if (main == "Clear" && temp.toDouble() > 5 && temp.toDouble() < 24) {
+    private fun classifyWeather(temp: String, main: String): String{
+        if(main == "Clear" && temp.toDouble() > 5 && temp.toDouble() < 24){
             return "sunshine"
-        } else if (main == "Clear" && temp.toDouble() >= 24) {
+        }
+        else if(main == "Clear" && temp.toDouble() >= 24){
             return "hot"
-        } else if (main == "Clear" && temp.toDouble() <= 5) {
+        }
+        else if(main == "Clear" && temp.toDouble() <= 5){
             return "cold"
-        } else if (main == "Clouds" || main == "Mist" || main == "Smoke" || main == "Haze" || main == "Dust"
-            || main == "Fog" || main == "Sand" || main == "Dust" || main == "Ash" || main == "Squall" || main == "Tornado"
-        ) {
+        }
+        else if(main == "Clouds" || main == "Mist" || main == "Smoke" || main == "Haze" || main == "Dust"
+            || main == "Fog" || main == "Sand" || main == "Dust" || main == "Ash" || main == "Squall" || main == "Tornado"){
             return "cloudy"
-        } else if (main == "Rain" || main == "Thunderstorm" || main == "Drizzle") {
+        }
+        else if(main == "Rain" || main == "Thunderstorm" || main == "Drizzle"){
             return "rainy"
-        } else if (main == "Snow") {
+        }
+        else if(main == "Snow"){
             return "snowy"
         }
         return "sunshine"
     }
 
-
     //NOW 이미지뷰 투명도 애니메이션
-    private fun animateNOW() {
+    private fun animateNOW(){
         val alphaNOW = AnimationUtils.loadAnimation(this, R.anim.now_animation)
         imageView_NOW.animation = alphaNOW
     }
