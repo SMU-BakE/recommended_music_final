@@ -11,7 +11,7 @@ import com.bake.recommended_music_final.database.Song
 import kotlinx.android.synthetic.main.unit_song.view.*
 
 class HomeListAdapter(
-    private val songList: List<Song>, private val context: Context, private val recordNum: Int
+    private val songList: List<Song>, private val context: Context
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -28,7 +28,7 @@ class HomeListAdapter(
         holder.itemView.text1.text = data.songName
         holder.itemView.text2.text = data.singer
         holder.itemView.imageView_play.setOnClickListener {
-            Navigator(context).startPlayerHomeActivity(recordNum)
+            Navigator(context).startPlayerHomeActivity(songPosition)
         }
     }
 
