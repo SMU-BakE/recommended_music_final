@@ -63,6 +63,8 @@ dependencies {
 
     //for firebase
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
+    implementation 'com.google.firebase:firebase-database:19.4.0'
 
 //    for firebase functions
     implementation "com.google.firebase:firebase-functions-ktx:19.1.0"

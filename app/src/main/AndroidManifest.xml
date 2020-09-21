@@ -34,11 +34,9 @@
         <activity android:name="com.bake.recommended_music_final.setting.SettingListActivity" />
         <activity android:name="com.bake.recommended_music_final.userfeed.UserFeedActivity" />
         <activity android:name="com.bake.recommended_music_final.home.HomeActivity" />
-        <activity android:name=".user.EmailAuth" />
-        <activity android:name=".user.LoginLoading" />
-        <activity android:name=".user.FindPassword" />
+        <activity android:name=".user.SignupActivity" />
         <activity android:name=".user.SignInActivity" />
-        <activity android:name=".user.SignUpActivity" />
+        <activity android:name=".user.FindAcitivty" />
 
         <activity android:name="com.bake.recommended_music_final.player.PlayerHome"
             android:theme="@style/AppTheme.Player" />
