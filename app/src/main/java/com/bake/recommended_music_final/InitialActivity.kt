@@ -10,7 +10,7 @@ import com.bake.recommended_music_final.firebase.Initialize
 import kotlinx.android.synthetic.main.activity_initial.*
 
 //예시. 임시 변수
-private var signIn: Boolean = false
+private var signIn: Boolean = true
 
 class InitialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

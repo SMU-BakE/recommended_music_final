@@ -14,7 +14,7 @@ class Initialize {
     private var functions: FirebaseFunctions = Firebase.functions("asia-northeast3")
 
     init {
- //       functions.useEmulator("10.0.2.2", 5001)
+        //       functions.useEmulator("10.0.2.2", 5001)
     }
 
 
@@ -95,9 +95,9 @@ class Initialize {
         Log.d("recommend music fx is requested", "request")
         val request = hashMapOf<String, String>(
             "emotion" to emotion,
-            "weather" to randomWeather(),
-            "season" to randomWeather(),
-            "time" to randomWeather()
+            "weather" to weather,
+            "season" to season,
+            "time" to time
         )
 
         return functions.getHttpsCallable("requestSongListWithCondition").call(request)
