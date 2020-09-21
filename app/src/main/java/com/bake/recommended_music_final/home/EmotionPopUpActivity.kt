@@ -61,6 +61,7 @@ class EmotionPopUpActivity : AppCompatActivity() {
                 songs = songList
                 Log.d("songs updated", songs.toString())
                 setResult(1001, Intent().putExtra("result", true))
+                Navigator(this).startHeartRatePopUpActivity(emotion)
                 finish()
             }
         }
