@@ -47,11 +47,8 @@ class HomeActivity : AppCompatActivity() {
     private var LON: Double = 127.106
     private val API: String = "cf47ea0b59553630ae022abdf6c77247" //OpenWeatherMap 날씨 API
 
-    //RecentSongList
+    //SongList
     private lateinit var listRV: RecyclerView
-    private var position by Delegates.notNull<Int>()    //해당 날짜의 음악 id
-    private var songPosition = 0
-    private lateinit var songList: List<Song>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,16 +82,22 @@ class HomeActivity : AppCompatActivity() {
         getLastLocation()
         //날씨
         weatherTask().execute()
-        //NOW 이미지뷰 투명도 애니메이션
-        animateNOW()
+        //이미지뷰 애니메이션
+        animateNOWnSWM()
 
         //date BE 에서 처리
-        tv_date.text = TimeUtils().getSeoson()
+        tv_date.text = TimeUtils().getSeoson().capitalize()
+
+        //좋아한 음악 리스트
+        listRV = findViewById(R.id.favoriteSong)
+
+        updateSongsList()
 
         //최근 추천 음악 리스트
         listRV = findViewById(R.id.recentSong)
 
         updateSongsList()
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -123,7 +126,7 @@ class HomeActivity : AppCompatActivity() {
 
 
     //<위치>
-//마지막으로 알려진 위치 가져오기
+    //마지막으로 알려진 위치 가져오기
     @SuppressLint("MissingPermission")
     private fun getLastLocation() {
         if (checkPermissions()) { //위치 권한 검사
@@ -229,7 +232,7 @@ class HomeActivity : AppCompatActivity() {
 
 
     //<날씨>
-//AsyncTask 클래스 - UI와 즉각적 상호작용
+    //AsyncTask 클래스 - UI와 즉각적 상호작용
     inner class weatherTask() : AsyncTask<String, Void, String>() {
 
         //스레드가 시작하기 전에 수행할 작업(메인 스레드)
@@ -314,10 +317,15 @@ class HomeActivity : AppCompatActivity() {
         return result
     }
 
-    //NOW 이미지뷰 투명도 애니메이션
-    private fun animateNOW() {
+
+    private fun animateNOWnSWM() {
         val alphaNOW = AnimationUtils.loadAnimation(this, R.anim.now_animation)
         imageView_NOW.animation = alphaNOW
+
+        val translateEmotion2 = AnimationUtils.loadAnimation(this, R.anim.emotion_transtate_2)
+        imageView_pan.animation = translateEmotion2
+        imageView3.animation = translateEmotion2
+        imageView4.animation = translateEmotion2
     }
 
 }
