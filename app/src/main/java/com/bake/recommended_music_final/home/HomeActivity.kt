@@ -313,7 +313,7 @@ class HomeActivity : AppCompatActivity() {
         }
         Log.d("weather changed", result)
         DataExample.myCondtion.weather = result
-        toast(result)
+//        toast(result)
         return result
     }
 

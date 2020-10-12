@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.Window
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bake.recommended_music_final.R
 import com.bake.recommended_music_final.firebase.Initialize
 
@@ -97,6 +98,7 @@ class StarRatePopup(val context: Context, songDocId: String) {
         completeButton.setOnClickListener {
             Initialize().increaseCondition(songDocId, starRate)
             starDialog.cancel()
+            Toast.makeText(context, "의견 감사합니다. :)", Toast.LENGTH_SHORT).show()
         }
 
 
