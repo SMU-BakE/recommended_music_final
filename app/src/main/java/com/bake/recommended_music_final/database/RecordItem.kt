@@ -28,39 +28,45 @@ data class Song(
     }
 }
 
+data class ConditionFeedbackRequest(
+    var songDocId: String,
+    var condition: Condition,
+    var starRate: Int
+) {
+    fun toMap(): Map<String, Any> {
+        return mapOf(
+            "songDocId" to songDocId,
+            "condition" to condition.toMap(),
+            "starRate" to starRate
+        )
+    }
+}
+
+data class ConditionRequest(var condition: Condition) {
+    fun toMap(): Map<String, String> {
+        return condition.toMap()
+    }
+}
+
 data class Condition(
     var emotion: String = "flutter",
     var weather: String = "cloudy",
     var season: String = "fall",
-    var time: String = "morning"
-)
+    var time: String = "morning",
+    var heartRate: String = "normalHeartRate"
+) {
+    fun toMap(): Map<String, String> {
+        return hashMapOf<String, String>(
+            "emotion" to emotion,
+            "weather" to weather,
+            "season" to season,
+            "time" to time,
+            "heartRate" to heartRate
+        )
+    }
+}
 
-data class ConditionNotUsed(
-    var angry: Int = 0,
-    var flutter: Int = 0,
-    var funny: Int = 0,
-    var happy: Int = 0,
-    var sad: Int = 0,
-    var soso: Int = 0,
 
-    var sunshine: Int = 0,
-    var cloudy: Int = 0,
-    var rainy: Int = 0,
-    var hot: Int = 0,
-    var cold: Int = 0,
-    var snowy: Int = 0,
-
-    var spring: Int = 0,
-    var summer: Int = 0,
-    var fall: Int = 0,
-    var winter: Int = 0,
-
-    var morning: Int = 0,
-    var lunch: Int = 0,
-    var evening: Int = 0,
-    var dawn: Int = 0
-
-)
 
 
 

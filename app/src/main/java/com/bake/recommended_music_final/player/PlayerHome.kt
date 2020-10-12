@@ -172,16 +172,23 @@ class PlayerHome : AppCompatActivity() {
             playRepeat()
         }
 
+
+        //test
         val goodButton = findViewById<ImageView>(R.id.iv_good)
         goodButton.setOnClickListener {
-            Initialize().increaseCondition(songList[position].docId)
+            if (songList[position] == null) {
+                toast("곡 정보를 불러올 수 없습니다.")
+            } else {
+                var currentSongDocId = songList[position].docId
+                val starDialog = StarRatePopup(this, currentSongDocId)
+                starDialog?.show()
+
+            }
+
+//            Initialize().increaseCondition(songList[position].docId,3)
         }
 
 
-        val badButton = findViewById<ImageView>(R.id.iv_bad)
-        badButton.setOnClickListener {
-            Initialize().decreaseCondition(songList[position].docId)
-        }
 
         playListFragment = PlayList()
         supportFragmentManager.beginTransaction()
@@ -204,15 +211,15 @@ class PlayerHome : AppCompatActivity() {
             }
         }
 
-//        moreViewButton.setOnClickListener {
-//            if (currentSong == null) {
-//                toast("곡 정보를 불러올 수 없습니다.")
-//            } else {
-//                currentSong = recordItem.songList?.get(songPosition)
-//                val dialog = currentSong?.let { it1 -> ViewMorePopup(this, it1) }
-//                dialog?.show()
-//            }
-//        }
+        moreViewButton.setOnClickListener {
+            if (songList[position] == null) {
+                toast("곡 정보를 불러올 수 없습니다.")
+            } else {
+                 var currentSong = songList[position]
+                val dialog = currentSong?.let { it1 -> ViewMorePopup(this, it1) }
+                dialog?.show()
+            }
+        }
 
         playButton = findViewById(R.id.playButton)
         playButton.setOnClickListener {

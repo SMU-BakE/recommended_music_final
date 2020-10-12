@@ -1,9 +1,7 @@
 package com.bake.recommended_music_final.firebase
 
 import android.util.Log
-import com.bake.recommended_music_final.database.Condition
-import com.bake.recommended_music_final.database.DataExample
-import com.bake.recommended_music_final.database.Song
+import com.bake.recommended_music_final.database.*
 import com.google.android.gms.tasks.Task
 import com.google.firebase.functions.FirebaseFunctions
 import com.google.firebase.functions.ktx.functions
@@ -14,7 +12,7 @@ class Initialize {
     private var functions: FirebaseFunctions = Firebase.functions("asia-northeast3")
 
     init {
-        //       functions.useEmulator("10.0.2.2", 5001)
+//        functions.useEmulator("10.0.2.2", 5001)
     }
 
 
@@ -33,28 +31,26 @@ class Initialize {
     }
 
     fun increaseCondition(
-        songDocId: String
+        songDocId: String,
+        starRate: Int
     ) {
         val condition = DataExample.myCondtion
         Log.d("start fx", "increase")
-        val conditionRequest = hashMapOf<String, String>(
-            "emotion" to condition.emotion,
-            "weather" to condition.weather,
-            "season" to condition.season,
-            "time" to condition.time
-        )
-        val request = hashMapOf<String, Any>(
-            "songDocId" to songDocId, "condition" to conditionRequest
-        )
+        val request = ConditionFeedbackRequest(songDocId, condition, starRate)
 
-        functions.getHttpsCallable("increaseCondition").call(request).addOnCompleteListener {
-            if (!it.isSuccessful) {
-                Log.e("error", it.exception.toString())
-                return@addOnCompleteListener
+//        val request = hashMapOf<String, Any>(
+//            "songDocId" to songDocId, "condition" to conditionRequest, "star"
+//        )
+
+        functions.getHttpsCallable("increaseCondition").call(request.toMap())
+            .addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    Log.e("error", it.exception.toString())
+                    return@addOnCompleteListener
+                }
+
+                Log.d("result", it.result.toString())
             }
-
-            Log.d("result", it.result.toString())
-        }
     }
 
     fun decreaseCondition(
@@ -91,16 +87,13 @@ class Initialize {
         val weather = condition.weather
         val season = condition.season
         val time = condition.time
+        val heartRate = condition.heartRate
 
         Log.d("recommend music fx is requested", "request")
-        val request = hashMapOf<String, String>(
-            "emotion" to emotion,
-            "weather" to weather,
-            "season" to season,
-            "time" to time
-        )
 
-        return functions.getHttpsCallable("requestSongListWithCondition").call(request)
+        val request = ConditionRequest(Condition(emotion, weather, season, time, heartRate))
+
+        return functions.getHttpsCallable("requestSongListWithCondition").call(request.toMap())
             .continueWith {
                 if (!it.isSuccessful) {
                     throw Error("hello?")
