@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bake.recommended_music_final.Navigator
 import com.bake.recommended_music_final.R
 import com.bake.recommended_music_final.database.SettingMenu
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.unit_setting.view.*
 
 
@@ -37,6 +39,7 @@ class SettingListAdapter(
                 2 -> {
                     Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
                     Navigator(context).executeSignOut()
+
                 }
 
             }

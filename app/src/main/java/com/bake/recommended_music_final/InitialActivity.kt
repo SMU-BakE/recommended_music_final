@@ -5,22 +5,17 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.animation.AnimationUtils
 import com.bake.recommended_music_final.database.DataExample
+import com.bake.recommended_music_final.firebase.Auth
 import com.bake.recommended_music_final.firebase.Initialize
 
 import kotlinx.android.synthetic.main.activity_initial.*
 
-//예시. 임시 변수
-private var signIn: Boolean = true
 
 class InitialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_initial)
 
-
-//        Initialize().callIncreaseCount("썸탈거야", "flutter", "good")
-//        Initialize().callDecreaseCount("한숨", "funny", "bad")
-//        Initialize().callRecommendMusic("flutter", "cloudy", 70)
     }
 
     override fun onStart() {
@@ -39,18 +34,18 @@ class InitialActivity : AppCompatActivity() {
         checkLogin()
         DataExample.myCondtion.season = TimeUtils().getSeoson()
         DataExample.myCondtion.time = TimeUtils().getTime()
-//        DataExample.myCondtion.weather = TimeUtils().get
         finish()
     }
 
     private fun checkLogin() {
         //로그인 되어있으면 홈으로
-        if (signIn) {
+        if (Auth().user != null) {
             Navigator(this).startHomeActivity()
         } else {
             //로그인 되어있지 않으면 로그인창으로
             Navigator(this).startLoginActivity()
         }
+
     }
 
     private fun animatePan() {

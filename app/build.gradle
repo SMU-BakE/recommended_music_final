@@ -69,4 +69,7 @@ dependencies {
 //    for firebase functions
     implementation "com.google.firebase:firebase-functions-ktx:19.1.0"
 
+    //    for firebase firestore
+    implementation 'com.google.firebase:firebase-firestore-ktx:21.5.0'
+
 }
