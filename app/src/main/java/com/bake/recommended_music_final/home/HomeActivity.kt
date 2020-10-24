@@ -85,8 +85,8 @@ class HomeActivity : AppCompatActivity() {
         //이미지뷰 애니메이션
         animateNOWnSWM()
 
-        //date BE 에서 처리
         tv_date.text = TimeUtils().getSeoson().capitalize()
+
 
         //좋아한 음악 리스트
         listRV = findViewById(R.id.favoriteSong)
@@ -313,7 +313,7 @@ class HomeActivity : AppCompatActivity() {
         }
         Log.d("weather changed", result)
         DataExample.myCondtion.weather = result
-//        toast(result)
+        //toast(result)
         return result
     }
 

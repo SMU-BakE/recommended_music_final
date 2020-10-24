@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.ktx.Firebase;
 
 import java.util.HashMap;
 import java.util.regex.Pattern;
@@ -135,8 +136,6 @@ public class SignupActivity extends AppCompatActivity {
 
                             //가입 성공시
                             if (task.isSuccessful()) {
-
-
                                 //사용자 인증메일 보내기.
                                 mDialog.dismiss();
 
@@ -155,6 +154,10 @@ public class SignupActivity extends AppCompatActivity {
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 DatabaseReference reference = database.getReference("Users");
                                 reference.child(uid).setValue(hashMap);
+
+
+
+
 
 
                                 //가입이 이루어져을시 가입 화면을 빠져나감.

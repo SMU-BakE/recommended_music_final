@@ -9,6 +9,7 @@ import com.bake.recommended_music_final.friends.Following
 import com.bake.recommended_music_final.home.HeartRatePopUpActivity
 import com.bake.recommended_music_final.home.HomeActivity
 import com.bake.recommended_music_final.player.PlayerHome
+import com.bake.recommended_music_final.setting.EditProfile
 import com.bake.recommended_music_final.setting.SettingListActivity
 import com.bake.recommended_music_final.user.SignInActivity
 
@@ -55,9 +56,14 @@ class Navigator(val context: Context) {
         context.startActivity(intent)
     }
 
-    fun startHeartRatePopUpActivity(emotion : String){
-        val intent = Intent(context, HeartRatePopUpActivity::class.java).putExtra("emotion",emotion)
+    fun startHeartRatePopUpActivity(emotion: String) {
+        val intent =
+            Intent(context, HeartRatePopUpActivity::class.java).putExtra("emotion", emotion)
         context.startActivity(intent)
     }
 
+    fun startEditProfileActivity() {
+        val intent = Intent(context, EditProfile::class.java)
+        context.startActivity(intent)
+    }
 }

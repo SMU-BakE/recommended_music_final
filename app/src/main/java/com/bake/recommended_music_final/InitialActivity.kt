@@ -7,8 +7,10 @@ import android.view.animation.AnimationUtils
 import com.bake.recommended_music_final.database.DataExample
 import com.bake.recommended_music_final.firebase.Auth
 import com.bake.recommended_music_final.firebase.Initialize
+import com.bake.recommended_music_final.firebase.Profile
 
 import kotlinx.android.synthetic.main.activity_initial.*
+import org.jetbrains.anko.toast
 
 
 class InitialActivity : AppCompatActivity() {
@@ -31,21 +33,31 @@ class InitialActivity : AppCompatActivity() {
     }
 
     private fun initialApp() {
-        checkLogin()
-        DataExample.myCondtion.season = TimeUtils().getSeoson()
-        DataExample.myCondtion.time = TimeUtils().getTime()
-        finish()
+        checkUser()
     }
 
-    private fun checkLogin() {
-        //로그인 되어있으면 홈으로
-        if (Auth().user != null) {
-            Navigator(this).startHomeActivity()
-        } else {
-            //로그인 되어있지 않으면 로그인창으로
+    private fun checkUser() {
+//       check login
+        val user = Auth().user
+
+        if (user == null) {
             Navigator(this).startLoginActivity()
+            finish()
+        } else {
+            Navigator(this).startHomeActivity()
+            DataExample.myCondtion.season = TimeUtils().getSeoson()
+            DataExample.myCondtion.time = TimeUtils().getTime()
+            finish()
         }
 
+//        val profile = Profile().getProfile(user!!.uid).addOnCompleteListener{
+//
+//        }
+//        if (profile == null) {
+//            Navigator(this).startEditProfileActivity()
+//        } else {
+//            toast(profile.email.toString())
+//        }
     }
 
     private fun animatePan() {

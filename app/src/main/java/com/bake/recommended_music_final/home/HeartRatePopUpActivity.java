@@ -58,7 +58,7 @@ public class HeartRatePopUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = getIntent();
-                String emotion = intent.getStringExtra("emotion");
+                final String emotion = intent.getStringExtra("emotion");
                 Toast.makeText(getApplicationContext(), emotion, Toast.LENGTH_SHORT).show();
 
                 //서버에 노래추천 요청

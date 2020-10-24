@@ -53,7 +53,7 @@ class Initialize {
             }
     }
 
-    fun decreaseCondition(
+    /*fun decreaseCondition(
         songDocId: String
     ) {
         Log.d("start fx", "decrease")
@@ -77,7 +77,7 @@ class Initialize {
 
             Log.d("result", it.result.toString())
         }
-    }
+    }*/
 
 
     fun callRecommendMusic(
