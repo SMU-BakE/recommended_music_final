@@ -96,7 +96,7 @@ class Initialize {
         return functions.getHttpsCallable("requestSongListWithCondition").call(request.toMap())
             .continueWith {
                 if (!it.isSuccessful) {
-                    throw Error("hello?")
+                    throw Error(it.exception)
                 }
 
                 val songs = it.result?.data as List<*>

@@ -44,6 +44,13 @@ class DataExample {
         //데이터베이스에서 RecordItem 받아와서 날짜순으로 정렬해야함.
         recordItemList.add(
             RecordItem(
+                "11",
+                "설레설레",
+                1588331341000
+            )
+        )
+       /* recordItemList.add(
+            RecordItem(
                 "설레",
                 1588331341000
             )
@@ -83,7 +90,7 @@ class DataExample {
                 "화나",
                 1577876941000
             )
-        )
+        )*/
 
 
         return recordItemList

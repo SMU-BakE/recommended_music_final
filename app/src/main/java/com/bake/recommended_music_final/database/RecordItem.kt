@@ -3,6 +3,7 @@ package com.bake.recommended_music_final.database
 import android.util.Log
 
 data class RecordItem(
+    var userId: String = "",
     var emotion: String? = null,
     var date: Long? = null,
     var songList: List<Song>? = null

@@ -28,7 +28,7 @@ class HomeListAdapter(
         holder.itemView.text1.text = data.songName
         holder.itemView.text2.text = data.singer
         holder.itemView.imageView_play.setOnClickListener {
-            Navigator(context).startPlayerHomeActivity(songPosition)
+            Navigator(context).startPlayerHomeActivity(songPosition,"임시","바꿔아함,..")
         }
     }
 

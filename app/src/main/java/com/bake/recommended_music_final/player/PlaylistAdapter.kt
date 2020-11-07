@@ -29,6 +29,7 @@ class PlaylistAdapter(
         holder.itemView.songName.text = data.songName
         holder.itemView.singer.text = data.singer
 
+
         if (songPosition == highlight) {
 //            set highlight
             holder.itemView.musicNote.setColorFilter(

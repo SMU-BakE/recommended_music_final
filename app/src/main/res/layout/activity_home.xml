@@ -261,4 +261,15 @@
             app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/btn_song_list_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="노래목록 저장"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="@+id/title_recommended_music"
+        app:layout_constraintStart_toEndOf="@+id/title_recommended_music"
+        app:layout_constraintTop_toTopOf="@+id/title_recommended_music" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

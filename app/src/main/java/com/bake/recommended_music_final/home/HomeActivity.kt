@@ -28,12 +28,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import com.bake.recommended_music_final.R
 import com.bake.recommended_music_final.TimeUtils
-import com.bake.recommended_music_final.firebase.Initialize
 import com.bake.recommended_music_final.database.DataExample
-import com.bake.recommended_music_final.database.Song
+import com.bake.recommended_music_final.database.RecordItem
 import com.bake.recommended_music_final.userfeed.UserFeedActivity
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import org.jetbrains.anko.toast
-import kotlin.properties.Delegates
 
 
 class HomeActivity : AppCompatActivity() {
@@ -50,17 +51,22 @@ class HomeActivity : AppCompatActivity() {
     //SongList
     private lateinit var listRV: RecyclerView
 
+    //날짜별 노래 저장
+    private lateinit var db: FirebaseFirestore
+    private val uid = Firebase.auth.currentUser?.uid
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        //날짜별 노래 저장
+        db = FirebaseFirestore.getInstance()
 
-        //잠시 테스트
-        imageView_BAKE.setOnClickListener {
-            //Initialize().sampleLike("01oOhsYxuRrhQuBCDtDc", "flutter", "cloudy", "fall", "morning")
-            Log.d("songlist", DataExample.myCondtion.toString())
+        btn_song_list_save.setOnClickListener {
+            saveRecordItem()
         }
+
+
 
         button_home.setOnClickListener {
             startActivity<HomeActivity>()
@@ -75,6 +81,7 @@ class HomeActivity : AppCompatActivity() {
         button_mystudio.setOnClickListener {
             startActivity<UserFeedActivity>()
         }
+
 
 
         //위치
@@ -326,6 +333,26 @@ class HomeActivity : AppCompatActivity() {
         imageView_pan.animation = translateEmotion2
         imageView3.animation = translateEmotion2
         imageView4.animation = translateEmotion2
+    }
+
+    private fun saveRecordItem() {
+        val date = TimeUtils().getTimestamp()
+        val emotion = DataExample.myCondtion.emotion
+        val songList = DataExample.songs
+//        songList 대신 RecordItem 을 저장!
+        if(uid == null){
+            throw Error("Cannot get User information")
+        }
+
+        val record = RecordItem(uid, emotion, date, songList)
+        Log.d("tes", songList.toString())
+        db.collection("record_item").document().set(record)
+            .addOnCompleteListener {
+                if (it.isSuccessful)
+                    toast("my studio 에 노래목록이 저장되었습니다.")
+                else
+                    Log.d("db error", it.exception.toString())
+            }
     }
 
 }

@@ -28,6 +28,9 @@ import kotlin.properties.Delegates
 
 
 class PlayerHome : AppCompatActivity() {
+    private var emotion=""
+    private var date=""
+
     //      About view widget
     private lateinit var recordImage: ImageView
     private lateinit var recordEmotion: TextView
@@ -74,6 +77,14 @@ class PlayerHome : AppCompatActivity() {
 
         intent.extras?.getInt("position")?.let {
             position = it
+        }
+
+        intent.extras?.getString("emotion")?.let {
+            emotion = it
+        }
+
+        intent.extras?.getString("date")?.let {
+            date = it
         }
 
         if (DataExample.songs == null) {
@@ -281,10 +292,10 @@ class PlayerHome : AppCompatActivity() {
     }
 
     private fun updateView() {
-//        dateTextView.text = recordItem.date?.let { TimeUtils().toDateString(it) }
+        dateTextView.text = date
         songNameTextView.text = songList[position].songName
         singerTextView.text = songList[position].singer
-        emotionTextView.text = DataExample.myCondtion.emotion
+        emotionTextView.text = emotion
     }
 
     private fun playNext() {

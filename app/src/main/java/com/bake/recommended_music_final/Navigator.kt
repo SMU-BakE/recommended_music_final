@@ -31,8 +31,10 @@ class Navigator(val context: Context) {
         context.startActivity(intent)
     }
 
-    fun startPlayerHomeActivity(position: Int) {
+    fun startPlayerHomeActivity(position: Int, emotion: String, date: String) {
         val intent = Intent(context, PlayerHome::class.java).putExtra("position", position)
+            .putExtra("emotion", emotion)
+            .putExtra("date", date)
         context.startActivity(intent)
     }
 
