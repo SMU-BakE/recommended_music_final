@@ -62,7 +62,6 @@ class HomeActivity : AppCompatActivity() {
 
         //날짜별 노래 저장
         db = FirebaseFirestore.getInstance()
-
         btn_song_list_save.setOnClickListener {
             saveRecordItem()
         }
@@ -97,7 +96,6 @@ class HomeActivity : AppCompatActivity() {
 
         //좋아한 음악 리스트
         favoriteListRV = findViewById(R.id.favoriteSong)
-
         //updateSongsList(favoriteListRV)
 
         //최근 추천 음악 리스트

@@ -172,8 +172,6 @@ class PlayerHome : AppCompatActivity() {
             playRepeat()
         }
 
-
-        //test
         val goodButton = findViewById<ImageView>(R.id.iv_good)
         goodButton.setOnClickListener {
             if (songList[position] == null) {
@@ -182,10 +180,7 @@ class PlayerHome : AppCompatActivity() {
                 var currentSongDocId = songList[position].docId
                 val starDialog = StarRatePopup(this, currentSongDocId)
                 starDialog?.show()
-
             }
-
-//            Initialize().increaseCondition(songList[position].docId,3)
         }
 
 
