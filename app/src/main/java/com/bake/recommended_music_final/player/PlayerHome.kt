@@ -21,6 +21,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBar
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.views.YouTubePlayerSeekBarListener
 import kotlinx.android.synthetic.main.activity_player_home.*
+import org.jetbrains.anko.support.v4.withArguments
 import org.jetbrains.anko.toast
 import java.util.*
 import kotlin.collections.ArrayList
@@ -28,8 +29,8 @@ import kotlin.properties.Delegates
 
 
 class PlayerHome : AppCompatActivity() {
-    private var emotion=""
-    private var date=""
+    private var emotion = ""
+    private var date = ""
 
     //      About view widget
     private lateinit var recordImage: ImageView
@@ -93,18 +94,6 @@ class PlayerHome : AppCompatActivity() {
         } else {
             songList = DataExample.songs!!
         }
-
-
-//        //TODO(임시 데이터 생성, 변경필요)
-//        recordItem = DataExample().createRecordItem()[position]
-//
-//        if (DataExample().createRecordItem()[position].songList != null) {
-//            songList = DataExample().createRecordItem()[position].songList!!
-//        } else {
-//            toast("노래 목록을 불러올 수 없습니다.")
-//            finish()
-//        }
-
         initView()
     }
 
@@ -201,7 +190,7 @@ class PlayerHome : AppCompatActivity() {
 
 
 
-        playListFragment = PlayList()
+        playListFragment = PlayList().withArguments("date" to date)
         supportFragmentManager.beginTransaction()
             .add(R.id.songListContainer, playListFragment)
             .hide(playListFragment)
@@ -226,7 +215,7 @@ class PlayerHome : AppCompatActivity() {
             if (songList[position] == null) {
                 toast("곡 정보를 불러올 수 없습니다.")
             } else {
-                 var currentSong = songList[position]
+                var currentSong = songList[position]
                 val dialog = currentSong?.let { it1 -> ViewMorePopup(this, it1) }
                 dialog?.show()
             }

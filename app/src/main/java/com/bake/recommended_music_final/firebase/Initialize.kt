@@ -12,9 +12,9 @@ class Initialize {
     private var functions: FirebaseFunctions = Firebase.functions("asia-northeast3")
 
     init {
+        //test 서버
 //        functions.useEmulator("10.0.2.2", 5001)
     }
-
 
     //초반에 데이터 모으기 위해 랜덤지정
     fun randomWeather(): String {
@@ -52,32 +52,6 @@ class Initialize {
                 Log.d("result", it.result.toString())
             }
     }
-
-    /*fun decreaseCondition(
-        songDocId: String
-    ) {
-        Log.d("start fx", "decrease")
-        val condition = DataExample.myCondtion
-
-        val conditionRequest = hashMapOf<String, String>(
-            "emotion" to condition.emotion,
-            "weather" to condition.weather,
-            "season" to condition.season,
-            "time" to condition.time
-        )
-        val request = hashMapOf<String, Any>(
-            "songDocId" to songDocId, "condition" to conditionRequest
-        )
-
-        functions.getHttpsCallable("decreaseCondition").call(request).addOnCompleteListener {
-            if (!it.isSuccessful) {
-                Log.e("error", it.exception.toString())
-                return@addOnCompleteListener
-            }
-
-            Log.d("result", it.result.toString())
-        }
-    }*/
 
 
     fun callRecommendMusic(

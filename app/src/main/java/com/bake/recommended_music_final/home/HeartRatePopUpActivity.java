@@ -69,6 +69,9 @@ public class HeartRatePopUpActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             List<Song> songList = task.getResult();
                             DataExample.Companion.setSongs(songList);
+
+                            Condition condition = DataExample.Companion.getMyCondtion();
+                            DataExample.Companion.setMyCondtion(condition);
                             Log.d("songs updated", DataExample.Companion.getSongs().toString());
                             setResult(1001, new Intent().putExtra("result", true));
                             finish();

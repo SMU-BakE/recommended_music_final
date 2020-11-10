@@ -13,7 +13,6 @@ class DataExample {
         )
 
         var songs: List<Song>? = null
-
         var myCondtion: Condition = Condition()
     }
 
@@ -37,65 +36,7 @@ class DataExample {
         return profile
     }
 
-    fun createRecordItem(): ArrayList<RecordItem> {
-        val recordItemList: ArrayList<RecordItem> = ArrayList()
 
-        //아래는 예시
-        //데이터베이스에서 RecordItem 받아와서 날짜순으로 정렬해야함.
-        recordItemList.add(
-            RecordItem(
-                "11",
-                "설레설레",
-                1588331341000
-            )
-        )
-       /* recordItemList.add(
-            RecordItem(
-                "설레",
-                1588331341000
-            )
-        )
-        recordItemList.add(
-            RecordItem(
-                "즐거워",
-                1587380941000
-            )
-        )
-        recordItemList.add(
-            RecordItem(
-                "슬퍼",
-                1586084941000
-            )
-        )
-        recordItemList.add(
-            RecordItem(
-                "그냥그래",
-                1583406541000
-            )
-        )
-        recordItemList.add(
-            RecordItem(
-                "기뻐",
-                1580555341000
-            )
-        )
-        recordItemList.add(
-            RecordItem(
-                "화나",
-                1580382541000
-            )
-        )
-        recordItemList.add(
-            RecordItem(
-                "화나",
-                1577876941000
-            )
-        )*/
-
-
-        return recordItemList
-
-    }
 
 
     //지금은 예시로 팔로우, 팔로잉, 친구찾기에 다 이 데이터 넣어둠. -> 바꿔야함

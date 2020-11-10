@@ -1,6 +1,7 @@
 package com.bake.recommended_music_final.player
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,9 +18,10 @@ import kotlin.properties.Delegates
 class PlayList : Fragment() {
     private lateinit var listRV: RecyclerView
     private lateinit var dateTV: TextView
-
+    private lateinit var date: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        date = arguments?.getString("date").toString()
         if (DataExample.songs == null) {
             activity!!.onBackPressed()
         }
@@ -33,11 +35,7 @@ class PlayList : Fragment() {
         listRV = view.findViewById(R.id.playlistRV)
         dateTV = view.findViewById(R.id.dateTextView)
 
-//        dateTV.text = DataExample().createRecordItem()[position].date?.let {
-//            TimeUtils().toDateString(
-//                it
-//            )
-//        }
+        dateTV.text = date
 
         listRV.apply {
             adapter = PlaylistAdapter(DataExample.songs!!, context, null)

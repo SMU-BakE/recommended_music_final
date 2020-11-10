@@ -53,14 +53,10 @@ class RecordListFragment : Fragment() {
     }
 
     private fun updateRecordList() {
-        //임시 데이터. DB 에서 불러와서 recordItem 에 넣어주세요.
-        //val recordItem: ArrayList<RecordItem> = DataExample().createRecordItem()
-
         db = FirebaseFirestore.getInstance()
         db.collection("record_item").whereEqualTo("userId", uid).limit(10)
             .get().addOnCompleteListener {
                 val querySnapshot = it.result
-
                 recordItems.clear()
                 querySnapshot?.documents?.map { doc ->
                     val item = doc.toObject<RecordItem>()
@@ -68,7 +64,6 @@ class RecordListFragment : Fragment() {
                         recordItems.add(item)
                     }
                 }
-
                 recordAdapter!!.notifyDataSetChanged()
             }
     }

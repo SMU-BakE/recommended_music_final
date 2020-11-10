@@ -1,6 +1,5 @@
 package com.bake.recommended_music_final
 
-import org.json.JSONObject
 import java.sql.Timestamp
 import java.time.Instant
 import java.time.LocalDate
@@ -27,6 +26,12 @@ class TimeUtils {
             current.hour,
             current.minute
         )
+    }
+
+    fun getCurrentDate() : String{
+        val current = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy년 MM월 dd일")
+        return current.format(formatter)
     }
 
     fun dateToString(year: Int, month: Int, dayOfMonth: Int): String {

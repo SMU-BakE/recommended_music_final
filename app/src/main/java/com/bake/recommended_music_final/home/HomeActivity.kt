@@ -348,8 +348,9 @@ class HomeActivity : AppCompatActivity() {
         Log.d("tes", songList.toString())
         db.collection("record_item").document().set(record)
             .addOnCompleteListener {
-                if (it.isSuccessful)
+                if (it.isSuccessful) {
                     toast("my studio 에 노래목록이 저장되었습니다.")
+                }
                 else
                     Log.d("db error", it.exception.toString())
             }

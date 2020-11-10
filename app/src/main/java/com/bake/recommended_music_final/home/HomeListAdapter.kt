@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bake.recommended_music_final.Navigator
 import com.bake.recommended_music_final.R
+import com.bake.recommended_music_final.TimeUtils
+import com.bake.recommended_music_final.database.DataExample
 import com.bake.recommended_music_final.database.Song
 import kotlinx.android.synthetic.main.unit_song.view.*
 
@@ -28,7 +30,7 @@ class HomeListAdapter(
         holder.itemView.text1.text = data.songName
         holder.itemView.text2.text = data.singer
         holder.itemView.imageView_play.setOnClickListener {
-            Navigator(context).startPlayerHomeActivity(songPosition,"임시","바꿔아함,..")
+            Navigator(context).startPlayerHomeActivity(songPosition,DataExample.myCondtion.emotion, TimeUtils().getCurrentDate())
         }
     }
 
