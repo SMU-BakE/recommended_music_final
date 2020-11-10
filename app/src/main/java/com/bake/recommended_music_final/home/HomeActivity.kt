@@ -119,7 +119,7 @@ class HomeActivity : AppCompatActivity() {
             var songList = DataExample.songs
             if (songList == null) {
                 songList = listOf()
-                view.setBackgroundResource(R.drawable.bg_recommended_song_init)
+                view.setBackgroundResource(R.drawable.bg_moo)
             }
             adapter = HomeListAdapter(
                 songList,
