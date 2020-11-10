@@ -49,7 +49,8 @@ class HomeActivity : AppCompatActivity() {
     private val API: String = "cf47ea0b59553630ae022abdf6c77247" //OpenWeatherMap 날씨 API
 
     //SongList
-    private lateinit var listRV: RecyclerView
+    private lateinit var recommendListRV: RecyclerView
+    private lateinit var favoriteListRV: RecyclerView
 
     //날짜별 노래 저장
     private lateinit var db: FirebaseFirestore
@@ -83,7 +84,6 @@ class HomeActivity : AppCompatActivity() {
         }
 
 
-
         //위치
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         getLastLocation()
@@ -96,15 +96,13 @@ class HomeActivity : AppCompatActivity() {
 
 
         //좋아한 음악 리스트
-        listRV = findViewById(R.id.favoriteSong)
+        favoriteListRV = findViewById(R.id.favoriteSong)
 
-        updateSongsList()
+        //updateSongsList(favoriteListRV)
 
         //최근 추천 음악 리스트
-        listRV = findViewById(R.id.recentSong)
-
-        updateSongsList()
-
+        recommendListRV = findViewById(R.id.recentSong)
+        updateSongsList(recommendListRV)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -112,16 +110,18 @@ class HomeActivity : AppCompatActivity() {
         if (resultCode == 1001) {
             val result = data?.extras?.get("result")
             if (result == true) {
-                updateSongsList()
+                updateSongsList(recommendListRV)
+                recommendListRV.setBackgroundResource(0)
             }
         }
     }
 
-    private fun updateSongsList() {
-        listRV.apply {
+    private fun updateSongsList(view: RecyclerView) {
+        view.apply {
             var songList = DataExample.songs
             if (songList == null) {
                 songList = listOf()
+                view.setBackgroundResource(R.drawable.bg_recommended_song_init)
             }
             adapter = HomeListAdapter(
                 songList,
@@ -340,7 +340,7 @@ class HomeActivity : AppCompatActivity() {
         val emotion = DataExample.myCondtion.emotion
         val songList = DataExample.songs
 //        songList 대신 RecordItem 을 저장!
-        if(uid == null){
+        if (uid == null) {
             throw Error("Cannot get User information")
         }
 
@@ -350,8 +350,7 @@ class HomeActivity : AppCompatActivity() {
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     toast("my studio 에 노래목록이 저장되었습니다.")
-                }
-                else
+                } else
                     Log.d("db error", it.exception.toString())
             }
     }
