@@ -13,9 +13,9 @@
 * 스트레스를 받는 사람의 비율 80%
 
 <div>
-<img src = https://user-images.githubusercontent.com/18053479/101714136-4765c480-3adc-11eb-9638-eb4a44263bbc.png height="200">
-<img src = https://user-images.githubusercontent.com/18053479/101714140-47fe5b00-3adc-11eb-9bca-8f1f345b7f4f.png height="200">
-<div>
+  <img src = https://user-images.githubusercontent.com/18053479/101714136-4765c480-3adc-11eb-9638-eb4a44263bbc.png height="200"/>
+  <img src = https://user-images.githubusercontent.com/18053479/101714140-47fe5b00-3adc-11eb-9bca-8f1f345b7f4f.png height="200"/>
+</div>
 
 * 좋아하는 음악을 들으며 스트레스를 해소한다는 비율 100%
 
@@ -26,10 +26,19 @@
 
 ## 주요기능
 1. 로그인 및 회원가입
-
-<img src="https://user-images.githubusercontent.com/18053479/101714809-a8da6300-3add-11eb-9cda-6e53d357ac5b.png">
+<p float="left">
+  <img src="https://user-images.githubusercontent.com/18053479/101714809-a8da6300-3add-11eb-9cda-6e53d357ac5b.png" width="200"/>
+  <img src="https://user-images.githubusercontent.com/18053479/101715641-2fdc0b00-3adf-11eb-92d9-b5817a39303c.png" width="200"/>
+  <img src="https://user-images.githubusercontent.com/18053479/101715639-2eaade00-3adf-11eb-82cc-f30bad954d45.png" width="200"/>
+</p>
 
 2. 심박수 추천
+<p float="left">
+<img src="https://user-images.githubusercontent.com/18053479/101716267-45056980-3ae0-11eb-817f-91d9ad0237fb.png" width="200")
+<img src="https://user-images.githubusercontent.com/18053479/101716269-46369680-3ae0-11eb-96d3-df8027825793.jpg" width="200")
+</p>
+
+
 3. 노래 추천
 4. 플레이어 기능
 5. 플레이리스트 저장
