@@ -22,13 +22,13 @@
 
 
 ## 주요기능
-1. 로그인
+**1. 로그인**
 <img src="https://user-images.githubusercontent.com/18053479/101726049-1fcf2600-3af5-11eb-8e23-3ce4896da3fa.gif" width="200">
-2. 노래 추천
+**2. 노래 추천**
 <img src="https://user-images.githubusercontent.com/18053479/101725121-60c63b00-3af3-11eb-85e3-3d2b5098af57.gif" width="200">
-4. 플레이어 및 노래 피드백 기능
+**4. 플레이어 및 노래 피드백 기능**
 <img src="https://user-images.githubusercontent.com/18053479/101726038-1b0a7200-3af5-11eb-851c-127e4a8d17e0.gif" width="200">
-5. 플레이리스트 저장
+**5. 플레이리스트 저장**
 <img src="https://user-images.githubusercontent.com/18053479/101726053-22318000-3af5-11eb-9288-33ad40211e54.gif" width="200">
 
 
@@ -37,8 +37,7 @@
 * front-end : Android, kotlin, java
 
 * back-end : node js, type script, firebase
-
-[backend function repo] - https://github.com/SMU-BakE/backend-function
+<br/>[backend function repo] - https://github.com/SMU-BakE/backend-function
 
 <img width="600" alt="음악 추천 시스템 구성도" src="https://user-images.githubusercontent.com/18053479/101724256-7e92a080-3af1-11eb-9789-c7fbe75d2706.PNG">
 
@@ -47,8 +46,11 @@
 
 ## 음악 추천 과정
 <img width="400" alt="노래추천1" src="https://user-images.githubusercontent.com/18053479/101717732-39677200-3ae3-11eb-994b-9a4d6a5a7873.PNG">
+<img width="400" alt="노래추천1" src="https://user-images.githubusercontent.com/18053479/101726829-9c163900-3af6-11eb-925a-8e668cbde604.png>
 
 ## User 만족도
 
 ## 참고자료
+
+[PierfrancescoSoffritti] - https://github.com/PierfrancescoSoffritti/android-youtube-player#youtubeplayerview
 
