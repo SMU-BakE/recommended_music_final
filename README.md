@@ -22,29 +22,30 @@
 
 
 ## 주요기능
-1. 로그인 및 회원가입
-<p float="left">
-  <img src="https://user-images.githubusercontent.com/18053479/101714809-a8da6300-3add-11eb-9cda-6e53d357ac5b.png" width="200"/>
-  <img src="https://user-images.githubusercontent.com/18053479/101715641-2fdc0b00-3adf-11eb-92d9-b5817a39303c.png" width="200"/>
-  <img src="https://user-images.githubusercontent.com/18053479/101715639-2eaade00-3adf-11eb-82cc-f30bad954d45.png" width="200"/>
-</p>
-
-2. 감정 선택 및 심박수 입력
-<p float="left">
-  <img src="https://user-images.githubusercontent.com/18053479/101717244-40da4b80-3ae2-11eb-882a-fe2a98942801.png" width="200"/>
-  <img src="https://user-images.githubusercontent.com/18053479/101716267-45056980-3ae0-11eb-817f-91d9ad0237fb.png" width="200"/>      
-  <img src="https://user-images.githubusercontent.com/18053479/101717130-0ffa1680-3ae2-11eb-9a0d-fa20969556e3.jpg" width="200"/>    
-</p>
-
-3. 노래 추천
-<img alt="노래추천1" src="https://user-images.githubusercontent.com/18053479/101717732-39677200-3ae3-11eb-994b-9a4d6a5a7873.PNG">
-4. 플레이어 기능
+1. 로그인
+<img src="https://user-images.githubusercontent.com/18053479/101726049-1fcf2600-3af5-11eb-8e23-3ce4896da3fa.gif" width="200">
+2. 노래 추천
+<img src="https://user-images.githubusercontent.com/18053479/101725121-60c63b00-3af3-11eb-85e3-3d2b5098af57.gif" width="200">
+4. 플레이어 및 노래 피드백 기능
+<img src="https://user-images.githubusercontent.com/18053479/101726038-1b0a7200-3af5-11eb-851c-127e4a8d17e0.gif" width="200">
 5. 플레이리스트 저장
+<img src="https://user-images.githubusercontent.com/18053479/101726053-22318000-3af5-11eb-9288-33ad40211e54.gif" width="200">
 
 
 ## 시스템 구성도
 
+* front-end : Android, kotlin, java
+
+* back-end : node js, type script, firebase
+[backend function repo] - https://github.com/SMU-BakE/backend-function
+
+<img width="429" alt="음악 추천 시스템 구성도" src="https://user-images.githubusercontent.com/18053479/101724256-7e92a080-3af1-11eb-9789-c7fbe75d2706.PNG">
+
+<img width="429" alt="사용자 피드백 구성도" src="https://user-images.githubusercontent.com/18053479/101724497-13959980-3af2-11eb-8646-44e329e2843e.PNG">
+
+
 ## 음악 추천 과정
+<img alt="노래추천1" src="https://user-images.githubusercontent.com/18053479/101717732-39677200-3ae3-11eb-994b-9a4d6a5a7873.PNG">
 
 ## User 만족도
 
