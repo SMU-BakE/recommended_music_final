@@ -68,6 +68,14 @@
 * 점수들을 표준화 한다. 
 ```autoNormalizing()```
 ## User 만족도
+![만족도](https://user-images.githubusercontent.com/18053479/101729644-e0f09e80-3afb-11eb-9ac0-30d6f08b48fd.png)
+
+* 88.8%의 사용자가 6점 이상의 점수를 주었다. (10점 만점)
+* [만족도 설문 조사 결과 전체] - https://docs.google.com/forms/d/19X5ZMu-tPk_DAc0S2irIy7hsiB-vzrfphgMO3aUQE5I/edit#responses
+
+
+## 기대효과
+<img width="358" alt="기대효과" src="https://user-images.githubusercontent.com/18053479/101729963-8146c300-3afc-11eb-8474-7023ad594811.PNG">
 
 ## 참고자료
 
