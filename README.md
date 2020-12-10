@@ -13,7 +13,7 @@
 * 스트레스를 받는 사람의 비율 80%
 
 
-![설문1](https://user-images.githubusercontent.com/18053479/101714136-4765c480-3adc-11eb-9638-eb4a44263bbc.png)
+![설문1](https://user-images.githubusercontent.com/18053479/101714136-4765c480-3adc-11eb-9638-eb4a44263bbc.png){: width="100" height="100"}
 ![설문2](https://user-images.githubusercontent.com/18053479/101714140-47fe5b00-3adc-11eb-9bca-8f1f345b7f4f.png)
 
 
@@ -26,6 +26,9 @@
 
 ## 주요기능
 1. 로그인 및 회원가입
+
+<img src="https://user-images.githubusercontent.com/18053479/101714809-a8da6300-3add-11eb-9cda-6e53d357ac5b.png" width="400">
+
 2. 심박수 추천
 3. 노래 추천
 4. 플레이어 기능
