@@ -12,14 +12,16 @@
 
 * 스트레스를 받는 사람의 비율 80%
 
-<div>
+
 ![설문1](https://user-images.githubusercontent.com/18053479/101714136-4765c480-3adc-11eb-9638-eb4a44263bbc.png)
 ![설문2](https://user-images.githubusercontent.com/18053479/101714140-47fe5b00-3adc-11eb-9bca-8f1f345b7f4f.png)
-</div>
+
 
 * 좋아하는 음악을 들으며 스트레스를 해소한다는 비율 100%
 
 * 이 때 듣는 선곡이 감정에 영향을 미친다 100%
+
+* 이러한 결과를 토대로 사용자의 현재 감정상태에 알맞는 음악을 추천해 사람들게 힐링을 주고자 EmoMusic 개발
 
 
 ## 주요기능
