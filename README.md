@@ -40,7 +40,7 @@
 </p>
 
 3. 노래 추천
-<img width="230" alt="노래추천1" src="https://user-images.githubusercontent.com/18053479/101717732-39677200-3ae3-11eb-994b-9a4d6a5a7873.PNG">
+<img alt="노래추천1" src="https://user-images.githubusercontent.com/18053479/101717732-39677200-3ae3-11eb-994b-9a4d6a5a7873.PNG">
 4. 플레이어 기능
 5. 플레이리스트 저장
 
