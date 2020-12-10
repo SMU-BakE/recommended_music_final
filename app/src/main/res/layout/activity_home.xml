@@ -9,13 +9,13 @@
 
     <ImageView
         android:id="@+id/imageView_BAKE"
-        android:layout_width="110dp"
+        android:layout_width="155dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_bake" />
+        app:srcCompat="@drawable/icon_emomusic" />
 
     <ImageView
         android:id="@+id/imageView_NOW"
@@ -106,7 +106,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="47dp"
+        android:layout_marginTop="50dp"
         android:text="최근 추천 음악"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
