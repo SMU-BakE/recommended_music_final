@@ -75,7 +75,7 @@
 
 
 ## 기대효과
-<img width="358" alt="기대효과" src="https://user-images.githubusercontent.com/18053479/101729963-8146c300-3afc-11eb-8474-7023ad594811.PNG">
+<img width="600" alt="기대효과" src="https://user-images.githubusercontent.com/18053479/101729963-8146c300-3afc-11eb-8474-7023ad594811.PNG">
 
 * 노래에 대한 감정 데이터 축적
 * 뎅디터 다양화를 통한 정확도 상승과 유저 유입
