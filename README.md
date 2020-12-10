@@ -37,15 +37,16 @@
 * front-end : Android, kotlin, java
 
 * back-end : node js, type script, firebase
+
 [backend function repo] - https://github.com/SMU-BakE/backend-function
 
-<img width="429" alt="음악 추천 시스템 구성도" src="https://user-images.githubusercontent.com/18053479/101724256-7e92a080-3af1-11eb-9789-c7fbe75d2706.PNG">
+<img width="600" alt="음악 추천 시스템 구성도" src="https://user-images.githubusercontent.com/18053479/101724256-7e92a080-3af1-11eb-9789-c7fbe75d2706.PNG">
 
-<img width="429" alt="사용자 피드백 구성도" src="https://user-images.githubusercontent.com/18053479/101724497-13959980-3af2-11eb-8646-44e329e2843e.PNG">
+<img width="600" alt="사용자 피드백 구성도" src="https://user-images.githubusercontent.com/18053479/101724497-13959980-3af2-11eb-8646-44e329e2843e.PNG">
 
 
 ## 음악 추천 과정
-<img alt="노래추천1" src="https://user-images.githubusercontent.com/18053479/101717732-39677200-3ae3-11eb-994b-9a4d6a5a7873.PNG">
+<img width="400" alt="노래추천1" src="https://user-images.githubusercontent.com/18053479/101717732-39677200-3ae3-11eb-994b-9a4d6a5a7873.PNG">
 
 ## User 만족도
 
