@@ -88,7 +88,11 @@
 
 ## 팀원 
 [이해선] https://github.com/HaeSeon
+
 [박은제] https://github.com/prk7048
+
 [박주원] https://github.com/scppliop
+
 [이세연] https://github.com/znoeyes
+
 [이성민] https://github.com/pigzzz8815
