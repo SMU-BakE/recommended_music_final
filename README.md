@@ -32,10 +32,11 @@
   <img src="https://user-images.githubusercontent.com/18053479/101715639-2eaade00-3adf-11eb-82cc-f30bad954d45.png" width="200"/>
 </p>
 
-2. 심박수 추천
+2. 감정 선택 및 심박수 입력
 <p float="left">
-<img src="https://user-images.githubusercontent.com/18053479/101716267-45056980-3ae0-11eb-817f-91d9ad0237fb.png" width="200")
-<img src="https://user-images.githubusercontent.com/18053479/101716269-46369680-3ae0-11eb-96d3-df8027825793.jpg" width="200")
+  <img src="https://user-images.githubusercontent.com/18053479/101717244-40da4b80-3ae2-11eb-882a-fe2a98942801.png" width="200"/>
+  <img src="https://user-images.githubusercontent.com/18053479/101716267-45056980-3ae0-11eb-817f-91d9ad0237fb.png" width="200"/>      
+  <img src="https://user-images.githubusercontent.com/18053479/101717130-0ffa1680-3ae2-11eb-9a0d-fa20969556e3.jpg" width="200"/>    
 </p>
 
 
