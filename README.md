@@ -77,7 +77,18 @@
 ## 기대효과
 <img width="358" alt="기대효과" src="https://user-images.githubusercontent.com/18053479/101729963-8146c300-3afc-11eb-8474-7023ad594811.PNG">
 
+* 노래에 대한 감정 데이터 축적
+* 뎅디터 다양화를 통한 정확도 상승과 유저 유입
+* 내 상태에 맞는 노래 추천으로 사용자의 감정 위로
+* 스트레스 감소 및 우울감 해소 
+
 ## 참고자료
 
 [PierfrancescoSoffritti] - https://github.com/PierfrancescoSoffritti/android-youtube-player#youtubeplayerview
 
+## 팀원 
+[이해선] https://github.com/HaeSeon
+[박은제] https://github.com/prk7048
+[박주원] https://github.com/scppliop
+[이세연] https://github.com/znoeyes
+[이성민] https://github.com/pigzzz8815
